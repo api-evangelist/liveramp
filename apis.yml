@@ -141,6 +141,8 @@ apis:
       - type: Documentation
         url: https://sidecar.readme.io/
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/liveramp
   - type: Website
     url: https://liveramp.com
   - type: Portal
