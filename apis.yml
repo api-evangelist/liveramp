@@ -158,6 +158,8 @@ common:
   - name: MCP Server
     url: https://github.com/LiveRamp/logscale-mcp
     type: MCPServer
+  - type: LLMsTxt
+    url: https://developers.liveramp.com/llms.txt
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
