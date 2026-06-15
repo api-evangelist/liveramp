@@ -1,0 +1,827 @@
+"""
+LiveRamp GraphQL Schema
+Derived from the LiveRamp REST API surface covering identity resolution,
+data activation, clean room collaboration, and marketplace data access.
+"""
+
+# ─────────────────────────────────────────
+# Scalar types
+# ─────────────────────────────────────────
+
+scalar DateTime
+scalar JSON
+scalar Long
+
+# ─────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────
+
+enum ActivationStatus {
+  PENDING
+  PROCESSING
+  ACTIVE
+  PAUSED
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum SegmentStatus {
+  DRAFT
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+  EXPIRED
+}
+
+enum IdentityType {
+  EMAIL
+  PHONE
+  NAME_ADDRESS
+  DEVICE_ID
+  COOKIE
+  RAMPID
+  ABILITEC_LINK
+}
+
+enum DataSourceType {
+  FIRST_PARTY
+  SECOND_PARTY
+  THIRD_PARTY
+  MARKETPLACE
+}
+
+enum CleanRoomStatus {
+  INITIALIZING
+  READY
+  RUNNING
+  COMPLETED
+  ERROR
+  TERMINATED
+}
+
+enum JobStatus {
+  QUEUED
+  RUNNING
+  SUCCEEDED
+  FAILED
+  CANCELLED
+  TIMED_OUT
+}
+
+enum JobType {
+  PYTHON
+  PYSPARK
+  BIGQUERY
+  SQL
+}
+
+enum PrivacyRequestType {
+  OPT_OUT
+  DELETION
+  ACCESS
+  CORRECTION
+  PORTABILITY
+}
+
+enum PrivacyRequestStatus {
+  RECEIVED
+  PROCESSING
+  COMPLETED
+  REJECTED
+  CANCELLED
+}
+
+enum DestinationPartnerType {
+  DSP
+  SSP
+  DMP
+  CRM
+  SOCIAL
+  SEARCH
+  EMAIL_PLATFORM
+  TV_PLATFORM
+  CUSTOM
+}
+
+enum MatchType {
+  DETERMINISTIC
+  PROBABILISTIC
+  HYBRID
+}
+
+enum AudienceType {
+  CUSTOM
+  LOOKALIKE
+  SUPPRESSION
+  RETARGETING
+  PROSPECTING
+}
+
+enum ConsentPurpose {
+  ADVERTISING
+  ANALYTICS
+  PERSONALIZATION
+  MEASUREMENT
+  PRODUCT_IMPROVEMENT
+}
+
+enum FileFormat {
+  CSV
+  TSV
+  PARQUET
+  AVRO
+  JSON
+  NDJSON
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+# ─────────────────────────────────────────
+# Core identity & resolution types
+# ─────────────────────────────────────────
+
+"""A pseudonymous, people-based identifier used across the LiveRamp identity graph."""
+type RampID {
+  id: ID!
+  value: String!
+  identityType: IdentityType!
+  createdAt: DateTime!
+  expiresAt: DateTime
+  envelopes: [IdentityEnvelope!]
+}
+
+"""An encrypted envelope wrapping a RampID for use by specific DSP/SSP partners."""
+type IdentityEnvelope {
+  id: ID!
+  rampId: RampID!
+  partnerId: String!
+  encryptedValue: String!
+  createdAt: DateTime!
+  expiresAt: DateTime!
+}
+
+"""A stable, enterprise-level identity link produced by the AbiliTec identity graph."""
+type AbiliTecLink {
+  id: ID!
+  linkValue: String!
+  matchType: MatchType!
+  confidence: Float
+  household: Household
+  individual: Individual
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Represents a household-level identity cluster."""
+type Household {
+  id: ID!
+  abilitecLinks: [AbiliTecLink!]
+  individuals: [Individual!]
+  attributes: JSON
+}
+
+"""Represents an individual-level identity record."""
+type Individual {
+  id: ID!
+  abilitecLink: AbiliTecLink
+  household: Household
+  attributes: JSON
+}
+
+"""Result of an identity resolution request."""
+type IdentityResolutionResult {
+  inputRecord: JSON!
+  rampId: RampID
+  abilitecLink: AbiliTecLink
+  matchType: MatchType
+  confidence: Float
+  resolvedAt: DateTime!
+}
+
+# ─────────────────────────────────────────
+# Segment & audience types
+# ─────────────────────────────────────────
+
+"""A data segment representing a cohort of identities for targeting or suppression."""
+type Segment {
+  id: ID!
+  name: String!
+  description: String
+  status: SegmentStatus!
+  audienceType: AudienceType!
+  dataSourceType: DataSourceType!
+  size: Long
+  tags: [String!]
+  provider: DataProvider
+  activations: [Activation!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  expiresAt: DateTime
+}
+
+"""Marketplace segment with pricing and taxonomy metadata."""
+type MarketplaceSegment {
+  id: ID!
+  segment: Segment!
+  taxonomyPath: String!
+  cpm: Float
+  cpmCurrency: String
+  dataProvider: DataProvider!
+  availableDestinations: [DestinationPartner!]
+  sampleSize: Long
+  createdAt: DateTime!
+}
+
+"""A custom audience built from first-party data."""
+type Audience {
+  id: ID!
+  name: String!
+  description: String
+  audienceType: AudienceType!
+  status: SegmentStatus!
+  baseSegment: Segment
+  lookalikeSeedSize: Long
+  estimatedReach: Long
+  activations: [Activation!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ─────────────────────────────────────────
+# Activation & destination types
+# ─────────────────────────────────────────
+
+"""An activation job pushing a segment to a destination partner."""
+type Activation {
+  id: ID!
+  name: String!
+  segment: Segment
+  audience: Audience
+  destination: DestinationPartner!
+  status: ActivationStatus!
+  scheduledAt: DateTime
+  startedAt: DateTime
+  completedAt: DateTime
+  recordsActivated: Long
+  matchRate: Float
+  errorMessage: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connected destination platform in the LiveRamp network."""
+type DestinationPartner {
+  id: ID!
+  name: String!
+  partnerType: DestinationPartnerType!
+  description: String
+  logoUrl: String
+  supportedIdentityTypes: [IdentityType!]!
+  isActive: Boolean!
+  activations: [Activation!]
+  createdAt: DateTime!
+}
+
+# ─────────────────────────────────────────
+# Data onboarding & file types
+# ─────────────────────────────────────────
+
+"""A data onboarding job that ingests and resolves PII records."""
+type OnboardingJob {
+  id: ID!
+  name: String!
+  status: JobStatus!
+  fileFormat: FileFormat!
+  inputFile: DataFile!
+  outputSegment: Segment
+  totalRecords: Long
+  matchedRecords: Long
+  matchRate: Float
+  errorMessage: String
+  createdAt: DateTime!
+  startedAt: DateTime
+  completedAt: DateTime
+}
+
+"""A reference to a data file in storage (S3, GCS, or SFTP)."""
+type DataFile {
+  id: ID!
+  fileName: String!
+  fileFormat: FileFormat!
+  fileSizeBytes: Long
+  storageUri: String!
+  checksum: String
+  createdAt: DateTime!
+}
+
+# ─────────────────────────────────────────
+# Clean room types
+# ─────────────────────────────────────────
+
+"""A secure clean room environment for collaborative data analysis."""
+type CleanRoom {
+  id: ID!
+  name: String!
+  description: String
+  status: CleanRoomStatus!
+  owner: Organization!
+  collaborators: [CleanRoomCollaborator!]
+  dataSources: [CleanRoomDataSource!]
+  queries: [CleanRoomQuery!]
+  results: [CleanRoomResult!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  expiresAt: DateTime
+}
+
+"""A collaborating organization in a clean room."""
+type CleanRoomCollaborator {
+  id: ID!
+  cleanRoom: CleanRoom!
+  organization: Organization!
+  role: String!
+  permissions: [String!]!
+  joinedAt: DateTime!
+}
+
+"""A data source contributed to a clean room by a collaborator."""
+type CleanRoomDataSource {
+  id: ID!
+  cleanRoom: CleanRoom!
+  name: String!
+  description: String
+  dataSourceType: DataSourceType!
+  contributor: Organization!
+  schema: JSON
+  recordCount: Long
+  createdAt: DateTime!
+}
+
+"""An analytical query run inside a clean room."""
+type CleanRoomQuery {
+  id: ID!
+  cleanRoom: CleanRoom!
+  name: String!
+  queryText: String!
+  status: JobStatus!
+  submittedBy: String!
+  result: CleanRoomResult
+  createdAt: DateTime!
+  startedAt: DateTime
+  completedAt: DateTime
+  errorMessage: String
+}
+
+"""The output of a clean room query."""
+type CleanRoomResult {
+  id: ID!
+  query: CleanRoomQuery!
+  outputFile: DataFile
+  rowCount: Long
+  schema: JSON
+  privacyBudgetConsumed: Float
+  createdAt: DateTime!
+  expiresAt: DateTime
+}
+
+# ─────────────────────────────────────────
+# Safe Haven job management types
+# ─────────────────────────────────────────
+
+"""A job running in the LiveRamp Safe Haven Analytics Environment."""
+type AnalyticsJob {
+  id: ID!
+  name: String!
+  jobType: JobType!
+  status: JobStatus!
+  scriptUri: String
+  scriptContent: String
+  parameters: JSON
+  outputUri: String
+  logs: [JobLog!]
+  createdAt: DateTime!
+  startedAt: DateTime
+  completedAt: DateTime
+  errorMessage: String
+}
+
+"""A log entry from an analytics job execution."""
+type JobLog {
+  id: ID!
+  job: AnalyticsJob!
+  timestamp: DateTime!
+  level: String!
+  message: String!
+}
+
+# ─────────────────────────────────────────
+# Privacy & consent types
+# ─────────────────────────────────────────
+
+"""A data subject privacy request (opt-out, deletion, access, etc.)."""
+type PrivacyRequest {
+  id: ID!
+  requestType: PrivacyRequestType!
+  status: PrivacyRequestStatus!
+  subjectIdentifiers: [SubjectIdentifier!]!
+  submittedAt: DateTime!
+  processedAt: DateTime
+  completedAt: DateTime
+  statusMessage: String
+  receiptToken: String!
+}
+
+"""An identifier submitted as part of a privacy request."""
+type SubjectIdentifier {
+  identityType: IdentityType!
+  value: String!
+}
+
+"""A consent record associated with a data subject."""
+type ConsentRecord {
+  id: ID!
+  rampId: RampID
+  purpose: ConsentPurpose!
+  granted: Boolean!
+  grantedAt: DateTime
+  revokedAt: DateTime
+  source: String
+  jurisdiction: String
+}
+
+# ─────────────────────────────────────────
+# Organization & account types
+# ─────────────────────────────────────────
+
+"""An organization (customer or partner) in the LiveRamp platform."""
+type Organization {
+  id: ID!
+  name: String!
+  description: String
+  website: String
+  segments: [Segment!]
+  audiences: [Audience!]
+  cleanRooms: [CleanRoom!]
+  destinations: [DestinationPartner!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""An API credential set for authenticating with LiveRamp APIs."""
+type ApiCredential {
+  id: ID!
+  clientId: String!
+  description: String
+  scopes: [String!]!
+  isActive: Boolean!
+  createdAt: DateTime!
+  expiresAt: DateTime
+}
+
+# ─────────────────────────────────────────
+# Data provider type (marketplace)
+# ─────────────────────────────────────────
+
+"""A third-party data provider in the LiveRamp Data Marketplace."""
+type DataProvider {
+  id: ID!
+  name: String!
+  description: String
+  logoUrl: String
+  website: String
+  segments: [MarketplaceSegment!]
+  taxonomies: [String!]
+  createdAt: DateTime!
+}
+
+# ─────────────────────────────────────────
+# Pagination / connection types
+# ─────────────────────────────────────────
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type SegmentConnection {
+  edges: [SegmentEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type SegmentEdge {
+  cursor: String!
+  node: Segment!
+}
+
+type ActivationConnection {
+  edges: [ActivationEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type ActivationEdge {
+  cursor: String!
+  node: Activation!
+}
+
+type CleanRoomConnection {
+  edges: [CleanRoomEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type CleanRoomEdge {
+  cursor: String!
+  node: CleanRoom!
+}
+
+type PrivacyRequestConnection {
+  edges: [PrivacyRequestEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type PrivacyRequestEdge {
+  cursor: String!
+  node: PrivacyRequest!
+}
+
+type MarketplaceSegmentConnection {
+  edges: [MarketplaceSegmentEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type MarketplaceSegmentEdge {
+  cursor: String!
+  node: MarketplaceSegment!
+}
+
+type AnalyticsJobConnection {
+  edges: [AnalyticsJobEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type AnalyticsJobEdge {
+  cursor: String!
+  node: AnalyticsJob!
+}
+
+# ─────────────────────────────────────────
+# Input types
+# ─────────────────────────────────────────
+
+input CreateSegmentInput {
+  name: String!
+  description: String
+  audienceType: AudienceType!
+  dataSourceType: DataSourceType!
+  tags: [String!]
+  expiresAt: DateTime
+}
+
+input UpdateSegmentInput {
+  name: String
+  description: String
+  status: SegmentStatus
+  tags: [String!]
+  expiresAt: DateTime
+}
+
+input CreateActivationInput {
+  name: String!
+  segmentId: ID
+  audienceId: ID
+  destinationPartnerId: ID!
+  scheduledAt: DateTime
+}
+
+input UpdateActivationInput {
+  name: String
+  scheduledAt: DateTime
+  status: ActivationStatus
+}
+
+input CreateAudienceInput {
+  name: String!
+  description: String
+  audienceType: AudienceType!
+  baseSegmentId: ID
+  lookalikeSeedSize: Long
+}
+
+input UpdateAudienceInput {
+  name: String
+  description: String
+  status: SegmentStatus
+}
+
+input CreateCleanRoomInput {
+  name: String!
+  description: String
+  collaboratorOrganizationIds: [ID!]
+  expiresAt: DateTime
+}
+
+input AddCleanRoomDataSourceInput {
+  cleanRoomId: ID!
+  name: String!
+  description: String
+  dataSourceType: DataSourceType!
+  schema: JSON
+}
+
+input SubmitCleanRoomQueryInput {
+  cleanRoomId: ID!
+  name: String!
+  queryText: String!
+}
+
+input CreateAnalyticsJobInput {
+  name: String!
+  jobType: JobType!
+  scriptUri: String
+  scriptContent: String
+  parameters: JSON
+  outputUri: String
+}
+
+input SubmitPrivacyRequestInput {
+  requestType: PrivacyRequestType!
+  identifiers: [SubjectIdentifierInput!]!
+}
+
+input SubjectIdentifierInput {
+  identityType: IdentityType!
+  value: String!
+}
+
+input ResolveIdentityInput {
+  records: [JSON!]!
+  matchTypes: [MatchType!]
+}
+
+input SegmentFilterInput {
+  status: SegmentStatus
+  audienceType: AudienceType
+  dataSourceType: DataSourceType
+  tags: [String!]
+  search: String
+}
+
+input ActivationFilterInput {
+  status: ActivationStatus
+  destinationPartnerId: ID
+  segmentId: ID
+}
+
+input MarketplaceSegmentFilterInput {
+  providerId: ID
+  taxonomyPath: String
+  maxCpm: Float
+  search: String
+}
+
+input AnalyticsJobFilterInput {
+  status: JobStatus
+  jobType: JobType
+}
+
+input PaginationInput {
+  first: Int
+  after: String
+  last: Int
+  before: String
+}
+
+input SortInput {
+  field: String!
+  order: SortOrder!
+}
+
+# ─────────────────────────────────────────
+# Query root
+# ─────────────────────────────────────────
+
+type Query {
+  # Identity & resolution
+  resolveIdentities(input: ResolveIdentityInput!): [IdentityResolutionResult!]!
+  getRampID(value: String!, identityType: IdentityType!): RampID
+  getAbiliTecLink(linkValue: String!): AbiliTecLink
+  decryptEnvelope(encryptedValue: String!, partnerId: String!): IdentityEnvelope
+
+  # Segments
+  segment(id: ID!): Segment
+  segments(filter: SegmentFilterInput, pagination: PaginationInput, sort: SortInput): SegmentConnection!
+
+  # Audiences
+  audience(id: ID!): Audience
+  audiences(pagination: PaginationInput): [Audience!]!
+
+  # Marketplace
+  marketplaceSegment(id: ID!): MarketplaceSegment
+  marketplaceSegments(filter: MarketplaceSegmentFilterInput, pagination: PaginationInput): MarketplaceSegmentConnection!
+  dataProvider(id: ID!): DataProvider
+  dataProviders(pagination: PaginationInput): [DataProvider!]!
+
+  # Activations
+  activation(id: ID!): Activation
+  activations(filter: ActivationFilterInput, pagination: PaginationInput): ActivationConnection!
+  destinationPartner(id: ID!): DestinationPartner
+  destinationPartners(partnerType: DestinationPartnerType): [DestinationPartner!]!
+
+  # Onboarding
+  onboardingJob(id: ID!): OnboardingJob
+  onboardingJobs(status: JobStatus, pagination: PaginationInput): [OnboardingJob!]!
+
+  # Clean rooms
+  cleanRoom(id: ID!): CleanRoom
+  cleanRooms(status: CleanRoomStatus, pagination: PaginationInput): CleanRoomConnection!
+  cleanRoomQuery(id: ID!): CleanRoomQuery
+  cleanRoomResult(id: ID!): CleanRoomResult
+
+  # Safe Haven / analytics jobs
+  analyticsJob(id: ID!): AnalyticsJob
+  analyticsJobs(filter: AnalyticsJobFilterInput, pagination: PaginationInput): AnalyticsJobConnection!
+  jobLogs(jobId: ID!, limit: Int): [JobLog!]!
+
+  # Privacy
+  privacyRequest(id: ID!): PrivacyRequest
+  privacyRequests(status: PrivacyRequestStatus, pagination: PaginationInput): PrivacyRequestConnection!
+
+  # Consent
+  consentRecord(rampId: ID!, purpose: ConsentPurpose!): ConsentRecord
+  consentRecords(rampId: ID!): [ConsentRecord!]!
+
+  # Organization
+  organization(id: ID!): Organization
+  myOrganization: Organization!
+
+  # Credentials
+  apiCredential(id: ID!): ApiCredential
+  apiCredentials: [ApiCredential!]!
+}
+
+# ─────────────────────────────────────────
+# Mutation root
+# ─────────────────────────────────────────
+
+type Mutation {
+  # Segments
+  createSegment(input: CreateSegmentInput!): Segment!
+  updateSegment(id: ID!, input: UpdateSegmentInput!): Segment!
+  archiveSegment(id: ID!): Segment!
+  deleteSegment(id: ID!): Boolean!
+
+  # Audiences
+  createAudience(input: CreateAudienceInput!): Audience!
+  updateAudience(id: ID!, input: UpdateAudienceInput!): Audience!
+  deleteAudience(id: ID!): Boolean!
+
+  # Activations
+  createActivation(input: CreateActivationInput!): Activation!
+  updateActivation(id: ID!, input: UpdateActivationInput!): Activation!
+  pauseActivation(id: ID!): Activation!
+  resumeActivation(id: ID!): Activation!
+  cancelActivation(id: ID!): Activation!
+
+  # Onboarding
+  startOnboardingJob(name: String!, fileId: ID!, fileFormat: FileFormat!): OnboardingJob!
+  cancelOnboardingJob(id: ID!): OnboardingJob!
+
+  # Clean rooms
+  createCleanRoom(input: CreateCleanRoomInput!): CleanRoom!
+  terminateCleanRoom(id: ID!): CleanRoom!
+  addCleanRoomDataSource(input: AddCleanRoomDataSourceInput!): CleanRoomDataSource!
+  removeCleanRoomDataSource(id: ID!): Boolean!
+  inviteCleanRoomCollaborator(cleanRoomId: ID!, organizationId: ID!, role: String!): CleanRoomCollaborator!
+  removeCleanRoomCollaborator(id: ID!): Boolean!
+  submitCleanRoomQuery(input: SubmitCleanRoomQueryInput!): CleanRoomQuery!
+  cancelCleanRoomQuery(id: ID!): CleanRoomQuery!
+
+  # Safe Haven / analytics jobs
+  createAnalyticsJob(input: CreateAnalyticsJobInput!): AnalyticsJob!
+  cancelAnalyticsJob(id: ID!): AnalyticsJob!
+  retryAnalyticsJob(id: ID!): AnalyticsJob!
+
+  # Privacy requests
+  submitPrivacyRequest(input: SubmitPrivacyRequestInput!): PrivacyRequest!
+  cancelPrivacyRequest(id: ID!): PrivacyRequest!
+
+  # Consent
+  recordConsent(rampId: ID!, purpose: ConsentPurpose!, granted: Boolean!, source: String): ConsentRecord!
+  revokeConsent(rampId: ID!, purpose: ConsentPurpose!): ConsentRecord!
+
+  # Credentials
+  createApiCredential(description: String!, scopes: [String!]!): ApiCredential!
+  deactivateApiCredential(id: ID!): ApiCredential!
+  deleteApiCredential(id: ID!): Boolean!
+}
