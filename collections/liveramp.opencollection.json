@@ -1,0 +1,457 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LiveRamp Activation API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Distribution Managers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List distribution managers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers"
+          },
+          "docs": "List distribution managers"
+        },
+        {
+          "info": {
+            "name": "Create distribution manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers"
+          },
+          "docs": "Create distribution manager"
+        },
+        {
+          "info": {
+            "name": "Get distribution manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get distribution manager"
+        },
+        {
+          "info": {
+            "name": "Update distribution manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update distribution manager"
+        },
+        {
+          "info": {
+            "name": "Delete distribution manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete distribution manager"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Integration Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List integration connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections"
+          },
+          "docs": "List integration connections"
+        },
+        {
+          "info": {
+            "name": "Create integration connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections"
+          },
+          "docs": "Create integration connection"
+        },
+        {
+          "info": {
+            "name": "Get integration connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get integration connection"
+        },
+        {
+          "info": {
+            "name": "Update integration connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update integration connection"
+        },
+        {
+          "info": {
+            "name": "Delete integration connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete integration connection"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Segment Configurations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List segment configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/segmentconfigurations"
+          },
+          "docs": "List segment configurations"
+        },
+        {
+          "info": {
+            "name": "Add segment configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/v2/segmentconfigurations"
+          },
+          "docs": "Add segment configuration"
+        },
+        {
+          "info": {
+            "name": "Get segment configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/segmentconfigurations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get segment configuration"
+        },
+        {
+          "info": {
+            "name": "Remove segment configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/v2/segmentconfigurations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove segment configuration"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Destinations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/destinations"
+          },
+          "docs": "List destinations"
+        },
+        {
+          "info": {
+            "name": "Get destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/destinations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get destination"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Destination Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List destination integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/destinationintegrations"
+          },
+          "docs": "List destination integrations"
+        },
+        {
+          "info": {
+            "name": "Get destination integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/destinationintegrations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get destination integration"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OAuth Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Begin OAuth connection attempt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/v2/oauthconnectionattempt"
+          },
+          "docs": "Begin OAuth connection attempt"
+        },
+        {
+          "info": {
+            "name": "List OAuth connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/oauthconnections"
+          },
+          "docs": "List OAuth connections"
+        },
+        {
+          "info": {
+            "name": "Get OAuth connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/oauthconnections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get OAuth connection"
+        },
+        {
+          "info": {
+            "name": "Get OAuth connection status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/oauthconnections/:id/status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get OAuth connection status"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Deliveries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List deliveries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/deliveries"
+          },
+          "docs": "List deliveries"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Segments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/segments"
+          },
+          "docs": "List segments"
+        },
+        {
+          "info": {
+            "name": "Get segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/segments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get segment"
+        },
+        {
+          "info": {
+            "name": "Get segment statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/segments/statuses"
+          },
+          "docs": "Get segment statuses"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
