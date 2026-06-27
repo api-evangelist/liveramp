@@ -3,19 +3,12 @@
   "feeds": [
     {
       "source": "https://liveramp.com/blog/",
-      "feed_url": "https://liveramp.com/blog/",
-      "title": "",
+      "feed_url": "",
       "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://support.liveramp.com/",
-      "feed_url": "https://support.liveramp.com/",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 1,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:52:09Z",
+  "post_count": 4,
+  "agent_pulled": "2026-06-27"
 }
