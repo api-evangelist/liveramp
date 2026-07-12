@@ -132,6 +132,14 @@ apis:
   - type: Documentation
     url: https://sidecar.readme.io/
 common:
+- type: TrustCenter
+  url: security/liveramp-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/liveramp-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/liveramp-domain-security.yml
+- type: Authentication
+  url: authentication/liveramp-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/liveramp
 - type: Website
