@@ -132,6 +132,8 @@ apis:
   - type: Documentation
     url: https://sidecar.readme.io/
 common:
+- type: AgenticAccess
+  url: agentic-access/liveramp-agentic-access.yml
 - type: TrustCenter
   url: security/liveramp-trust-center.yml
 - type: VulnerabilityDisclosure
