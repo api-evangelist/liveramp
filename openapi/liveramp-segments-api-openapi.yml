@@ -1,0 +1,58 @@
+openapi: 3.1.0
+info:
+  title: LiveRamp Activation Deliveries Segments API
+  description: Programmatic activation of first-party and marketplace data across destination partners and connected platforms in the LiveRamp network. Manages distribution managers, integration connections, segment configurations, destinations, and OAuth connections. Authenticated with OAuth 2.0 access tokens issued via the service account token URI.
+  version: v2
+  contact:
+    name: LiveRamp Developer Portal
+    url: https://developers.liveramp.com/activation-api
+servers:
+- url: https://api.liveramp.com/activation/v2
+  description: LiveRamp Activation API (paths are v2/...)
+security:
+- bearerAuth: []
+tags:
+- name: Segments
+paths:
+  /v2/segments:
+    get:
+      tags:
+      - Segments
+      summary: List segments
+      operationId: listSegments
+      responses:
+        '200':
+          description: Segments.
+  /v2/segments/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Segments
+      summary: Get segment
+      operationId: getSegment
+      responses:
+        '200':
+          description: Segment.
+  /v2/segments/statuses:
+    get:
+      tags:
+      - Segments
+      summary: Get segment statuses
+      operationId: getSegmentStatuses
+      responses:
+        '200':
+          description: Segment statuses.
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token obtained from the LiveRamp service account token URI; passed as `Authorization: Bearer <token>`.'

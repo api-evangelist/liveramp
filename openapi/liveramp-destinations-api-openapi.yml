@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: LiveRamp Activation Deliveries Destinations API
+  description: Programmatic activation of first-party and marketplace data across destination partners and connected platforms in the LiveRamp network. Manages distribution managers, integration connections, segment configurations, destinations, and OAuth connections. Authenticated with OAuth 2.0 access tokens issued via the service account token URI.
+  version: v2
+  contact:
+    name: LiveRamp Developer Portal
+    url: https://developers.liveramp.com/activation-api
+servers:
+- url: https://api.liveramp.com/activation/v2
+  description: LiveRamp Activation API (paths are v2/...)
+security:
+- bearerAuth: []
+tags:
+- name: Destinations
+paths:
+  /v2/destinations:
+    get:
+      tags:
+      - Destinations
+      summary: List destinations
+      operationId: listDestinations
+      responses:
+        '200':
+          description: Destinations.
+  /v2/destinations/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Destinations
+      summary: Get destination
+      operationId: getDestination
+      responses:
+        '200':
+          description: Destination.
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token obtained from the LiveRamp service account token URI; passed as `Authorization: Bearer <token>`.'

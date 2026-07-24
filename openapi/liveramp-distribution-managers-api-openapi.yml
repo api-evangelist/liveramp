@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: LiveRamp Activation Deliveries Distribution Managers API
+  description: Programmatic activation of first-party and marketplace data across destination partners and connected platforms in the LiveRamp network. Manages distribution managers, integration connections, segment configurations, destinations, and OAuth connections. Authenticated with OAuth 2.0 access tokens issued via the service account token URI.
+  version: v2
+  contact:
+    name: LiveRamp Developer Portal
+    url: https://developers.liveramp.com/activation-api
+servers:
+- url: https://api.liveramp.com/activation/v2
+  description: LiveRamp Activation API (paths are v2/...)
+security:
+- bearerAuth: []
+tags:
+- name: Distribution Managers
+paths:
+  /v2/distributionmanagers:
+    get:
+      tags:
+      - Distribution Managers
+      summary: List distribution managers
+      operationId: listDistributionManagers
+      responses:
+        '200':
+          description: Distribution managers list.
+    post:
+      tags:
+      - Distribution Managers
+      summary: Create distribution manager
+      operationId: createDistributionManager
+      responses:
+        '201':
+          description: Created.
+  /v2/distributionmanagers/{id}:
+    parameters:
+    - $ref: '#/components/parameters/Id'
+    get:
+      tags:
+      - Distribution Managers
+      summary: Get distribution manager
+      operationId: getDistributionManager
+      responses:
+        '200':
+          description: Distribution manager.
+    put:
+      tags:
+      - Distribution Managers
+      summary: Update distribution manager
+      operationId: updateDistributionManager
+      responses:
+        '200':
+          description: Updated.
+    delete:
+      tags:
+      - Distribution Managers
+      summary: Delete distribution manager
+      operationId: deleteDistributionManager
+      responses:
+        '204':
+          description: Deleted.
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'OAuth 2.0 access token obtained from the LiveRamp service account token URI; passed as `Authorization: Bearer <token>`.'
