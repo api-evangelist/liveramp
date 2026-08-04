@@ -1,0 +1,28 @@
+{
+  "provider": "liveramp",
+  "sources": [
+    "liveramp-deliveries-api-openapi.yml",
+    "liveramp-destination-integrations-api-openapi.yml",
+    "liveramp-destinations-api-openapi.yml",
+    "liveramp-distribution-managers-api-openapi.yml",
+    "liveramp-integration-connections-api-openapi.yml",
+    "liveramp-oauth-connections-api-openapi.yml",
+    "liveramp-segment-configurations-api-openapi.yml",
+    "liveramp-segments-api-openapi.yml"
+  ],
+  "outputs": [
+    "liveramp-deliveries-api-openapi.yml",
+    "liveramp-destination-integrations-api-openapi.yml",
+    "liveramp-destinations-api-openapi.yml",
+    "liveramp-distribution-managers-api-openapi.yml",
+    "liveramp-integration-connections-api-openapi.yml",
+    "liveramp-oauth-connections-api-openapi.yml",
+    "liveramp-segment-configurations-api-openapi.yml",
+    "liveramp-segments-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,259 @@
+openapi: 3.1.0
+info:
+  title: LiveRamp Activation API
+  description: >-
+    Programmatic activation of first-party and marketplace data across
+    destination partners and connected platforms in the LiveRamp network.
+    Manages distribution managers, integration connections, segment
+    configurations, destinations, and OAuth connections. Authenticated with
+    OAuth 2.0 access tokens issued via the service account token URI.
+  version: "v2"
+  contact:
+    name: LiveRamp Developer Portal
+    url: https://developers.liveramp.com/activation-api
+servers:
+  - url: https://api.liveramp.com/activation/v2
+    description: LiveRamp Activation API (paths are v2/...)
+security:
+  - bearerAuth: []
+tags:
+  - name: Distribution Managers
+  - name: Integration Connections
+  - name: Segment Configurations
+  - name: Destinations
+  - name: Destination Integrations
+  - name: OAuth Connections
+  - name: Deliveries
+  - name: Segments
+paths:
+  /v2/distributionmanagers:
+    get:
+      tags: [Distribution Managers]
+      summary: List distribution managers
+      operationId: listDistributionManagers
+      responses:
+        "200":
+          description: Distribution managers list.
+    post:
+      tags: [Distribution Managers]
+      summary: Create distribution manager
+      operationId: createDistributionManager
+      responses:
+        "201":
+          description: Created.
+  /v2/distributionmanagers/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Distribution Managers]
+      summary: Get distribution manager
+      operationId: getDistributionManager
+      responses:
+        "200":
+          description: Distribution manager.
+    put:
+      tags: [Distribution Managers]
+      summary: Update distribution manager
+      operationId: updateDistributionManager
+      responses:
+        "200":
+          description: Updated.
+    delete:
+      tags: [Distribution Managers]
+      summary: Delete distribution manager
+      operationId: deleteDistributionManager
+      responses:
+        "204":
+          description: Deleted.
+  /v2/integrationconnections:
+    get:
+      tags: [Integration Connections]
+      summary: List integration connections
+      operationId: listIntegrationConnections
+      responses:
+        "200":
+          description: Integration connections.
+    post:
+      tags: [Integration Connections]
+      summary: Create integration connection
+      operationId: createIntegrationConnection
+      responses:
+        "201":
+          description: Created.
+  /v2/integrationconnections/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Integration Connections]
+      summary: Get integration connection
+      operationId: getIntegrationConnection
+      responses:
+        "200":
+          description: Integration connection.
+    put:
+      tags: [Integration Connections]
+      summary: Update integration connection
+      operationId: updateIntegrationConnection
+      responses:
+        "200":
+          description: Updated.
+    delete:
+      tags: [Integration Connections]
+      summary: Delete integration connection
+      operationId: deleteIntegrationConnection
+      responses:
+        "204":
+          description: Deleted.
+  /v2/segmentconfigurations:
+    get:
+      tags: [Segment Configurations]
+      summary: List segment configurations
+      operationId: listSegmentConfigurations
+      responses:
+        "200":
+          description: Segment configurations.
+    post:
+      tags: [Segment Configurations]
+      summary: Add segment configuration
+      operationId: addSegmentConfiguration
+      responses:
+        "201":
+          description: Added.
+  /v2/segmentconfigurations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Segment Configurations]
+      summary: Get segment configuration
+      operationId: getSegmentConfiguration
+      responses:
+        "200":
+          description: Segment configuration.
+    delete:
+      tags: [Segment Configurations]
+      summary: Remove segment configuration
+      operationId: removeSegmentConfiguration
+      responses:
+        "204":
+          description: Removed.
+  /v2/destinations:
+    get:
+      tags: [Destinations]
+      summary: List destinations
+      operationId: listDestinations
+      responses:
+        "200":
+          description: Destinations.
+  /v2/destinations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Destinations]
+      summary: Get destination
+      operationId: getDestination
+      responses:
+        "200":
+          description: Destination.
+  /v2/destinationintegrations:
+    get:
+      tags: [Destination Integrations]
+      summary: List destination integrations
+      operationId: listDestinationIntegrations
+      responses:
+        "200":
+          description: Destination integrations.
+  /v2/destinationintegrations/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Destination Integrations]
+      summary: Get destination integration
+      operationId: getDestinationIntegration
+      responses:
+        "200":
+          description: Destination integration.
+  /v2/oauthconnectionattempt:
+    post:
+      tags: [OAuth Connections]
+      summary: Begin OAuth connection attempt
+      operationId: createOauthConnectionAttempt
+      responses:
+        "201":
+          description: Attempt created.
+  /v2/oauthconnections:
+    get:
+      tags: [OAuth Connections]
+      summary: List OAuth connections
+      operationId: listOauthConnections
+      responses:
+        "200":
+          description: OAuth connections.
+  /v2/oauthconnections/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [OAuth Connections]
+      summary: Get OAuth connection
+      operationId: getOauthConnection
+      responses:
+        "200":
+          description: OAuth connection.
+  /v2/oauthconnections/{id}/status:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [OAuth Connections]
+      summary: Get OAuth connection status
+      operationId: getOauthConnectionStatus
+      responses:
+        "200":
+          description: Status.
+  /v2/deliveries:
+    get:
+      tags: [Deliveries]
+      summary: List deliveries
+      operationId: listDeliveries
+      responses:
+        "200":
+          description: Deliveries.
+  /v2/segments:
+    get:
+      tags: [Segments]
+      summary: List segments
+      operationId: listSegments
+      responses:
+        "200":
+          description: Segments.
+  /v2/segments/{id}:
+    parameters:
+      - $ref: '#/components/parameters/Id'
+    get:
+      tags: [Segments]
+      summary: Get segment
+      operationId: getSegment
+      responses:
+        "200":
+          description: Segment.
+  /v2/segments/statuses:
+    get:
+      tags: [Segments]
+      summary: Get segment statuses
+      operationId: getSegmentStatuses
+      responses:
+        "200":
+          description: Segment statuses.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        OAuth 2.0 access token obtained from the LiveRamp service account
+        token URI; passed as `Authorization: Bearer <token>`.
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
