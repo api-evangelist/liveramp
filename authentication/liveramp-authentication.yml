@@ -1,14 +1,84 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/liveramp-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/liveramp-activation-api-openapi.yml, openapi/liveramp-clean-room-api-openapi.yml,
+  openapi/liveramp-privacy-api-openapi.yml
+docs: https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token
+notes: >-
+  LiveRamp issues API credentials as "Service Accounts" that are provisioned by a LiveRamp
+  representative — there is no self-serve key issuance. The Activation, AbiliTec, RampID and
+  Privacy APIs share one OAuth 2.0 token service at serviceaccounts.liveramp.com; the Clean Room
+  API (the former Habu platform, acquired by LiveRamp) runs its own client-credentials token
+  endpoint on api.habu.com.
 summary:
   types:
   - http
+  - oauth2
+  oauth2_flows:
+  - password
+  - clientCredentials
+  api_key_in: []
+token_services:
+- name: LiveRamp Service Accounts
+  token_url: https://serviceaccounts.liveramp.com/authn/v1/oauth2/token
+  grant_type: password
+  client_id: liveramp-api
+  scope: openid
+  token_type: Bearer
+  expires_in_seconds: 600
+  applies_to:
+  - LiveRamp Activation API
+  - LiveRamp AbiliTec API
+  - LiveRamp RampID API
+  - LiveRamp Privacy API
+  docs: https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token
+  note: >-
+    Username is the service-account Account ID, password is the Secret Key, both delivered by a
+    LiveRamp representative as a JSON credentials file. Access tokens are short lived (the
+    documented example is 600 seconds); the docs instruct clients to fetch a new token on a 403
+    token-expiration response and to share one token across a thread rather than refresh per call.
+- name: Clean Room (Habu) OAuth
+  token_url: https://api.habu.com/v1/oauth/token
+  grant_type: client_credentials
+  applies_to:
+  - LiveRamp Clean Room API
+  source: openapi/liveramp-clean-room-api-openapi.yml
 schemes:
+- name: application
+  type: oauth2
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.habu.com/v1/oauth/token
+    scopes: 0
+  sources:
+  - openapi/liveramp-clean-room-api-openapi.yml
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/liveramp-privacy-api-openapi.yml
 - name: bearerAuth
   type: http
   scheme: bearer
-  description: 'OAuth 2.0 access token obtained from the LiveRamp service account token URI;
-    passed as `Authorization: Bearer <token>`.'
+  description: >-
+    Authorization: Bearer <access_token>, where the access token comes from the LiveRamp service
+    account token service. Documented for the Activation API, which publishes no securitySchemes
+    block in its own OpenAPI.
   sources:
-  - openapi/liveramp-openapi.yml
+  - https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token
+required_headers:
+- name: LR-Org-Id
+  applies_to:
+  - LiveRamp Activation API
+  note: >-
+    Replaced the former LR-Customer-Id header (see the Activation API changelog entry "LR-Org-Id
+    replaces LR-Customer-Id").
+  source: https://developers.liveramp.com/activation-api/changelog/lr-org-id-replaces-lr-customer-id
+transport:
+  tls_minimum: '1.2'
+  source: https://developers.liveramp.com/rampid-api/changelog/tls-requirement-upgrade
+x-evidence:
+- url: https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token.md
+  http_status: 200
+- url: https://developers.liveramp.com/activation-api/reference/getting-started-1.md
+  http_status: 200

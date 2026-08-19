@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LiveRamp Activation Deliveries Integration Connections API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integration Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List integration connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections"
+          },
+          "docs": "List integration connections"
+        },
+        {
+          "info": {
+            "name": "Create integration connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections"
+          },
+          "docs": "Create integration connection"
+        },
+        {
+          "info": {
+            "name": "Get integration connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get integration connection"
+        },
+        {
+          "info": {
+            "name": "Update integration connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update integration connection"
+        },
+        {
+          "info": {
+            "name": "Delete integration connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/v2/integrationconnections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete integration connection"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

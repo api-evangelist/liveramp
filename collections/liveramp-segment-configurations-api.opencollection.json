@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LiveRamp Activation Deliveries Segment Configurations API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Segment Configurations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List segment configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/segmentconfigurations"
+          },
+          "docs": "List segment configurations"
+        },
+        {
+          "info": {
+            "name": "Add segment configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/v2/segmentconfigurations"
+          },
+          "docs": "Add segment configuration"
+        },
+        {
+          "info": {
+            "name": "Get segment configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/segmentconfigurations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get segment configuration"
+        },
+        {
+          "info": {
+            "name": "Remove segment configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/v2/segmentconfigurations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove segment configuration"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

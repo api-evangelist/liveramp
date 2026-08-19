@@ -1,0 +1,942 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Activation API",
+    "version": "2.9.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "View Deliveries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch a list of Deliveries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/deliveries",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of v2/Deliveries to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              },
+              {
+                "name": "integrationConnectionID",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "segmentIDs",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fetch a list of Deliveries"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Explore Destinations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch a list of Destinations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/destinations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of v2/Destinations to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              }
+            ]
+          },
+          "docs": "Fetch a list of Destinations"
+        },
+        {
+          "info": {
+            "name": "Fetch a single Destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/destinations/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch a single Destination"
+        },
+        {
+          "info": {
+            "name": "Fetch a list of Integrations within a Destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/destinations/:v2DestinationId/integrations",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "v2DestinationId",
+                "value": "",
+                "type": "path",
+                "description": "Id of parent v2/Destination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of Integrations to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "view",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fetch a list of Integrations within a Destination"
+        },
+        {
+          "info": {
+            "name": "Fetch a single Integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/destinations/:v2DestinationId/integrations/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "v2DestinationId",
+                "value": "",
+                "type": "path",
+                "description": "Id of parent v2/Destination"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch a single Integration"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Configure Distributions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch a list of Distribution Managers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of v2/DistributionManagers to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              },
+              {
+                "name": "integrationConnectionID",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fetch a list of Distribution Managers"
+        },
+        {
+          "info": {
+            "name": "Create a Distribution Manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a Distribution Manager"
+        },
+        {
+          "info": {
+            "name": "Fetch a single Distribution Manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch a single Distribution Manager"
+        },
+        {
+          "info": {
+            "name": "Update a Distribution Manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a Distribution Manager"
+        },
+        {
+          "info": {
+            "name": "Delete a Distribution Manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a Distribution Manager"
+        },
+        {
+          "info": {
+            "name": "Fetch a list of Integration Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/integration-connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of v2/IntegrationConnections to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              }
+            ]
+          },
+          "docs": "Fetch a list of Integration Connections"
+        },
+        {
+          "info": {
+            "name": "Create an Integration Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/integration-connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Integration Connection"
+        },
+        {
+          "info": {
+            "name": "Fetch a single Integration Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/integration-connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch a single Integration Connection"
+        },
+        {
+          "info": {
+            "name": "Update an Integration Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.liveramp.com/activation/v2/integration-connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an Integration Connection"
+        },
+        {
+          "info": {
+            "name": "Delete an Integration Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/integration-connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an Integration Connection"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Distribute Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch a list of Segments within a Distribution Manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers/:v2DistributionManagerId/segment-configs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "v2DistributionManagerId",
+                "value": "",
+                "type": "path",
+                "description": "Id of parent v2/DistributionManager"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of SegmentConfigs to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              }
+            ]
+          },
+          "docs": "Fetch a list of Segments within a Distribution Manager"
+        },
+        {
+          "info": {
+            "name": "Add Segments to a Distribution Manager. Limited to 500 segments at a time.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers/:v2DistributionManagerId/segment-configs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "v2DistributionManagerId",
+                "value": "",
+                "type": "path",
+                "description": "Id of parent v2/DistributionManager"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add Segments to a Distribution Manager. Limited to 500 segments at a time."
+        },
+        {
+          "info": {
+            "name": "Remove Segments from a Distribution Manager. Limited to 500 segments at a time.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers/:v2DistributionManagerId/segment-configs",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "v2DistributionManagerId",
+                "value": "",
+                "type": "path",
+                "description": "Id of parent v2/DistributionManager"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove Segments from a Distribution Manager. Limited to 500 segments at a time."
+        },
+        {
+          "info": {
+            "name": "Fetch a single Segment within a Distribution Manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/distribution-managers/:v2DistributionManagerId/segment-configs/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "v2DistributionManagerId",
+                "value": "",
+                "type": "path",
+                "description": "Id of parent v2/DistributionManager"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch a single Segment within a Distribution Manager"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OAuth Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch a list of OAuth Connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/oauth-connections",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of v2/OauthConnections to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              },
+              {
+                "name": "oAuthEndpointID",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fetch a list of OAuth Connections"
+        },
+        {
+          "info": {
+            "name": "Fetch a single OAuth Connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/oauth-connections/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch a single OAuth Connection"
+        },
+        {
+          "info": {
+            "name": "Begin an OAuth authorization flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/oauth-connection-attempts",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Begin an OAuth authorization flow"
+        },
+        {
+          "info": {
+            "name": "Fetch the status of an OAuth flow",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/oauth-connection-attempts/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch the status of an OAuth flow"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "View Segments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch a list of Segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/segments",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of v2/Segments to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              },
+              {
+                "name": "valueName",
+                "value": "",
+                "type": "query",
+                "description": "Search by a field name+value pair. If valueName is set, fieldName must also be set"
+              },
+              {
+                "name": "fieldName",
+                "value": "",
+                "type": "query",
+                "description": "Search by a field name+value pair. If fieldName is set, valueName must also be set"
+              }
+            ]
+          },
+          "docs": "Fetch a list of Segments"
+        },
+        {
+          "info": {
+            "name": "Fetch a single Segment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/segments/:id",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch a single Segment"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "v2/SegmentStatus",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch a list of Segments' statuses.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/segment-statuses",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of v2/SegmentStatuses to return"
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+              },
+              {
+                "name": "segmentType",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "segmentIDs",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Limited to either first-party (onboarding) or data marketplace segments. Exactly one of these segmentID params must be passed in\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

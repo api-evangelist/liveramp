@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Privacy API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "PrivacyRequests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get PrivacyRequests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://privacy-api.liveramp.com/v1/requests",
+            "headers": [
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "uuid",
+                "value": "",
+                "type": "query",
+                "description": "The UUID of a specific privacy request to retrieve. If provided, returns a single request; if omitted, returns a paginated list of requests."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items per page."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by request status."
+              },
+              {
+                "name": "request_type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by request type."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter from date in YYYY-MM-DD format."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter to date in YYYY-MM-DD format."
+              }
+            ]
+          },
+          "docs": "Retrieves privacy requests with optional filtering. If a UUID is provided as a query parameter, a single request is returned; otherwise a paginated list of requests is returned."
+        },
+        {
+          "info": {
+            "name": "Create PrivacyRequests",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://privacy-api.liveramp.com/v1/requests",
+            "headers": [
+              {
+                "name": "LR-Org-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new privacy request for data deletion or opt-out. Accepts personal information (email, name, address) or mobile advertising identifiers (MAID) to identify the data subject and processes the request according to the specified type. At least one identifier (email or MAID) must be provided. Returns a unique request UUID for tracking and handles duplicate detection."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

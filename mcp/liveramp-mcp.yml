@@ -1,0 +1,57 @@
+generated: '2026-08-13'
+method: searched
+status: published
+source: https://github.com/LiveRamp/logscale-mcp
+deployment:
+  mode: local-stdio
+  install: node /absolute/path/to/logscale-mcp/server.js
+  package: https://github.com/LiveRamp/logscale-mcp
+  auth: api-key
+  verified: searched
+important: >-
+  THIS MCP SERVER DOES NOT FRONT LIVERAMP'S OWN APIs. It is a first-party LiveRamp repository
+  (published by LiveRamp Security Engineering) that exposes CrowdStrike LogScale — a third-party
+  log-analytics product LiveRamp operates internally — to MCP clients. None of its 27 tools call
+  the Activation, Clean Room, Privacy, AbiliTec, RampID, ATS or Data Marketplace APIs. It is
+  recorded because LiveRamp genuinely publishes it, and it is annotated because crediting it as
+  an agent surface for the LiveRamp API portfolio would be false. As of this probe LiveRamp
+  publishes NO hosted/remote MCP server for its own APIs.
+server:
+  name: logscale
+  owner: LiveRamp Security Engineering
+  transport: stdio
+  alternate_transport: streamable-http (self-hosted; the operator runs the server and points the
+    client at their own URL — LiveRamp hosts no endpoint)
+  url: null
+  repository: https://github.com/LiveRamp/logscale-mcp
+  license: null
+  last_pushed: '2026-04-10'
+  runtime: Node.js >= 18
+  backing_service: CrowdStrike LogScale
+  credentials:
+  - LOGSCALE_API_TOKEN
+  - LOGSCALE_USER_API_TOKEN
+tool_categories:
+- name: Query
+  description: Search logs and run full CQL queries
+- name: Dashboard Management
+  description: Create, list, delete, export, and deploy dashboards
+- name: Detection/Alert Management
+  description: Full CRUD for filter alerts, aggregate alerts, and scheduled searches
+- name: Lookup Files
+  description: List and view lookup file contents
+- name: Discovery
+  description: List repositories, check server health
+- name: Documentation
+  description: Sync and read CQL/dashboard docs locally
+tool_count: 27
+tools: []
+tools_note: >-
+  The repository README states 27 tools across the six categories above but does not enumerate
+  them with input schemas in the README, and there is no hosted endpoint to run tools/list
+  against. Tool names and inputSchemas are therefore NOT recorded rather than guessed.
+x-evidence:
+- url: https://api.github.com/repos/LiveRamp/logscale-mcp
+  http_status: 200
+- url: https://raw.githubusercontent.com/LiveRamp/logscale-mcp/main/README.md
+  http_status: 200

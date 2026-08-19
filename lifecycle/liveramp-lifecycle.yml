@@ -1,0 +1,66 @@
+generated: '2026-08-13'
+method: searched
+source: https://status.liveramp.com/,
+  https://developers.liveramp.com/authenticatedtraffic-api/changelog/ats-mobile-sdk-users-to-transition-to-ats-api,
+  https://developers.liveramp.com/rampid-api/changelog/tls-requirement-upgrade,
+  openapi/
+versioning:
+  scheme: uri-path
+  examples:
+  - {api: LiveRamp Activation API, current: v2, spec_version: 2.9.0, path_prefix: /v2}
+  - {api: LiveRamp Clean Room API, current: v1, spec_version: v1.0.0, path_prefix: /v1}
+  - {api: LiveRamp Privacy API, current: v1, spec_version: 1.0.0, path_prefix: /v1}
+  - {api: LiveRamp Data Marketplace Buyer API, current: v3, note: 'the v3 changelog records a
+      route removal: "Removed Segment Details Route from v3"'}
+  note: >-
+    Major version lives in the URL path and the product name changes with it — the Activation API
+    was called the Distribution API before v2.0. LiveRamp publishes no single cross-portfolio
+    versioning policy page; each API documents its own version in its own developer sub-site.
+deprecation:
+  policy_url: https://developers.liveramp.com/authenticatedtraffic-api/changelog/ats-mobile-sdk-users-to-transition-to-ats-api
+  sunset_header: unknown
+  practice: announced-in-changelog
+  note: >-
+    LiveRamp does not publish a written deprecation POLICY, but it does practice dated deprecation
+    with a named sunset and a migration path, announced on the per-API changelog. There is no
+    evidence of RFC 8594 Sunset/Deprecation response headers in any published OpenAPI.
+  announced:
+  - subject: ATS Mobile SDK (iOS and Android)
+    status: deprecated
+    sunset_date: '2026-09-30'
+    replacement: LiveRamp ATS API
+    migration_guide: https://developers.liveramp.com/authenticatedtraffic-api/docs/ats-api-implementation-guide-for-mobile-publishers
+    source: https://developers.liveramp.com/authenticatedtraffic-api/changelog/ats-mobile-sdk-users-to-transition-to-ats-api
+  - subject: Data Marketplace Buyer API — segment details route
+    status: removed
+    scope: v3
+    source: https://developers.liveramp.com/datamarketplace-buyer-api/changelog/removed-segment-details-route-from-v3
+  - subject: Data Marketplace Buyer API — destination and distribution endpoints
+    status: disabled
+    source: https://developers.liveramp.com/datamarketplace-buyer-api/changelog/destination-and-distribution-endpoints-disabled
+  - subject: TLS 1.0/1.1 connections
+    status: rejected
+    effective_date: '2022-11-01'
+    replacement: TLS 1.2 or higher
+    source: https://developers.liveramp.com/rampid-api/changelog/tls-requirement-upgrade
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in any of the three published OpenAPI documents carries deprecated: true. The
+  deprecations LiveRamp has announced are product-level (the ATS Mobile SDK) and route-level on
+  the Data Marketplace Buyer API, which publishes no OpenAPI.
+status_page:
+  url: https://status.liveramp.com/
+  title: LiveRamp External Status
+  platform: Atlassian Statuspage
+  http_status: 200
+  mirror: https://liveramp.statuspage.io/
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment found. LiveRamp's pricing page states that the base
+    consumption plan "includes a foundational service tier" with higher tiers negotiated —
+    availability commitments are contractual, not published.
+maintenance:
+  practice: announced-in-changelog
+  example: https://developers.liveramp.com/datamarketplace-buyer-api/changelog/planned-buyer-api-downtime-may-16-810-pm-pst

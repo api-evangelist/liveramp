@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LiveRamp Activation Deliveries Distribution Managers API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Distribution Managers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List distribution managers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers"
+          },
+          "docs": "List distribution managers"
+        },
+        {
+          "info": {
+            "name": "Create distribution manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers"
+          },
+          "docs": "Create distribution manager"
+        },
+        {
+          "info": {
+            "name": "Get distribution manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get distribution manager"
+        },
+        {
+          "info": {
+            "name": "Update distribution manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update distribution manager"
+        },
+        {
+          "info": {
+            "name": "Delete distribution manager",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.liveramp.com/activation/v2/v2/distributionmanagers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete distribution manager"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

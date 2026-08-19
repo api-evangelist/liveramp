@@ -3,128 +3,82 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: LiveRamp
 providerId: liveramp
+generated: '2026-08-13'
+method: searched
+source: https://developers.liveramp.com/abilitec-api/reference/rate-limits
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-08-13'
 tags:
-  - Data Connectivity
-  - Identity Resolution
-  - Activation
-  - Clean Room
-  - Privacy
-  - AdTech
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the LiveRamp API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+- Rate Limiting
+- Quotas
+- Throttling
+- Identity Resolution
+description: >-
+  Published rate limits for the LiveRamp API portfolio. This artifact REPLACES a 2026-05-04
+  scaffold that carried invented per-tier request quotas; those tiers were never published by
+  LiveRamp and have been removed. Only limits LiveRamp actually documents are recorded here.
+limit_count: 3
+headers: {}
+headers_note: >-
+  LiveRamp documents NO rate-limit response headers on any API — no X-RateLimit-*, no
+  RateLimit-*, no Retry-After, and no documented status code on exhaustion. The published limits
+  below are numbers in prose, not a runtime signal an agent can read. This is recorded as an
+  honest absence; do not assume 429.
+responseCodes: {}
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - LiveRamp Activation API
-      - LiveRamp Authenticated Traffic Solution (ATS) API
-      - LiveRamp Clean Room API
-      - LiveRamp Data Marketplace Buyer API
-      - LiveRamp AbiliTec API
-      - LiveRamp RampID API
-      - LiveRamp Safe Haven Job Management API
-      - LiveRamp Privacy API
-      - LiveRamp Sidecar
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - LiveRamp Activation API
-      - LiveRamp Authenticated Traffic Solution (ATS) API
-      - LiveRamp Clean Room API
-      - LiveRamp Data Marketplace Buyer API
-      - LiveRamp AbiliTec API
-      - LiveRamp RampID API
-      - LiveRamp Safe Haven Job Management API
-      - LiveRamp Privacy API
-      - LiveRamp Sidecar
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - LiveRamp Activation API
-      - LiveRamp Authenticated Traffic Solution (ATS) API
-      - LiveRamp Clean Room API
-      - LiveRamp Data Marketplace Buyer API
-      - LiveRamp AbiliTec API
-      - LiveRamp RampID API
-      - LiveRamp Safe Haven Job Management API
-      - LiveRamp Privacy API
-      - LiveRamp Sidecar
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - LiveRamp Activation API
-      - LiveRamp Authenticated Traffic Solution (ATS) API
-      - LiveRamp Clean Room API
-      - LiveRamp Data Marketplace Buyer API
-      - LiveRamp AbiliTec API
-      - LiveRamp RampID API
-      - LiveRamp Safe Haven Job Management API
-      - LiveRamp Privacy API
-      - LiveRamp Sidecar
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - LiveRamp Activation API
-      - LiveRamp Authenticated Traffic Solution (ATS) API
-      - LiveRamp Clean Room API
-      - LiveRamp Data Marketplace Buyer API
-      - LiveRamp AbiliTec API
-      - LiveRamp RampID API
-      - LiveRamp Safe Haven Job Management API
-      - LiveRamp Privacy API
-      - LiveRamp Sidecar
+- name: AbiliTec Match endpoint
+  api: LiveRamp AbiliTec API
+  scope: per-endpoint
+  metric: records_per_minute
+  limit: 10000
+  timeFrame: minute
+  source: https://developers.liveramp.com/abilitec-api/reference/rate-limits
+- name: AbiliTec Lookup endpoint
+  api: LiveRamp AbiliTec API
+  scope: per-endpoint
+  metric: records_per_minute
+  limit: 10000
+  timeFrame: minute
+  source: https://developers.liveramp.com/abilitec-api/reference/rate-limits
+- name: AbiliTec batch calls
+  api: LiveRamp AbiliTec API
+  scope: per-endpoint
+  metric: calls_per_minute
+  limit: 360
+  timeFrame: minute
+  max_records_per_call: 1000
+  effective_records_per_minute: 360000
+  note: >-
+    "Batch request calls are subject to higher rate limits, so batch request calls are also less
+    likely to be throttled." LiveRamp's stated best practice is to fill batches to as close to
+    1,000 records as possible.
+  source: https://developers.liveramp.com/abilitec-api/reference/rate-limits
+undocumented:
+- api: LiveRamp Activation API
+  note: No published rate limits. Hard caps exist on payload size instead — 500 segments per
+    distribution-manager segment-config call.
+- api: LiveRamp Clean Room API
+  note: No published rate limits in the docs or the OpenAPI.
+- api: LiveRamp Privacy API
+  note: >-
+    No published rate limits. The docs prescribe client-side exponential backoff (1s/2s/4s, 3-5
+    attempts) on 5xx instead.
+- api: LiveRamp RampID API
+  note: >-
+    No dedicated rate-limits page. The RampID API shares the batch-oriented identity architecture
+    with AbiliTec, but LiveRamp does not state that the AbiliTec numbers apply, so they are not
+    copied across.
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+- name: Backoff Strategy
+  description: >-
+    Exponential backoff with jitter on 5xx — 1s, 2s, 4s, maximum 3-5 attempts. Documented for the
+    Privacy API.
+  source: https://developers.liveramp.com/privacy-api/reference/error-handling-retries
+- name: Batch preference
+  description: >-
+    LiveRamp explicitly steers volume into batch calls rather than single-transaction calls, both
+    for throughput and to reduce throttling risk.
+  source: https://developers.liveramp.com/abilitec-api/reference/rate-limits
 maintainers:
-  - FN: API Evangelist
-    email: info@apievangelist.com
+- FN: API Evangelist
+  email: info@apievangelist.com

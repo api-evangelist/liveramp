@@ -1,0 +1,144 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.liveramp.com/llms.txt
+scheme: per-API changelog on the developer portal (ReadMe), one changelog section per API
+current_versions:
+  activation-api: 2.9.0
+  clean-room-api: v1.0.0
+  privacy-api: 1.0.0
+dating_note: >-
+  LiveRamp's per-entry changelog pages do not render a publication date in their markdown export,
+  and the only machine-readable timestamp on the HTML page (`createdAt`) is the ReadMe CATEGORY
+  creation date shared by every entry in that API — so it is NOT the entry date and is not
+  recorded as one. Real per-entry dates exist only where LiveRamp writes them into the body,
+  which the Privacy API changelog does. Undated entries are recorded as dated: false rather than
+  given a fabricated date.
+changelogs:
+- api: LiveRamp Privacy API
+  url: https://developers.liveramp.com/privacy-api/changelog/privacy-api-changelog
+  dated: true
+  entries:
+  - date: '2026-03-03'
+    breaking: false
+    highlights:
+    - Added support for mobile advertising IDs (MAIDs) to the create privacy requests call
+    - Added the "Error Handling and Retries" topic
+    - Updated the reference and the downloadable OpenAPI specification
+  - date: '2025-11-21'
+    breaking: false
+    highlights:
+    - Added llms.txt to the API documentation
+  - date: '2025-10-08'
+    breaking: false
+    highlights:
+    - Updated the reference and the downloadable OpenAPI specification
+  - date: '2025-10-02'
+    breaking: false
+    highlights:
+    - Privacy API developer documentation launched
+- api: LiveRamp Activation API
+  url: https://developers.liveramp.com/activation-api/changelog
+  dated: false
+  entries:
+  - title: Added OpenAPI Specification
+    breaking: false
+    highlights: [Published a downloadable OpenAPI specification link on "The Basics"]
+  - title: Added llms.txt
+    breaking: false
+  - title: New OAuth Status for Integration Connections
+    breaking: false
+    highlights: ['oauthStatus values are now NotApplicable, Authorized, Unauthorized']
+  - title: New Activation API Documentation Structure
+    breaking: false
+  - title: New URL for Activation API Access Tokens
+    breaking: true
+    highlights: [Token endpoint moved; clients pointing at the old URL must update]
+  - title: LR-Org-Id replaces LR-Customer-Id
+    breaking: true
+    highlights: [Request header renamed]
+- api: LiveRamp Clean Room API
+  url: https://developers.liveramp.com/clean-room-api/changelog/clean-room-api-changelog
+  dated: true
+  entries: []
+  note: >-
+    A single rolling "Clean Room API Changelog" page. Its markdown export was not served (the
+    .md path returned the HTML app shell), so individual entries are not transcribed rather than
+    paraphrased.
+- api: LiveRamp AbiliTec API
+  url: https://developers.liveramp.com/abilitec-api/changelog
+  dated: false
+  entries:
+  - {title: Authentication Upgrade, breaking: true}
+  - {title: Added llms.txt, breaking: false}
+  - {title: New AbiliTec API Documentation Structure, breaking: false}
+  - {title: AbiliTec API Security Enhancements, breaking: false}
+  - {title: Return derived links when hashed input does not match any maintained links, breaking: false}
+  - {title: Update to Error Documents, breaking: false}
+- api: LiveRamp RampID API
+  url: https://developers.liveramp.com/rampid-api/changelog
+  dated: false
+  entries:
+  - {title: Authentication Upgrade, breaking: true}
+  - {title: Added llms.txt, breaking: false}
+  - {title: New RampID API Documentation Structure, breaking: false}
+  - {title: RampID API Security Enhancements, breaking: false}
+  - {title: Update to Error Documents, breaking: false}
+  - title: TLS Requirement Upgrade
+    breaking: true
+    date: '2022-11-01'
+    highlights: [TLS 1.2 or higher required; earlier versions rejected]
+  - {title: Site reorganization, breaking: false}
+- api: LiveRamp Authenticated Traffic Solution (ATS) API
+  url: https://developers.liveramp.com/authenticatedtraffic-api/changelog
+  dated: false
+  entries:
+  - title: 'ATS Mobile SDK Deprecated: Users to Transition to ATS API'
+    breaking: true
+    sunset_date: '2026-09-30'
+    highlights: [ATS Mobile SDK deprecated; migrate to the ATS API before the sunset date]
+  - {title: Added llms.txt, breaking: false}
+  - {title: ATS Mobile SDK (v3.1.0) Has Been Released, breaking: false}
+  - {title: ATS Mobile SDK (v3.0.0) Has Been Released, breaking: false}
+  - {title: Android ATS Mobile SDK (v2.10.0) Has Been Released, breaking: false}
+  - {title: Send Mobile App Events to Meta and TikTok CAPI, breaking: false}
+- api: LiveRamp Data Marketplace Buyer API
+  url: https://developers.liveramp.com/datamarketplace-buyer-api/changelog
+  dated: false
+  entries:
+  - {title: Added llms.txt, breaking: false}
+  - {title: 'Planned Buyer API Downtime — May 16, 8–10 PM PDT', breaking: false}
+  - {title: Removed Segment Details Route from v3, breaking: true}
+  - {title: Seller Storefront, breaking: false}
+  - {title: Filters, breaking: false}
+  - {title: Enable Data Marketplace Segments for Distribution by Activation API, breaking: false}
+  - {title: Buyer API URL update, breaking: true}
+  - {title: TLS Requirement Update, breaking: true}
+  - {title: Destination and Distribution endpoints disabled, breaking: true}
+- api: LiveRamp Data Seller API
+  url: https://developers.liveramp.com/data-seller-api/changelog
+  dated: false
+  entries:
+  - {title: Segment Delivery Information Endpoint, breaking: false}
+  - {title: Data Seller API is now GA, breaking: false}
+  - {title: Support for Seller Direct, breaking: false}
+  - {title: Added llms.txt, breaking: false}
+  - {title: Update Data Marketplace segment metadata, breaking: false}
+  - {title: Data Marketplace Segment Distribution Status, breaking: false}
+  - {title: Enable Segments for Combination, breaking: false}
+  - {title: Use Activation API first-party segmentID to create or search segments, breaking: false}
+  - {title: Welcome to Data Seller API, breaking: false}
+- api: LiveRamp Safe Haven Job Management API
+  url: https://developers.liveramp.com/ae-job-management-api/changelog
+  dated: false
+  entries:
+  - {title: Job Management API Updates, breaking: false}
+- api: LiveRamp Data Pipeline Visibility API (Beta)
+  url: https://developers.liveramp.com/data-pipeline-visibility-api/changelog
+  dated: false
+  entries:
+  - {title: Added llms.txt, breaking: false}
+  - {title: New Data Pipeline Visibility API Documentation Structure, breaking: false}
+  - {title: Welcome to Data Pipeline Visibility API, breaking: false}
+totals:
+  apis_with_a_changelog: 10
+  entries_captured: 53

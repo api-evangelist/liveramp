@@ -1,0 +1,41 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for LiveRamp Activation API
+  version: 1.0.0
+extends: openapi/liveramp-activation-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Generated from the provider's own published specification, harvested verbatim from
+  storage.googleapis.com/lr-tech-docs-resources (linked from developers.liveramp.com). This
+  overlay carries API Evangelist annotations only; the original document is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: liveramp
+      x-apievangelist-profile: https://apis.io/provider/liveramp/
+      x-apievangelist-harvested: '2026-08-13'
+      x-apievangelist-conventions: conventions/liveramp-conventions.yml
+      x-apievangelist-errors: errors/liveramp-error-codes.yml
+      x-apievangelist-authentication: authentication/liveramp-authentication.yml
+      x-apievangelist-lifecycle: lifecycle/liveramp-lifecycle.yml
+      x-apievangelist-rate-limits: rate-limits/liveramp-rate-limits.yml
+  - target: $.components
+    update:
+      securitySchemes:
+        bearerAuth:
+          type: http
+          scheme: bearer
+          description: >-
+            NOT present in the published document. LiveRamp documents bearer-token auth for this
+            API at
+            https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token —
+            tokens come from https://serviceaccounts.liveramp.com/authn/v1/oauth2/token using the
+            OAuth 2.0 password grant with client_id liveramp-api and scope openid.
+  - target: $.info
+    update:
+      x-apievangelist-required-header: LR-Org-Id
+      x-apievangelist-note: >-
+        The published Activation API document declares no securitySchemes and no security
+        requirement, although every operation requires a bearer token and the LR-Org-Id header.
+        That gap is recorded here rather than silently patched into the original.

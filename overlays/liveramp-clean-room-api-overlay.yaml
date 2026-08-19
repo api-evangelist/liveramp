@@ -1,0 +1,28 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for LiveRamp External APIs for Customer Integration
+  version: 1.0.0
+extends: openapi/liveramp-clean-room-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Generated from the provider's own published specification, harvested verbatim from
+  storage.googleapis.com/lr-tech-docs-resources (linked from developers.liveramp.com). This
+  overlay carries API Evangelist annotations only; the original document is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: liveramp
+      x-apievangelist-profile: https://apis.io/provider/liveramp/
+      x-apievangelist-harvested: '2026-08-13'
+      x-apievangelist-conventions: conventions/liveramp-conventions.yml
+      x-apievangelist-errors: errors/liveramp-error-codes.yml
+      x-apievangelist-authentication: authentication/liveramp-authentication.yml
+      x-apievangelist-lifecycle: lifecycle/liveramp-lifecycle.yml
+      x-apievangelist-rate-limits: rate-limits/liveramp-rate-limits.yml
+  - target: $.info
+    update:
+      x-apievangelist-lineage: >-
+        This is the former Habu platform. LiveRamp acquired Habu; the document's own contact block
+        reads "LiveRamp (previously Habu)" and its servers[] entry is https://api.habu.com/v1/,
+        which is why an api.habu.com host is correct for a LiveRamp API entry.

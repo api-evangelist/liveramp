@@ -1,0 +1,38 @@
+generated: '2026-08-13'
+method: searched
+source: openapi/liveramp-clean-room-api-openapi.yml
+docs: https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token
+note: >-
+  LiveRamp does not publish a scope/permission reference. The Clean Room API declares an oauth2
+  clientCredentials scheme with an EMPTY scopes map, and the LiveRamp Service Account token
+  request documents exactly one scope value, `openid`. Authorization is carried by the service
+  account itself (provisioned per organization by a LiveRamp representative) and by the LR-Org-Id
+  header, not by OAuth scopes. Recorded as an honest near-absence rather than an invented scope
+  list.
+schemes:
+- name: application
+  source: openapi/liveramp-clean-room-api-openapi.yml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://api.habu.com/v1/oauth/token
+- name: LiveRamp Service Accounts
+  source: https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token
+  flows:
+  - flow: password
+    tokenUrl: https://serviceaccounts.liveramp.com/authn/v1/oauth2/token
+scopes:
+- scope: openid
+  description: >-
+    The only scope value documented in the LiveRamp Service Account token request. Yields an
+    OIDC id_token alongside the bearer access_token.
+  flows:
+  - password
+  sources:
+  - https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token
+authorization_model:
+  style: service-account
+  tenant_header: LR-Org-Id
+  description: >-
+    Access is bounded by the service account a LiveRamp representative issues, plus the LR-Org-Id
+    header that names the customer organization the call acts on behalf of. There is no
+    consent-screen scope selection surface.

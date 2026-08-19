@@ -1,0 +1,82 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.liveramp.com/rampid-api/reference/error-document,
+  https://developers.liveramp.com/abilitec-api/reference/error-documents-1,
+  https://developers.liveramp.com/privacy-api/reference/error-handling-retries
+format: proprietary
+envelope:
+  shape: |
+    { "error": { "message": "...", "code": "600-0043", "requestId": "..." } }
+  fields:
+  - name: error.message
+    description: Human-readable description of what went wrong.
+  - name: error.code
+    description: >-
+      Application-level error code: a 3-digit application prefix, a hyphen, then a 4-digit
+      application error code. Gateway errors use the 000- prefix; the identity APIs use 600-.
+  - name: error.requestId
+    description: Correlation id to quote to LiveRamp support.
+  applies_to:
+  - LiveRamp RampID API
+  - LiveRamp AbiliTec API
+batch_semantics: >-
+  On the identity APIs a batch call whose envelope is well formed returns 200 OK even when
+  individual records fail. Per-record error documents appear inside the batch response with their
+  own HTTP-style `code` plus the nested error document — so a 200 is NOT proof that every record
+  succeeded. Agents must inspect per-record documents, not just the transport status.
+error_codes:
+- code: 000-*
+  description: Gateway-level errors (prefix reserved for the API gateway rather than the service).
+  http_status: null
+- {code: 600-0000, description: Unhandled Error (System/OS Error), http_status: 400}
+- {code: 600-0010, description: Internal Server Error, http_status: 400}
+- {code: 600-0020, description: Authorization Error, http_status: 403}
+- {code: 600-0025, description: Username, Tenant, and Role Not Authorized, http_status: 403}
+- {code: 600-0030, description: Document Not Found Due to Deletion, http_status: 404}
+- {code: 600-0031, description: Invalid Document Id, http_status: 400}
+- {code: 600-0032, description: Invalid Document Class, http_status: 400}
+- {code: 600-0033, description: Unknown path (check documentation), http_status: 400}
+- {code: 600-0040, description: Missing Parameter, http_status: 400}
+- {code: 600-0041, description: Invalid Data Type, http_status: 400}
+- {code: 600-0042, description: Invalid Content Type, http_status: 400}
+- {code: 600-0043, description: Invalid Request Value, http_status: 400}
+- {code: 600-0044, description: AbiliTec Link Error, http_status: 400}
+- {code: 600-0045, description: Invalid Request Parameter, http_status: 400}
+- {code: 600-0050, description: Conflicting Values for Parameter and Header, http_status: 400}
+- {code: 600-0052, description: Method Not Allowed, http_status: 405}
+- {code: 600-0060, description: Batch Request Limit Exceeded, http_status: 400}
+- {code: 600-0070, description: Generic Backend Service Error, http_status: 400}
+- {code: 600-0080, description: Generic Backend Service Error, http_status: 400}
+- {code: 600-0095, description: Generic Backend Service Error, http_status: 400}
+- {code: 600-0100, description: Generic Backend Service Error, http_status: 400}
+- {code: 600-0116, description: Invalid Envelope Handle, http_status: 400, apis: [RampID]}
+- code: 600-0117
+  description: Opted-out Entity — the record maps to a consumer who has opted out; opt-out
+    representations are omitted from group documents entirely.
+  http_status: 404
+- code: 600-0017
+  description: >-
+    Opted-out entity. Listed on the RampID error reference alongside 600-0117; the two pages
+    disagree on the digit, so both are recorded as published rather than silently reconciled.
+  http_status: 404
+upstream_errors:
+  provider: Cloudflare
+  note: >-
+    All client requests are routed through Cloudflare, so a caller can receive a Cloudflare error
+    page instead of a LiveRamp error document — most commonly when calling from an IP that is not
+    allowlisted. Documented on both the AbiliTec and RampID error references.
+  reference: https://developers.cloudflare.com/support/troubleshooting/cloudflare-errors/
+retry_policy:
+  source: https://developers.liveramp.com/privacy-api/reference/error-handling-retries
+  retry_on: [500, 502, 503, 504]
+  do_not_retry_on:
+  - {status: 400, action: Fix the request format}
+  - {status: 401, action: Check your authentication token}
+  - {status: 403, action: Verify organization permissions}
+  - {status: 422, action: Fix validation errors}
+  strategy: exponential backoff with jitter — 1s, 2s, 4s, maximum 3-5 attempts
+spec_derived_statuses:
+  note: Response codes present across the three published OpenAPI documents.
+  activation_api: {200: 21, 201: 3, 207: 2, 404: 16, 422: 14}
+  clean_room_api: {200: 150, 201: 1, 400: 150, 401: 150, 403: 91, 404: 150, 409: 2, 412: 1, 500: 150}
+  privacy_api: {200: 2, 201: 1, 400: 2, 401: 2, 403: 2, 404: 1, 422: 1}

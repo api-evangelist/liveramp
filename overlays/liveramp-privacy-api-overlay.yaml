@@ -1,0 +1,30 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for LiveRamp Privacy API
+  version: 1.0.0
+extends: openapi/liveramp-privacy-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: >-
+  Generated from the provider's own published specification, harvested verbatim from
+  storage.googleapis.com/lr-tech-docs-resources (linked from developers.liveramp.com). This
+  overlay carries API Evangelist annotations only; the original document is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: liveramp
+      x-apievangelist-profile: https://apis.io/provider/liveramp/
+      x-apievangelist-harvested: '2026-08-13'
+      x-apievangelist-conventions: conventions/liveramp-conventions.yml
+      x-apievangelist-errors: errors/liveramp-error-codes.yml
+      x-apievangelist-authentication: authentication/liveramp-authentication.yml
+      x-apievangelist-lifecycle: lifecycle/liveramp-lifecycle.yml
+      x-apievangelist-rate-limits: rate-limits/liveramp-rate-limits.yml
+  - target: $.paths['/v1/requests'].post
+    update:
+      x-idempotent: true
+      x-idempotency-mechanism: natural-key deduplication
+      x-idempotency-note: >-
+        A duplicate create returns 200 OK with is_duplicate true and the same request_uuid as the
+        original, per
+        https://developers.liveramp.com/privacy-api/reference/error-handling-retries.

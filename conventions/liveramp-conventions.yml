@@ -1,0 +1,96 @@
+generated: '2026-08-13'
+method: searched
+source: https://developers.liveramp.com/privacy-api/reference/error-handling-retries,
+  https://developers.liveramp.com/activation-api/reference/oauth2defaultv1token,
+  https://developers.liveramp.com/abilitec-api/reference/rate-limits,
+  openapi/
+scope: >-
+  Cross-cutting request/response semantics for the LiveRamp API portfolio. LiveRamp does not
+  publish a single API design guide, so these conventions are assembled per API from the
+  developer-portal reference pages and the three published OpenAPI documents. Where a convention
+  is only documented for one API, that is stated.
+authentication:
+  style: oauth2-bearer
+  detail: See authentication/liveramp-authentication.yml
+  tenant_header: LR-Org-Id
+  token_lifetime_seconds: 600
+idempotency:
+  supported: true
+  mechanism: natural-key deduplication (no client-supplied idempotency key)
+  header: null
+  scope: LiveRamp Privacy API — POST /v1/requests
+  behavior: >-
+    A duplicate POST /v1/requests returns 200 OK with `is_duplicate: true` and the SAME
+    `request_uuid` as the original request, instead of creating a second privacy request. The
+    documentation states this explicitly so that retries are safe.
+  response_fields:
+  - is_duplicate
+  - request_uuid
+  source: https://developers.liveramp.com/privacy-api/reference/error-handling-retries
+  caveat: >-
+    Idempotency is documented ONLY for the Privacy API create-request endpoint. The Activation
+    and Clean Room APIs publish no idempotency contract and no Idempotency-Key parameter appears
+    in either OpenAPI, so writes there must be treated as non-idempotent.
+pagination:
+  styles:
+  - api: LiveRamp Clean Room API
+    style: page/limit query parameters with filters and search
+    evidence: >-
+      Operations such as listCleanroomFlows and listCleanroomFlowRuns are documented as
+      supporting pagination, filters and search.
+    source: https://developers.liveramp.com/clean-room-api/reference/listcleanroomflows
+  - api: LiveRamp Activation API
+    style: undocumented
+    note: >-
+      No pagination parameters are declared on the collection operations in the published
+      Activation OpenAPI 2.9.0.
+  - api: LiveRamp AbiliTec API / RampID API
+    style: batch-request
+    note: >-
+      These are batch-oriented rather than paginated — up to 1,000 records per batch call.
+batching:
+  supported: true
+  apis: [LiveRamp AbiliTec API, LiveRamp RampID API, LiveRamp Activation API]
+  limits:
+  - {scope: identity batch call, max_records: 1000, source: 'https://developers.liveramp.com/abilitec-api/reference/rate-limits'}
+  - {scope: Activation API distribution-manager segment configuration, max_segments: 500,
+     note: 'Add Segments / Remove Segments are "Limited to 500 segments at a time"',
+     source: 'https://developers.liveramp.com/activation-api/reference/create-v2distributionmanagersegmentconfigs'}
+  partial_success: >-
+    Batch calls return 200 OK for a well-formed envelope even when individual records error, and
+    the Activation API returns 207 Multi-Status on two operations. Callers must read per-record
+    results.
+error_envelope:
+  shape: '{ "error": { "message", "code", "requestId" } }'
+  format: proprietary (not RFC 9457 application/problem+json)
+  detail: See errors/liveramp-error-codes.yml
+retries:
+  retry_on: [500, 502, 503, 504]
+  do_not_retry_on: [400, 401, 403, 422]
+  strategy: exponential backoff with jitter, 1s / 2s / 4s, 3-5 attempts maximum
+  source: https://developers.liveramp.com/privacy-api/reference/error-handling-retries
+request_tracing:
+  field: error.requestId
+  header: null
+  note: >-
+    A correlation id is returned inside error documents on the identity APIs. No request-id
+    RESPONSE HEADER is documented on any API, so successful calls carry no published trace handle.
+rate_limit_signaling:
+  documented_headers: []
+  note: >-
+    LiveRamp publishes rate-limit NUMBERS (see rate-limits/liveramp-rate-limits.yml) but does not
+    document any X-RateLimit-* / RateLimit-* response headers or the status code returned on
+    exhaustion. An agent cannot read remaining quota from a LiveRamp response — this is the
+    largest runtime-semantics gap in the portfolio.
+versioning:
+  style: uri-path
+  detail: See lifecycle/liveramp-lifecycle.yml
+transport:
+  tls_minimum: '1.2'
+  edge: Cloudflare (callers may receive Cloudflare error pages; source IPs may need allowlisting)
+cross_links:
+  errors: errors/liveramp-error-codes.yml
+  lifecycle: lifecycle/liveramp-lifecycle.yml
+  authentication: authentication/liveramp-authentication.yml
+  rate_limits: rate-limits/liveramp-rate-limits.yml
+  scopes: scopes/liveramp-scopes.yml

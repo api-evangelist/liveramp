@@ -1,22 +1,24 @@
-generated: '2026-07-15'
+generated: '2026-08-13'
 method: generated
-source: openapi/liveramp-openapi.yml
+source: openapi/liveramp-activation-api-openapi.yml, openapi/liveramp-clean-room-api-openapi.yml,
+  openapi/liveramp-privacy-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 26
+  operations: 179
   by_action_class:
-    connected: 17
-    acting: 9
+    connected: 98
+    acting: 81
   by_consequence:
-    read: 17
-    write: 9
+    read: 98
+    write: 77
+    physical: 4
   human_in_the_loop_required: 0
 operations:
-- path: /v2/distributionmanagers
+- path: /v2/deliveries
   method: get
-  operationId: listDistributionManagers
+  operationId: Get v2/Deliveries
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -24,187 +26,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v2/distributionmanagers
-  method: post
-  operationId: createDistributionManager
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v2/distributionmanagers/{id}
-  method: get
-  operationId: getDistributionManager
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v2/distributionmanagers/{id}
-  method: put
-  operationId: updateDistributionManager
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v2/distributionmanagers/{id}
-  method: delete
-  operationId: deleteDistributionManager
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v2/integrationconnections
-  method: get
-  operationId: listIntegrationConnections
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v2/integrationconnections
-  method: post
-  operationId: createIntegrationConnection
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v2/integrationconnections/{id}
-  method: get
-  operationId: getIntegrationConnection
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v2/integrationconnections/{id}
-  method: put
-  operationId: updateIntegrationConnection
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v2/integrationconnections/{id}
-  method: delete
-  operationId: deleteIntegrationConnection
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v2/segmentconfigurations
-  method: get
-  operationId: listSegmentConfigurations
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v2/segmentconfigurations
-  method: post
-  operationId: addSegmentConfiguration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v2/segmentconfigurations/{id}
-  method: get
-  operationId: getSegmentConfiguration
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v2/segmentconfigurations/{id}
-  method: delete
-  operationId: removeSegmentConfiguration
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /v2/destinations
   method: get
-  operationId: listDestinations
+  operationId: Get v2/Destinations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -214,7 +38,7 @@ operations:
     audit: none
 - path: /v2/destinations/{id}
   method: get
-  operationId: getDestination
+  operationId: Get v2/Destination
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -222,9 +46,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v2/destinationintegrations
+- path: /v2/destinations/{v2DestinationId}/integrations
   method: get
-  operationId: listDestinationIntegrations
+  operationId: Get v2/Destination::Integrations
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -232,9 +56,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v2/destinationintegrations/{id}
+- path: /v2/destinations/{v2DestinationId}/integrations/{id}
   method: get
-  operationId: getDestinationIntegration
+  operationId: Get v2/Destination::Integration
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -242,9 +66,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v2/oauthconnectionattempt
+- path: /v2/distribution-managers
   method: post
-  operationId: createOauthConnectionAttempt
+  operationId: Create v2/DistributionManager
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -258,9 +82,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v2/oauthconnections
+- path: /v2/distribution-managers
   method: get
-  operationId: listOauthConnections
+  operationId: Get v2/DistributionManagers
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -268,9 +92,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v2/oauthconnections/{id}
+- path: /v2/distribution-managers/{id}
   method: get
-  operationId: getOauthConnection
+  operationId: Get v2/DistributionManager
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -278,9 +102,73 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v2/oauthconnections/{id}/status
+- path: /v2/distribution-managers/{id}
+  method: put
+  operationId: Modify v2/DistributionManager
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/distribution-managers/{id}
+  method: delete
+  operationId: Delete v2/DistributionManager
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/distribution-managers/{v2DistributionManagerId}/segment-configs
+  method: post
+  operationId: Create v2/DistributionManager::SegmentConfigs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/distribution-managers/{v2DistributionManagerId}/segment-configs
+  method: delete
+  operationId: Delete v2/DistributionManager::SegmentConfigs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/distribution-managers/{v2DistributionManagerId}/segment-configs
   method: get
-  operationId: getOauthConnectionStatus
+  operationId: Get v2/DistributionManager::SegmentConfigs
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -288,9 +176,123 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v2/deliveries
+- path: /v2/distribution-managers/{v2DistributionManagerId}/segment-configs/{id}
   method: get
-  operationId: listDeliveries
+  operationId: Get v2/DistributionManager::SegmentConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/integration-connections
+  method: post
+  operationId: Create v2/IntegrationConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/integration-connections
+  method: get
+  operationId: Get v2/IntegrationConnections
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/integration-connections/{id}
+  method: get
+  operationId: Get v2/IntegrationConnection
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/integration-connections/{id}
+  method: put
+  operationId: Modify v2/IntegrationConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/integration-connections/{id}
+  method: delete
+  operationId: Delete v2/IntegrationConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/oauth-connections
+  method: get
+  operationId: Get v2/OauthConnections
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/oauth-connections/{id}
+  method: get
+  operationId: Get v2/OauthConnection
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/oauth-connection-attempts
+  method: post
+  operationId: Create v2/OauthConnectionAttempt
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/oauth-connection-attempts/{id}
+  method: get
+  operationId: Get v2/OauthConnectionAttempt
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -300,7 +302,7 @@ operations:
     audit: none
 - path: /v2/segments
   method: get
-  operationId: listSegments
+  operationId: Get v2/Segments
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -310,7 +312,7 @@ operations:
     audit: none
 - path: /v2/segments/{id}
   method: get
-  operationId: getSegment
+  operationId: Get v2/Segment
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -318,9 +320,1979 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v2/segments/statuses
+- path: /v2/segment-statuses
   method: get
-  operationId: getSegmentStatuses
+  operationId: Get v2/SegmentStatuses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /health
+  method: get
+  operationId: getHealth
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /billable-configs
+  method: get
+  operationId: getBillableConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /billable-configs
+  method: post
+  operationId: upsertBillableConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /billable-configs/{billableConfigId}
+  method: delete
+  operationId: deleteBillableConfig
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms
+  method: post
+  operationId: createCleanroom
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms
+  method: get
+  operationId: getAllCleanrooms
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/invitations
+  method: get
+  operationId: listPartnerInvitationsForInviter
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/invitations
+  method: delete
+  operationId: cancelPartnerInvitationByEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/invitations/{invitationId}
+  method: delete
+  operationId: cancelPartnerInvitationById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}
+  method: get
+  operationId: getCleanroomById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}
+  method: put
+  operationId: updateCleanroom
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}
+  method: delete
+  operationId: deleteCleanroom
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/cleanroom-types
+  method: get
+  operationId: getCleanroomTypes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-questions
+  method: post
+  operationId: addCleanroomQuestion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-questions
+  method: get
+  operationId: getAllCleanroomQuestions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}
+  method: get
+  operationId: getCleanroomQuestionById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}
+  method: delete
+  operationId: deleteCleanroomQuestion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/compute-capacity
+  method: patch
+  operationId: updateCleanroomQuestionComputeCapacity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/questions/{questionId}
+  method: get
+  operationId: getCleanroomQuestion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-result-shares
+  method: get
+  operationId: getCleanroomQuestionResultShares
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-result-shares
+  method: put
+  operationId: upsertCleanRoomQuestionResultShares
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-tags
+  method: get
+  operationId: getCleanroomQuestionTags
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-parameters
+  method: get
+  operationId: getCleanroomQuestionParameters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-run-schedules/{cleanroomQuestionRunScheduleId}
+  method: get
+  operationId: getCleanroomQuestionRunScheduleById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-run-schedules/{cleanroomQuestionRunScheduleId}
+  method: delete
+  operationId: deleteCleanroomQuestionRunScheduleById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-run-schedules/{cleanroomQuestionRunScheduleId}
+  method: patch
+  operationId: patchCleanroomQuestionRunScheduleById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-run-schedules
+  method: get
+  operationId: getCleanroomQuestionRunSchedules
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-run-schedules
+  method: post
+  operationId: createCleanroomQuestionRunSchedule
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-runs
+  method: get
+  operationId: getAllCleanroomQuestionRuns
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/create-run
+  method: post
+  operationId: createCleanroomQuestionRun
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/segmentation
+  method: post
+  operationId: enableCleanroomQuestionSegmentation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/segmentation
+  method: put
+  operationId: updateCleanroomQuestionSegmentation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}
+  method: get
+  operationId: getCleanroomQuestionRunById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}
+  method: put
+  operationId: updateCleanroomQuestionRunStatus
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}
+  method: delete
+  operationId: deleteCleanroomQuestionRun
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}/data
+  method: get
+  operationId: getCleanroomQuestionRunData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}/download/{fileName}
+  method: get
+  operationId: getCleanroomQuestionRunOutputFile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}/data/count
+  method: get
+  operationId: getCleanroomQuestionRunDataCount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}/audit
+  method: get
+  operationId: getCleanroomQuestionRunAudit
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}/activation-summary
+  method: get
+  operationId: getCleanroomQuestionRunActivationSummaries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}/partition-parameters
+  method: get
+  operationId: getCleanroomQuestionRunPartitionParameters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-question-runs/{cleanroomQuestionRunId}/explain-plan
+  method: get
+  operationId: getCleanroomQuestionRunExplainPlan
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/partners
+  method: post
+  operationId: addCleanroomPartner
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/partners
+  method: get
+  operationId: getAllCleanroomPartners
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/partners/{cleanroomPartnerId}
+  method: get
+  operationId: getCleanroomPartnerById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/partners/{cleanroomPartnerId}
+  method: delete
+  operationId: deleteCleanroomPartner
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/partners/{cleanroomPartnerId}/cleanRoomRoles
+  method: get
+  operationId: getCleanroomPartnerRoles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/partners/{cleanroomPartnerId}/cleanRoomRoles/{cleanRoomRoleId}
+  method: get
+  operationId: getCleanroomPartnerRoleByID
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/partners/{cleanroomPartnerId}/users/{cleanroomUserId}
+  method: delete
+  operationId: deleteCleanroomPartnerUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/partners/{cleanroomPartnerId}/users/{cleanroomUserId}/cleanRoomRoles/{cleanRoomRoleId}
+  method: put
+  operationId: updateCleanroomPartnerUserRole
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanRoomRoles
+  method: get
+  operationId: getCleanroomRoles
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanRoomRoles/{cleanRoomRoleId}
+  method: get
+  operationId: getCleanroomRoleById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/users
+  method: post
+  operationId: addCleanroomUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/users
+  method: get
+  operationId: getCleanroomUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/users/{cleanroomUserId}
+  method: get
+  operationId: getCleanroomUserById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/users/{cleanroomUserId}
+  method: delete
+  operationId: deleteCleanroomUser
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/users/{cleanroomUserId}/cleanRoomRoles/{cleanRoomRoleId}
+  method: put
+  operationId: updateCleanroomUserRole
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /data-connections
+  method: post
+  operationId: createDataConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /data-connections
+  method: get
+  operationId: getAllDataConnections
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-connections/{dataConnectionId}
+  method: get
+  operationId: getDataConnectionById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-connections/{dataConnectionId}
+  method: put
+  operationId: updateDataConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /data-connections/{dataConnectionId}
+  method: delete
+  operationId: deleteDataConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /data-connections/{dataConnectionId}/retry
+  method: post
+  operationId: retryDataConnectionJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /data-connections/{dataConnectionId}/field-configurations
+  method: get
+  operationId: getAllFieldConfigurations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-connections/{dataConnectionId}/field-configurations
+  method: post
+  operationId: mapFieldConfigurations
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/datasets
+  method: get
+  operationId: getCleanroomDatasets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/datasets/{datasetId}
+  method: get
+  operationId: getCleanroomDatasetById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/datasets/{datasetId}
+  method: put
+  operationId: updateCleanroomDatasetById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/datasets/configure
+  method: post
+  operationId: configureCleanroomDataset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/datasets/partner-assignment
+  method: post
+  operationId: updateCleanroomDatasetPartnerAssignment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /identifier-types
+  method: get
+  operationId: getAllIdentifierTypes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/stakeholders
+  method: get
+  operationId: getCleanroomStakeholders
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/assets
+  method: get
+  operationId: getCleanroomAssetDetails
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-permissions
+  method: post
+  operationId: configureCleanRoomQuestionPermissions
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/cleanroom-question-permissions
+  method: get
+  operationId: getCleanroomQuestionPermissions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/data-type-options
+  method: get
+  operationId: getCleanroomQuestionDataTypeOptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanroom-questions/{cleanroomQuestionId}/datasets-ownership
+  method: post
+  operationId: assignCleanroomQuestionDatasetsOwnership
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/datasets
+  method: post
+  operationId: configureCleanroomQuestionDatasets
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanroom-questions/{cleanroomQuestionId}/datasets
+  method: get
+  operationId: getAllCleanroomQuestionDatasets
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /users
+  method: get
+  operationId: getAllOrganizationUsers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organization-credentials
+  method: get
+  operationId: getAllOrganizationCredentials
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organization-credentials
+  method: post
+  operationId: createOrganizationCredential
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organization-credentials/{organizationCredentialId}
+  method: get
+  operationId: getOrganizationCredentialById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organization-credentials/{organizationCredentialId}
+  method: put
+  operationId: updateOrganizationCredential
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /organization-credentials/{organizationCredentialId}
+  method: delete
+  operationId: deleteOrganizationCredential
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /credential-sources
+  method: get
+  operationId: getAllCredentialSources
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /credential-sources/{credentialSourceId}
+  method: get
+  operationId: getCredentialSourceById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /credential-sources/credential-name/{name}
+  method: get
+  operationId: getCredentialSourceByName
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-sources
+  method: get
+  operationId: getAllDataSources
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-sources/{dataSourceId}
+  method: get
+  operationId: getDataSourceById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-sources/{dataSourceId}/data-types
+  method: get
+  operationId: getAllDataTypes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-sources/data-types/{dataTypeId}
+  method: get
+  operationId: getDataTypeById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-sources/{dataSourceId}/data-types/{dataTypeId}/data-source-parameters
+  method: get
+  operationId: getAllDataSourceParameters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /question/{questionID}
+  method: get
+  operationId: getQuestionDetails
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /question/{questionID}
+  method: delete
+  operationId: deleteQuestion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /question/{questionID}
+  method: put
+  operationId: updateQuestion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /question
+  method: post
+  operationId: createQuestion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /question/{questionID}/data-types
+  method: get
+  operationId: getQuestionDataTypes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-connections/import-data-types
+  method: get
+  operationId: getAllImportDataTypes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-connection-views
+  method: post
+  operationId: createDataConnectionView
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /data-connection-views
+  method: get
+  operationId: getAllDataConnectionViews
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-connection-views/{viewId}
+  method: get
+  operationId: getDataConnectionViewById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /data-connection-views/{viewId}
+  method: put
+  operationId: updateDataConnectionView
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /data-connection-views/{viewId}
+  method: delete
+  operationId: deleteDataConnectionView
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}
+  method: get
+  operationId: getCleanroomFlow
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows
+  method: post
+  operationId: createOrUpdateCleanroomFlow
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/version/{version}
+  method: put
+  operationId: setCleanroomFlowVersion
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/list
+  method: post
+  operationId: listCleanroomFlows
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flow-runs/{cleanroomFlowRunId}/resume-flow-run
+  method: post
+  operationId: resumeCleanroomFlowRun
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flow-runs/{cleanroomFlowRunId}/replay-flow-run
+  method: post
+  operationId: replayCleanroomFlowRun
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flow-runs/{cleanroomFlowRunId}/status
+  method: get
+  operationId: getCleanroomFlowRunStatus
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/cleanroom-flow-runs
+  method: get
+  operationId: listCleanroomFlowRuns
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/cleanroom-flow-runs
+  method: post
+  operationId: createOrUpdateCleanroomFlowRun
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/flow-run-parameters
+  method: get
+  operationId: getCleanroomFlowRunparameters
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/preview-flow-run-parameters
+  method: post
+  operationId: previewFlowRunParameters
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/assign-datasets
+  method: post
+  operationId: assignCleanroomFlowDatasets
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/dataset-organizations
+  method: post
+  operationId: getDatasetOrganizations
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/nodes/exports
+  method: post
+  operationId: createFlowNodeExportJobs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/nodes/exports
+  method: get
+  operationId: listFlowNodeExportJobs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/nodes/exports
+  method: delete
+  operationId: deleteFlowNodeExportJobs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/nodes/exports/status
+  method: patch
+  operationId: updateFlowNodeExportJobsStatus
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/nodes/exports/runs
+  method: get
+  operationId: getFlowNodeExportJobRuns
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/node-details
+  method: get
+  operationId: getCleanroomFlowNodeDetails
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/decision-configurations
+  method: get
+  operationId: getFlowDecisionConfiguration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/decision-configurations
+  method: post
+  operationId: createOrUpdateFlowDecisionConfiguration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flows/{cleanroomFlowId}/decision-configurations
+  method: delete
+  operationId: deleteFlowDecisionConfiguration
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-flow-runs/{cleanroomFlowRunId}
+  method: get
+  operationId: getCleanroomFlowRunByID
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flow-runs/{cleanroomFlowRunId}/report
+  method: get
+  operationId: getCleanroomFlowRunReport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flow-runs/{cleanroomFlowRunId}/output-nodes
+  method: get
+  operationId: getCleanroomFlowRunOutputNodes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-flow-runs/{cleanroomFlowRunId}/node/{nodeIdentifier}/download/{fileName}
+  method: get
+  operationId: getCleanroomFlowRunNodeOutputFile
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/create-cleanroom-execution-instance
+  method: post
+  operationId: createCleanRoomExecutionTemplateInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/cleanroom-execution-instance/{cleanRoomMeasurementExecutionInstanceId}
+  method: get
+  operationId: getCleanRoomMeasurementExecutionInstance
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-execution-instance/{cleanRoomMeasurementExecutionInstanceId}
+  method: post
+  operationId: cancelCleanRoomMeasurementExecutionInstance
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/exports/jobs
+  method: get
+  operationId: getAllDataExportJobs
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/exports/jobs
+  method: post
+  operationId: createDataExportJobs
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/destinations
+  method: get
+  operationId: listCleanroomDestinations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/destinations
+  method: post
+  operationId: provisionCleanroomDestinations
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/destinations/{partnerAccountId}
+  method: delete
+  operationId: deprovisionCleanroomDestination
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/destinations/{partnerAccountId}/provisioning-request/review
+  method: post
+  operationId: reviewDestinationProvisioningRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /exports/jobs/{exportJobId}/runs
+  method: get
+  operationId: getDataExportJobRuns
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /exports/jobs/{exportJobId}/status
+  method: patch
+  operationId: changeJobStatus
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /exports/jobs/{exportJobId}
+  method: delete
+  operationId: deleteDataExportJob
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /destinations/partners
+  method: get
+  operationId: listDestinationPartners
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /destinations
+  method: get
+  operationId: listDestinations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /destinations
+  method: post
+  operationId: createDestination
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /destinations/{partnerAccountId}
+  method: patch
+  operationId: updateDestinationConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /destinations/{partnerAccountId}
+  method: delete
+  operationId: deleteDestinationConnection
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /cleanrooms/{cleanroomId}/intelligence
+  method: get
+  operationId: getCleanroomIntelligence
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/intelligence/loaded-questions
+  method: get
+  operationId: listLoadedIntelligenceQuestions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/cleanroom-questions/{cleanroomQuestionId}/intelligence
+  method: get
+  operationId: getCleanroomQuestionIntelligence
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cleanrooms/{cleanroomId}/flows/{flowId}/intelligence
+  method: get
+  operationId: getFlowIntelligence
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/requests
+  method: post
+  operationId: Create PrivacyRequests
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/requests
+  method: get
+  operationId: Get PrivacyRequests
   x-agentic-access:
     action-class: connected
     consequence: read

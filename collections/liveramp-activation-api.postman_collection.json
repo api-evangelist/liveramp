@@ -1,0 +1,5080 @@
+{
+  "item": [
+    {
+      "id": "b0adf2f2-f4af-43b6-aec9-4b33ffbbb025",
+      "name": "Explore Destinations",
+      "description": {
+        "content": "View Destinations and Integrations where you can distribute data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4752899a-0a03-459f-937b-2b5cdede60df",
+          "name": "Fetch a list of Destinations",
+          "request": {
+            "name": "Fetch a list of Destinations",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "destinations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of v2/Destinations to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8d2e939a-0625-405b-b789-45691004b853",
+              "name": "v2/Destinations retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"v2/Destinations\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"logoUrl\": \"https://www.domain.com (url)\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"logoUrl\": \"https://www.domain.com (url)\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 8788\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea03258b-95ce-40f3-8af9-2c67367f3d3a",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fff5a44a-3860-4381-b824-ef6cf24151f0",
+          "name": "Fetch a single Destination",
+          "request": {
+            "name": "Fetch a single Destination",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "destinations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2259854c-1a04-4d46-9152-8e53875bf1a3",
+              "name": "v2/Destination retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"logoUrl\": \"https://www.domain.com (url)\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7967e16b-3210-457f-ac26-5ffde030ba53",
+              "name": "v2/Destination not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4bce02f6-7c22-4c46-aee9-8d1116f1450a",
+          "name": "Fetch a list of Integrations within a Destination",
+          "request": {
+            "name": "Fetch a list of Integrations within a Destination",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "destinations",
+                ":v2DestinationId",
+                "integrations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of Integrations to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "view",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "v2DestinationId",
+                  "description": "(Required) Id of parent v2/Destination"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "433c7529-f938-41e1-b61e-be00e6ab9864",
+              "name": "Integrations retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations",
+                    ":v2DestinationId",
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DestinationId",
+                      "description": "(Required) Id of parent v2/Destination"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"integrations\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"<string>\",\n      \"deviceTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"requiredProperties\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"oAuthEndpointID\": \"string\",\n      \"unavailableReason\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"type\": \"<string>\",\n      \"deviceTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"requiredProperties\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\"\n        }\n      ],\n      \"oAuthEndpointID\": \"string\",\n      \"unavailableReason\": \"string\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 1081\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0f5efd0-9570-49f0-9200-3d443cf6d85d",
+              "name": "Parent resource(s) not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations",
+                    ":v2DestinationId",
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DestinationId",
+                      "description": "(Required) Id of parent v2/Destination"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ad5ebef-b8ac-42cd-a480-6db610655e89",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations",
+                    ":v2DestinationId",
+                    "integrations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "view",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DestinationId",
+                      "description": "(Required) Id of parent v2/Destination"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1bbaa01-e76d-4fc6-83c5-3acc75a2ff54",
+          "name": "Fetch a single Integration",
+          "request": {
+            "name": "Fetch a single Integration",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "destinations",
+                ":v2DestinationId",
+                "integrations",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "v2DestinationId",
+                  "description": "(Required) Id of parent v2/Destination"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32a159b8-ce12-46d9-a9f7-f5fbb36c2654",
+              "name": "Integration retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations",
+                    ":v2DestinationId",
+                    "integrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DestinationId",
+                      "description": "(Required) Id of parent v2/Destination"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"type\": \"<string>\",\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"requiredProperties\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\"\n    }\n  ],\n  \"oAuthEndpointID\": \"string\",\n  \"unavailableReason\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8da0966c-1f4b-4722-ade5-3d36d54724c5",
+              "name": "Integration or parent resource(s) not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "destinations",
+                    ":v2DestinationId",
+                    "integrations",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DestinationId",
+                      "description": "(Required) Id of parent v2/Destination"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "668e06e5-eaf3-48a6-a0e4-375cd6366a23",
+      "name": "Configure Distributions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ec768a7e-cd8b-4096-ac4e-7147b00438a5",
+          "name": "Create a Distribution Manager",
+          "request": {
+            "name": "Create a Distribution Manager",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"integrationConnectionID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"expireAt\": \"<ISO8601 UTC date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "22710018-b75f-4b6b-bc28-5b363dcaa6d8",
+              "name": "v2/DistributionManager created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"integrationConnectionID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"expireAt\": \"2019-04-13\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c553c75-4805-4c61-8350-5ef8cac566aa",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"integrationConnectionID\": \"<string>\",\n  \"status\": \"<string>\",\n  \"expireAt\": \"2019-04-13\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3998efc1-f9a9-49b6-99e8-7f3145c694be",
+          "name": "Fetch a list of Distribution Managers",
+          "request": {
+            "name": "Fetch a list of Distribution Managers",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of v2/DistributionManagers to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "integrationConnectionID",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c1e7d8cb-6fb2-4b79-9efa-c7066f9f227a",
+              "name": "v2/DistributionManagers retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "integrationConnectionID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"v2/DistributionManagers\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"integrationConnectionID\": \"string\",\n      \"status\": \"<string>\",\n      \"expireAt\": \"2019-04-13\",\n      \"createdAt\": \"2019-04-13T03:35:34Z\",\n      \"updatedAt\": \"2019-04-13T03:35:34Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"integrationConnectionID\": \"string\",\n      \"status\": \"<string>\",\n      \"expireAt\": \"2019-04-13\",\n      \"createdAt\": \"2019-04-13T03:35:34Z\",\n      \"updatedAt\": \"2019-04-13T03:35:34Z\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 9462\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "825ef3ca-002f-4257-88db-3ad1b36280d2",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "integrationConnectionID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52ccfd32-5804-443c-8712-e7690cb400dc",
+          "name": "Fetch a single Distribution Manager",
+          "request": {
+            "name": "Fetch a single Distribution Manager",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe65279d-4099-422f-8c87-9c3c6c32d30f",
+              "name": "v2/DistributionManager retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"integrationConnectionID\": \"string\",\n  \"status\": \"<string>\",\n  \"expireAt\": \"2019-04-13\",\n  \"createdAt\": \"2019-04-13T03:35:34Z\",\n  \"updatedAt\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df208f7b-c86b-446d-af15-2ed49ff4b51c",
+              "name": "v2/DistributionManager not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1a4db47-bf3a-46fb-8aa8-273c3978086c",
+          "name": "Update a Distribution Manager",
+          "request": {
+            "name": "Update a Distribution Manager",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"expireAt\": \"<ISO8601 UTC date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "255235b9-1bc4-4689-8a4b-9c220c96d187",
+              "name": "v2/DistributionManager modified successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"expireAt\": \"2019-04-13\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b224e93-7989-4878-b6a4-e3716843f57f",
+              "name": "v2/DistributionManager not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"expireAt\": \"2019-04-13\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d992ea91-e4ca-4319-b574-7b8b96e90f8f",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"expireAt\": \"2019-04-13\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff4b416b-1c30-4a55-aba5-20e1fe102857",
+          "name": "Delete a Distribution Manager",
+          "request": {
+            "name": "Delete a Distribution Manager",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e4918db-5667-4fe7-b963-d3d8f8a4935c",
+              "name": "v2/DistributionManager deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2672c9cd-b153-4d3e-8b77-cb8dbbd05c72",
+              "name": "v2/DistributionManager not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ced136b9-5bab-433f-8256-4922c8b475d7",
+          "name": "Create an Integration Connection",
+          "request": {
+            "name": "Create an Integration Connection",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "integration-connections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"integrationID\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"properties\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oAuthConnectionID\": \"<string>\",\n  \"distributionManagerName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a5ee9cd9-134a-4c38-ab62-5a87ef704142",
+              "name": "v2/IntegrationConnection created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationID\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"properties\": [\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    },\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    }\n  ],\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oAuthConnectionID\": \"<string>\",\n  \"distributionManagerName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08a03205-9d94-4cba-a6c7-a0b3ff785f9d",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"integrationID\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"properties\": [\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    },\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    }\n  ],\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oAuthConnectionID\": \"<string>\",\n  \"distributionManagerName\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd111101-26e9-4818-ae9c-4c56a8059a97",
+          "name": "Fetch a list of Integration Connections",
+          "request": {
+            "name": "Fetch a list of Integration Connections",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "integration-connections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of v2/IntegrationConnections to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4d190660-7cff-4304-80db-90e181e96352",
+              "name": "v2/IntegrationConnections retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"v2/IntegrationConnections\": [\n    {\n      \"id\": \"string\",\n      \"integrationID\": [\n        \"string\",\n        \"string\"\n      ],\n      \"properties\": [\n        {\n          \"propertyKey\": \"<string>\",\n          \"propertyValue\": \"<string>\"\n        },\n        {\n          \"propertyKey\": \"<string>\",\n          \"propertyValue\": \"<string>\"\n        }\n      ],\n      \"deviceTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"createdAt\": \"2019-04-13T03:35:34Z\",\n      \"updatedAt\": \"2019-04-13T03:35:34Z\",\n      \"oAuthConnectionID\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"integrationID\": [\n        \"string\",\n        \"string\"\n      ],\n      \"properties\": [\n        {\n          \"propertyKey\": \"<string>\",\n          \"propertyValue\": \"<string>\"\n        },\n        {\n          \"propertyKey\": \"<string>\",\n          \"propertyValue\": \"<string>\"\n        }\n      ],\n      \"deviceTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"createdAt\": \"2019-04-13T03:35:34Z\",\n      \"updatedAt\": \"2019-04-13T03:35:34Z\",\n      \"oAuthConnectionID\": \"string\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 4683\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "73597fdb-fad9-4364-9177-2a99c051d3db",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d898e63d-45eb-4206-9483-058e70696ca6",
+          "name": "Fetch a single Integration Connection",
+          "request": {
+            "name": "Fetch a single Integration Connection",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "integration-connections",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "57f7d8cf-e150-4f65-bc47-aa4d507d0482",
+              "name": "v2/IntegrationConnection retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"integrationID\": [\n    \"string\",\n    \"string\"\n  ],\n  \"properties\": [\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    },\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    }\n  ],\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdAt\": \"2019-04-13T03:35:34Z\",\n  \"updatedAt\": \"2019-04-13T03:35:34Z\",\n  \"oAuthConnectionID\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7563865c-8534-45f5-af38-c580fcfa2292",
+              "name": "v2/IntegrationConnection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9dbae7a9-e7ae-4f09-aeca-ea6ee793852b",
+          "name": "Update an Integration Connection",
+          "request": {
+            "name": "Update an Integration Connection",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "integration-connections",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"properties\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oAuthConnectionID\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "89b520b3-76b5-471d-babf-f602894edc4d",
+              "name": "v2/IntegrationConnection modified successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    },\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    }\n  ],\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oAuthConnectionID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4097c169-0306-4719-b6de-48c1e9aa8b9e",
+              "name": "v2/IntegrationConnection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    },\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    }\n  ],\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oAuthConnectionID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58310030-4a71-41fa-a0e0-0a1c009409e5",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": [\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    },\n    {\n      \"propertyKey\": \"<string>\",\n      \"propertyValue\": \"<string>\"\n    }\n  ],\n  \"deviceTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oAuthConnectionID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "376a2b97-48cd-4639-9459-f91b26d5da1f",
+          "name": "Delete an Integration Connection",
+          "request": {
+            "name": "Delete an Integration Connection",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "integration-connections",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7379afca-7d64-4188-aa3c-932b33e7d1fb",
+              "name": "v2/IntegrationConnection deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e7147ce4-429b-42fe-b2e5-b0a231705d5c",
+              "name": "v2/IntegrationConnection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "integration-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "a5df43ee-006c-47c2-8e41-20c0cff19ce7",
+      "name": "Distribute Data",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0c4e75f1-0f1e-482d-892f-fee2f2721ce2",
+          "name": "Add Segments to a Distribution Manager. Limited to 500 segments at a time.",
+          "request": {
+            "name": "Add Segments to a Distribution Manager. Limited to 500 segments at a time.",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers",
+                ":v2DistributionManagerId",
+                "segment-configs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "v2DistributionManagerId",
+                  "description": "(Required) Id of parent v2/DistributionManager"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"segmentID\": \"<string>\",\n    \"segmentType\": \"<string>\",\n    \"distributionManagerID\": \"<string>\",\n    \"destinationSegmentID\": \"<string>\"\n  },\n  {\n    \"segmentID\": \"<string>\",\n    \"segmentType\": \"<string>\",\n    \"distributionManagerID\": \"<string>\",\n    \"destinationSegmentID\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc91763f-09fc-477d-a167-9b3a565cb7b9",
+              "name": "SegmentConfig resources processed, statuses in body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"segmentID\": \"<string>\",\n    \"segmentType\": \"<string>\",\n    \"distributionManagerID\": \"<string>\",\n    \"destinationSegmentID\": \"<string>\"\n  },\n  {\n    \"segmentID\": \"<string>\",\n    \"segmentType\": \"<string>\",\n    \"distributionManagerID\": \"<string>\",\n    \"destinationSegmentID\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"status\": {\n      \"httpStatus\": 2401,\n      \"errorCode\": \"string\",\n      \"message\": \"string\"\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"status\": {\n      \"httpStatus\": 4058,\n      \"errorCode\": \"string\",\n      \"message\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96837919-8b80-448e-aa60-a003b368e5b7",
+              "name": "Parent resource(s) not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"segmentID\": \"<string>\",\n    \"segmentType\": \"<string>\",\n    \"distributionManagerID\": \"<string>\",\n    \"destinationSegmentID\": \"<string>\"\n  },\n  {\n    \"segmentID\": \"<string>\",\n    \"segmentType\": \"<string>\",\n    \"distributionManagerID\": \"<string>\",\n    \"destinationSegmentID\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8061555e-dac5-48df-b360-7b37573f9e74",
+          "name": "Remove Segments from a Distribution Manager. Limited to 500 segments at a time.",
+          "request": {
+            "name": "Remove Segments from a Distribution Manager. Limited to 500 segments at a time.",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers",
+                ":v2DistributionManagerId",
+                "segment-configs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "v2DistributionManagerId",
+                  "description": "(Required) Id of parent v2/DistributionManager"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"id\": \"<string>\"\n  },\n  {\n    \"id\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e74b292a-ac3e-4173-9491-bc69354b8805",
+              "name": "SegmentConfig deletes processed, statuses in body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<string>\"\n  },\n  {\n    \"id\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Multi-Status (WebDAV) (RFC 4918)",
+              "code": 207,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"status\": {\n      \"httpStatus\": 2401,\n      \"errorCode\": \"string\",\n      \"message\": \"string\"\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"status\": {\n      \"httpStatus\": 4058,\n      \"errorCode\": \"string\",\n      \"message\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab438c12-f248-4c3d-94e7-bcc1e5700f0a",
+              "name": "Parent resource(s) not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"id\": \"<string>\"\n  },\n  {\n    \"id\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2ad30178-63dc-44e4-ba07-9780ebf29c7b",
+          "name": "Fetch a list of Segments within a Distribution Manager",
+          "request": {
+            "name": "Fetch a list of Segments within a Distribution Manager",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers",
+                ":v2DistributionManagerId",
+                "segment-configs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of SegmentConfigs to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "v2DistributionManagerId",
+                  "description": "(Required) Id of parent v2/DistributionManager"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "297318b9-24b8-4a19-90e6-5a0c159221df",
+              "name": "SegmentConfigs retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"segmentConfigs\": [\n    {\n      \"id\": \"string\",\n      \"segmentID\": \"string\",\n      \"segmentType\": \"<string>\",\n      \"distributionManagerID\": \"string\",\n      \"destinationSegmentID\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"segmentID\": \"string\",\n      \"segmentType\": \"<string>\",\n      \"distributionManagerID\": \"string\",\n      \"destinationSegmentID\": \"string\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 1239\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42fa7778-9318-441e-a549-c8f46d4137ef",
+              "name": "Parent resource(s) not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "faaf15dd-662b-40b0-9098-b5751290dddb",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f098285-522d-46b4-a54b-9cc99e6b7047",
+          "name": "Fetch a single Segment within a Distribution Manager",
+          "request": {
+            "name": "Fetch a single Segment within a Distribution Manager",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "distribution-managers",
+                ":v2DistributionManagerId",
+                "segment-configs",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "v2DistributionManagerId",
+                  "description": "(Required) Id of parent v2/DistributionManager"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b2ad9773-c546-41f0-add7-68bc5b5d99d5",
+              "name": "SegmentConfig retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"segmentID\": \"string\",\n  \"segmentType\": \"<string>\",\n  \"distributionManagerID\": \"string\",\n  \"destinationSegmentID\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8a77cb0-867a-4dd6-94f6-5910f86b7694",
+              "name": "SegmentConfig or parent resource(s) not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "distribution-managers",
+                    ":v2DistributionManagerId",
+                    "segment-configs",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "v2DistributionManagerId",
+                      "description": "(Required) Id of parent v2/DistributionManager"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "6c68c2f5-c763-4b39-80a5-cd0d687b4431",
+      "name": "View Deliveries",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f9ac1541-025a-4759-978d-28c752363b34",
+          "name": "Fetch a list of Deliveries",
+          "request": {
+            "name": "Fetch a list of Deliveries",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "deliveries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of v2/Deliveries to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "integrationConnectionID",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "segmentIDs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "segmentIDs",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "094e19b2-aa73-4477-b613-c5f144833d9b",
+              "name": "v2/Deliveries retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "integrationConnectionID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentIDs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentIDs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"v2/Deliveries\": [\n    {\n      \"id\": \"string\",\n      \"status\": \"IN_PROGRESS\",\n      \"deviceType\": \"RAMP_ID\",\n      \"updatedAt\": \"2019-04-13T03:35:34Z\",\n      \"integrationConnectionID\": \"string\",\n      \"operationType\": \"DELETE\",\n      \"recordCount\": 6848,\n      \"segmentID\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"status\": \"PENDING\",\n      \"deviceType\": \"PII\",\n      \"updatedAt\": \"2019-04-13T03:35:34Z\",\n      \"integrationConnectionID\": \"string\",\n      \"operationType\": \"DELETE\",\n      \"recordCount\": 5118,\n      \"segmentID\": \"string\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 2123\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "981991c1-b2be-4a05-a5f4-9acb0d9f63d6",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "deliveries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "integrationConnectionID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentIDs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentIDs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "4d5cd796-219d-469f-a0bb-afc519833eca",
+      "name": "OAuth Configuration",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7fd0e09c-43d9-4f9d-a752-1d05806e7060",
+          "name": "Fetch a list of OAuth Connections",
+          "request": {
+            "name": "Fetch a list of OAuth Connections",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-connections"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of v2/OauthConnections to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "oAuthEndpointID",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0236f178-79e5-4eac-a287-11751ee815a6",
+              "name": "v2/OauthConnections retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "oAuthEndpointID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"v2/OauthConnections\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"oAuthEndpointID\": \"string\",\n      \"createdAt\": \"2019-04-13T03:35:34Z\",\n      \"updatedAt\": \"2019-04-13T03:35:34Z\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"oAuthEndpointID\": \"string\",\n      \"createdAt\": \"2019-04-13T03:35:34Z\",\n      \"updatedAt\": \"2019-04-13T03:35:34Z\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 2968\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cf74d43-5bd8-4385-b1e4-6545120565be",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-connections"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "oAuthEndpointID",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22d22d6f-5733-4f97-a5bd-76634c7e22d0",
+          "name": "Fetch a single OAuth Connection",
+          "request": {
+            "name": "Fetch a single OAuth Connection",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-connections",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93826381-71cd-4776-a259-686c3779f481",
+              "name": "v2/OauthConnection retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"oAuthEndpointID\": \"string\",\n  \"createdAt\": \"2019-04-13T03:35:34Z\",\n  \"updatedAt\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46153184-f016-4a01-8d11-c025c6977872",
+              "name": "v2/OauthConnection not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-connections",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8822a807-9e49-4f2b-a008-6f720741ca41",
+          "name": "Begin an OAuth authorization flow",
+          "request": {
+            "name": "Begin an OAuth authorization flow",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-connection-attempts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"oAuthEndpointID\": \"<string>\",\n  \"redirectUrl\": \"<url>\",\n  \"state\": \"<string>\",\n  \"oAuthConnectionID\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b7aae876-9e10-4a6a-ad21-8dc677e4188c",
+              "name": "v2/OauthConnectionAttempt created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-connection-attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"oAuthEndpointID\": \"<string>\",\n  \"redirectUrl\": \"<url>\",\n  \"state\": \"<string>\",\n  \"oAuthConnectionID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426655440000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d22c2944-7c2a-4e32-9451-8c136922017a",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-connection-attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"oAuthEndpointID\": \"<string>\",\n  \"redirectUrl\": \"<url>\",\n  \"state\": \"<string>\",\n  \"oAuthConnectionID\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c94d1cc-ca98-4f23-b908-7f064a4cbf37",
+          "name": "Fetch the status of an OAuth flow",
+          "request": {
+            "name": "Fetch the status of an OAuth flow",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "oauth-connection-attempts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c0a7fe14-fc72-432e-940c-5cfcbcc4d671",
+              "name": "v2/OauthConnectionAttempt retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-connection-attempts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123e4567-e89b-12d3-a456-426655440000\",\n  \"authorizationUrl\": \"https://www.domain.com (url)\",\n  \"status\": \"PENDING\",\n  \"oAuthEndpointID\": \"string\",\n  \"statusDetail\": \"string\",\n  \"redirectUrl\": \"https://www.domain.com (url)\",\n  \"state\": \"string\",\n  \"oAuthConnectionID\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5dea556-b69f-4758-9d37-e3008b098b06",
+              "name": "v2/OauthConnectionAttempt not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "oauth-connection-attempts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "242f4df6-be50-4a58-a690-74ec912d2807",
+      "name": "View Segments",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "814c5465-027c-45a2-86cc-57c64864d3e6",
+          "name": "Fetch a list of Segments",
+          "request": {
+            "name": "Fetch a list of Segments",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "segments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of v2/Segments to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "valueName",
+                  "value": "<string>",
+                  "description": "Search by a field name+value pair. If valueName is set, fieldName must also be set"
+                },
+                {
+                  "disabled": false,
+                  "key": "fieldName",
+                  "value": "<string>",
+                  "description": "Search by a field name+value pair. If fieldName is set, valueName must also be set"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8aa8a4bc-85fc-4681-bf93-6825a7f73ce7",
+              "name": "v2/Segments retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "valueName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fieldName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"v2/Segments\": [\n    {\n      \"id\": \"string\",\n      \"field\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"audienceId\": \"string\"\n      },\n      \"value\": \"string\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"id\": \"string\",\n      \"field\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"audienceId\": \"string\"\n      },\n      \"value\": \"string\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 2934\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20cde253-f437-4388-92df-d5cdc327349a",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "segments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "valueName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "fieldName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a3b9ed3-4c7a-43c8-8194-879b10bfd89e",
+          "name": "Fetch a single Segment",
+          "request": {
+            "name": "Fetch a single Segment",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "segments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25eaa8ad-59eb-49ad-ad5e-815ca675e0d6",
+              "name": "v2/Segment retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "segments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"field\": {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"audienceId\": \"string\"\n  },\n  \"value\": \"string\",\n  \"type\": \"<string>\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cbe77049-ac1f-4e7f-a86e-264bd3e08e12",
+              "name": "v2/Segment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "segments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "5efa02b7-27f0-4165-a7ee-72f3e8e73290",
+      "name": "v2/SegmentStatus",
+      "description": {
+        "content": "(resource)  Represents a segment's status",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6a003830-f695-4579-bd32-512750975e10",
+          "name": "Fetch a list of Segments' statuses.",
+          "request": {
+            "name": "Fetch a list of Segments' statuses.",
+            "description": {
+              "content": "Limited to either first-party (onboarding) or data marketplace segments. Exactly one of these segmentID params must be passed in\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "segment-statuses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Number of v2/SegmentStatuses to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "This value is a cursor that enables continued paginated queries. Its value can be found under \"_pagination.after\" in the previous response from this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "segmentType",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "segmentIDs",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "segmentIDs",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "20b70acb-5f7c-4b17-8934-349705b351eb",
+              "name": "v2/SegmentStatuses retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "segment-statuses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentIDs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentIDs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"v2/SegmentStatuses\": [\n    {\n      \"taxonomy\": {\n        \"taxonomySyncStatus\": \"OUT_OF_SYNC\",\n        \"destinationSegmentID\": \"string\"\n      },\n      \"segmentID\": \"string\",\n      \"segmentType\": \"<string>\",\n      \"integrationConnectionID\": \"string\"\n    },\n    {\n      \"taxonomy\": {\n        \"taxonomySyncStatus\": \"NEVER_SYNCED\",\n        \"destinationSegmentID\": \"string\"\n      },\n      \"segmentID\": \"string\",\n      \"segmentType\": \"<string>\",\n      \"integrationConnectionID\": \"string\"\n    }\n  ],\n  \"_pagination\": {\n    \"after\": \"string\",\n    \"total\": 5423\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "51f07556-1847-4654-a3e2-c347af31acf1",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "segment-statuses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentIDs",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "segmentIDs",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Bearer Authorization using the access token generated with your service account",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header",
+                    "key": "LR-Org-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"httpStatus\": 8589,\n  \"errorCode\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.liveramp.com/activation",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4781007c-e814-42bd-897f-7fca1578b816",
+    "name": "Activation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for destination management and segment delivery",
+      "type": "text/plain"
+    }
+  }
+}

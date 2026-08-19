@@ -1,0 +1,57 @@
+generated: '2026-08-13'
+method: generated
+source: openapi/liveramp-activation-api-openapi.yml, openapi/liveramp-clean-room-api-openapi.yml,
+  openapi/liveramp-privacy-api-openapi.yml
+note: >-
+  Every step in every skill is grounded in an operationId that exists verbatim in the linked
+  specification. LiveRamp publishes no AGENTS.md or first-party skill files; searched first, none
+  found. Skills are written only for the three APIs that have a machine-readable contract — the
+  AbiliTec, RampID, ATS, Data Marketplace, Data Seller and Job Management APIs publish no OpenAPI,
+  so no skill is authored for them.
+skills:
+- file: liveramp-distribute-a-segment.md
+  name: Distribute a LiveRamp segment to a destination platform
+  api: openapi/liveramp-activation-api-openapi.yml
+  operations:
+  - Get v2/Destinations
+  - Get v2/Destination::Integrations
+  - Create v2/IntegrationConnection
+  - Get v2/IntegrationConnection
+  - Create v2/DistributionManager
+  - Create v2/DistributionManager::SegmentConfigs
+  - Get v2/Segments
+  - Get v2/SegmentStatuses
+  - Get v2/Deliveries
+- file: liveramp-authorize-a-destination-oauth.md
+  name: Authorize a LiveRamp destination over OAuth
+  api: openapi/liveramp-activation-api-openapi.yml
+  operations:
+  - Create v2/OauthConnectionAttempt
+  - Get v2/OauthConnectionAttempt
+  - Get v2/OauthConnections
+  - Get v2/OauthConnection
+  - Get v2/IntegrationConnection
+  - Modify v2/IntegrationConnection
+- file: liveramp-run-a-clean-room-question.md
+  name: Stand up a LiveRamp clean room and run a question
+  api: openapi/liveramp-clean-room-api-openapi.yml
+  operations:
+  - getHealth
+  - createCleanroom
+  - addCleanroomPartner
+  - createDataConnection
+  - configureCleanroomDataset
+  - createQuestion
+  - addCleanroomQuestion
+  - configureCleanroomQuestionDatasets
+  - configureCleanRoomQuestionPermissions
+  - createCleanroomQuestionRun
+  - getCleanroomQuestionRunById
+  - getCleanroomQuestionRunData
+  - createDataExportJobs
+- file: liveramp-submit-a-privacy-request.md
+  name: Submit and track a LiveRamp privacy request
+  api: openapi/liveramp-privacy-api-openapi.yml
+  operations:
+  - Create PrivacyRequests
+  - Get PrivacyRequests

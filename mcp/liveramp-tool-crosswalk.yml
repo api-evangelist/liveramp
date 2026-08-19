@@ -1,0 +1,106 @@
+generated: '2026-08-13'
+method: derived
+source: mcp/liveramp-mcp.yml, openapi/liveramp-activation-api-openapi.yml,
+  openapi/liveramp-clean-room-api-openapi.yml, openapi/liveramp-privacy-api-openapi.yml
+headline: >-
+  ZERO OVERLAP. LiveRamp publishes both an MCP server and 179 REST operations across three
+  OpenAPI documents, and the two surfaces do not touch. The MCP server (LiveRamp/logscale-mcp) is
+  a Security Engineering tool that fronts CrowdStrike LogScale, a third-party product. Every one
+  of LiveRamp's own 179 published operations is rest_only. This crosswalk exists to record that
+  divergence explicitly rather than let a reader infer that a provider with "an MCP server" and
+  "an OpenAPI" has an agent path to its product.
+surfaces:
+  openapi:
+  - file: openapi/liveramp-activation-api-openapi.yml
+    server: https://api.liveramp.com/activation
+    operations: 26
+    gated: false
+  - file: openapi/liveramp-clean-room-api-openapi.yml
+    server: https://api.habu.com/v1/
+    operations: 151
+    gated: false
+  - file: openapi/liveramp-privacy-api-openapi.yml
+    server: https://privacy-api.liveramp.com
+    operations: 2
+    gated: false
+  graphql:
+    endpoint: null
+    note: >-
+      LiveRamp publishes no GraphQL endpoint for its own APIs. (The logscale-mcp server speaks
+      GraphQL to CrowdStrike LogScale, which is a different company's API.)
+  mcp:
+    url: null
+    mode: local-stdio
+    repository: https://github.com/LiveRamp/logscale-mcp
+    gated: true
+    note: >-
+      No hosted endpoint exists, so tools/list could not be run. The README states 27 tools in
+      six categories but does not enumerate names or inputSchemas, so no tool row can be written
+      without inventing it.
+crosswalk: []
+mcp_only:
+- tool: '(27 LogScale tools, names not published)'
+  reason: >-
+    Backed by CrowdStrike LogScale, not by any LiveRamp API. There is no LiveRamp operationId
+    these could bind to, at any confidence.
+rest_only:
+- api: LiveRamp Activation API
+  file: openapi/liveramp-activation-api-openapi.yml
+  operations: 26
+  capabilities:
+  - {group: Configure Distributions, operations: 10}
+  - {group: Distribute Data, operations: 4}
+  - {group: Explore Destinations, operations: 4}
+  - {group: OAuth Configuration, operations: 4}
+  - {group: View Segments, operations: 2}
+  - {group: View Deliveries, operations: 1}
+  - {group: v2/SegmentStatus, operations: 1}
+- api: LiveRamp Clean Room API
+  file: openapi/liveramp-clean-room-api-openapi.yml
+  operations: 151
+  capabilities:
+  - {group: Cleanroom Flows, operations: 12}
+  - {group: Cleanroom Question Runs, operations: 12}
+  - {group: Cleanroom Flow Runs, operations: 11}
+  - {group: Cleanroom Partners, operations: 11}
+  - {group: Data Connections, operations: 9}
+  - {group: Cleanroom Questions, operations: 8}
+  - {group: Cleanrooms, operations: 7}
+  - {group: Cleanroom Datasets, operations: 5}
+  - {group: Cleanroom Exports, operations: 5}
+  - {group: Cleanroom Question Datasets, operations: 5}
+  - {group: Cleanroom Question Run Schedule, operations: 5}
+  - {group: Cleanroom Users, operations: 5}
+  - {group: DataConnectionViews, operations: 5}
+  - {group: Destinations, operations: 5}
+  - {group: Organization Credentials, operations: 5}
+  - {group: Questions, operations: 5}
+  - {group: Cleanroom Destinations, operations: 4}
+  - {group: Intelligence, operations: 4}
+  - {group: Billable Configs, operations: 3}
+  - {group: Cleanroom, operations: 3}
+  - {group: Credential Sources, operations: 3}
+  - {group: Flow Decision Configurations, operations: 3}
+  - {group: Cleanroom Question Permissions, operations: 2}
+  - {group: Cleanroom Question Result Shares, operations: 2}
+  - {group: Cleanroom Question Tags, operations: 2}
+  - {group: Cleanroom Roles, operations: 2}
+  - {group: Data Sources, operations: 2}
+  - {group: Data Types, operations: 2}
+  - {group: Data Source Parameters, operations: 1}
+  - {group: Health, operations: 1}
+  - {group: Import Data Types, operations: 1}
+  - {group: Organization Users, operations: 1}
+- api: LiveRamp Privacy API
+  file: openapi/liveramp-privacy-api-openapi.yml
+  operations: 2
+  capabilities:
+  - {group: PrivacyRequests, operations: 2}
+coverage:
+  tools_named: 0
+  tools_declared_by_provider: 27
+  tools_bound_to_rest: 0
+  mcp_only: 27
+  rest_operations_total: 179
+  rest_operations_with_a_tool: 0
+  binding_rate: 0.0

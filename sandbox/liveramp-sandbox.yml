@@ -1,0 +1,65 @@
+generated: '2026-08-13'
+method: searched
+source: openapi/liveramp-privacy-api-openapi.yml,
+  https://developers.liveramp.com/activation-api/reference/getting-started-1
+summary: >-
+  LiveRamp publishes no self-serve sandbox, no test-mode key prefix, and no magic test values.
+  There is exactly one non-production surface named in any published artifact: a staging server
+  declared in the Privacy API OpenAPI. Everything else is "your LiveRamp representative will
+  provision a Service Account you can use to test API calls" — a sales-gated test path, not a
+  sandbox.
+sandbox_available: false
+self_serve: false
+environments:
+- name: Privacy API production
+  url: https://privacy-api.liveramp.com
+  type: production
+  source: openapi/liveramp-privacy-api-openapi.yml
+- name: Privacy API staging
+  url: https://privacy-api.staging.liveramp.com
+  type: staging
+  source: openapi/liveramp-privacy-api-openapi.yml
+  note: >-
+    Declared as "Staging environment" in the published Privacy API OpenAPI servers[] block. No
+    documentation page explains how to obtain staging credentials, so it is recorded as a
+    declared environment rather than an open sandbox.
+- name: Activation API production
+  url: https://api.liveramp.com/activation
+  type: production
+  source: openapi/liveramp-activation-api-openapi.yml
+- name: Clean Room API production
+  url: https://api.habu.com/v1/
+  type: production
+  source: openapi/liveramp-clean-room-api-openapi.yml
+test_credentials:
+  model: representative-provisioned
+  detail: >-
+    "When the necessary agreements are in place, your LiveRamp Representative will provide you
+    with your Service Account (API key) and SFTP server credentials. You can use them to test API
+    calls." There is no separate test key, no key prefix distinguishing test from live, and no
+    documented way to obtain credentials without a LiveRamp representative.
+  source: https://developers.liveramp.com/activation-api/reference/getting-started-1
+test_values: []
+test_values_note: >-
+  No test cards, magic identifiers, sample RampIDs, seeded fixtures, or time-simulation tooling
+  are published anywhere in the developer portal. Nothing is invented here.
+health_check:
+  operation: getHealth
+  path: /health
+  api: LiveRamp Clean Room API
+  note: The only unauthenticated-shaped availability probe declared in any published spec.
+sample_data:
+  note: >-
+    LiveRamp does publish real file-format sample data for data ONBOARDING (not API testing) in
+    its public docs bucket — good/bad column-based and key-value CSV samples, PII header
+    templates, and per-partner attribution file templates.
+  location: https://storage.googleapis.com/lr-tech-docs-resources/Files/connect/
+  examples:
+  - LiveRamp_Column-Based_offline_good_sample.csv
+  - LiveRamp_Column-Based_offline_bad_sample.rtf
+  - LiveRamp_key-value_online_good_sample.csv
+  - LiveRamp_Column-Based_PII_Headers.csv
+tutorials:
+- name: Clean Room API Python Tutorial
+  url: https://storage.googleapis.com/lr-tech-docs-resources/Files/clean-room/api/Clean-Room-API-Python-Tutorial.ipynb
+  format: Jupyter notebook

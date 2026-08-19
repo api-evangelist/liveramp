@@ -1,0 +1,924 @@
+{
+  "item": [
+    {
+      "id": "62e8d046-f824-4a29-87b0-a99e160535a2",
+      "name": "PrivacyRequests",
+      "description": {
+        "content": "(resource)  Manage privacy requests.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "68b87e4a-c930-4926-9061-88fa641f2b16",
+          "name": "Create PrivacyRequests",
+          "request": {
+            "name": "Create PrivacyRequests",
+            "description": {
+              "content": "Creates a new privacy request for data deletion or opt-out. Accepts personal information (email, name, address) or mobile advertising identifiers (MAID) to identify the data subject and processes the request according to the specified type. At least one identifier (email or MAID) must be provided. Returns a unique request UUID for tracking and handles duplicate detection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Organization ID for the request",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6499ef22-7946-4a9b-83a7-632eaad4e39a",
+              "name": "Request acknowledged - duplicate detected",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"+1-555-123-4567\",\n  \"street\": \"123 Main St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip_code\": \"94105\",\n  \"request_type\": \"DELETION\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_uuid\": \"123e4567-e89b-12d3-a456-426655440000\",\n  \"status\": \"ACCEPTED\",\n  \"message\": \"Request created successfully\",\n  \"is_duplicate\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56ecea9b-ebd6-4465-8cb0-01413d2bcaa3",
+              "name": "Creates a new privacy request successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"+1-555-123-4567\",\n  \"street\": \"123 Main St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip_code\": \"94105\",\n  \"request_type\": \"DELETION\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_uuid\": \"456e7890-f12b-34c5-d678-901234567890\",\n  \"status\": \"ACCEPTED\",\n  \"message\": \"Request created successfully\",\n  \"is_duplicate\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8c312b7-4831-4b95-82f6-858480998d93",
+              "name": "Bad Request - Invalid request format or missing required headers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"+1-555-123-4567\",\n  \"street\": \"123 Main St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip_code\": \"94105\",\n  \"request_type\": \"DELETION\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"time\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23220720-f942-41ae-ad8c-ffe35bb19c11",
+              "name": "Unauthenticated Request - Invalid or missing authorization token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"+1-555-123-4567\",\n  \"street\": \"123 Main St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip_code\": \"94105\",\n  \"request_type\": \"DELETION\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"time\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9dd03f1b-891b-4602-8de9-88ca70f53d77",
+              "name": "Forbidden Request - Insufficient permissions for the organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"+1-555-123-4567\",\n  \"street\": \"123 Main St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip_code\": \"94105\",\n  \"request_type\": \"DELETION\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"time\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9829205-e6c6-4930-a5e7-e4064e8640a0",
+              "name": "Input Validation Error - Invalid field values, format, or missing required identifier (must provide at least email or MAID)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"+1-555-123-4567\",\n  \"street\": \"123 Main St\",\n  \"city\": \"San Francisco\",\n  \"state\": \"CA\",\n  \"zip_code\": \"94105\",\n  \"request_type\": \"DELETION\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"time\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "796f5066-b05a-4117-b0d5-3fe6aa882661",
+          "name": "Get PrivacyRequests",
+          "request": {
+            "name": "Get PrivacyRequests",
+            "description": {
+              "content": "Retrieves privacy requests with optional filtering. If a UUID is provided as a query parameter, a single request is returned; otherwise a paginated list of requests is returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "requests"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "uuid",
+                  "value": "<uuid>",
+                  "description": "The UUID of a specific privacy request to retrieve. If provided, returns a single request; if omitted, returns a paginated list of requests."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "10",
+                  "description": "Number of items per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by request status."
+                },
+                {
+                  "disabled": false,
+                  "key": "request_type",
+                  "value": "<string>",
+                  "description": "Filter by request type."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_from",
+                  "value": "<date>",
+                  "description": "Filter from date in YYYY-MM-DD format."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_to",
+                  "value": "<date>",
+                  "description": "Filter to date in YYYY-MM-DD format."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Organization ID for the request",
+                "key": "LR-Org-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e065aeb-f544-434b-bf0d-c07d6a38bde4",
+              "name": "Success - Returns either a single privacy request or a list of requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "uuid",
+                      "value": "123e4567-e89b-12d3-a456-426655440000"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "COMPLETED"
+                    },
+                    {
+                      "key": "request_type",
+                      "value": "DELETION"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"privacy_request\": {\n    \"request_uuid\": \"123e4567-e89b-12d3-a456-426655440000\",\n    \"request_type\": \"DELETION\",\n    \"status\": \"PROCESSING\",\n    \"date_received\": \"2023-10-07T10:30:00Z\",\n    \"date_processed\": \"2023-10-07T11:15:30Z\",\n    \"date_completed\": null,\n    \"error_message\": null\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e97c6df7-bdd8-48f1-9c9e-b5438baa147d",
+              "name": "Bad Request - Invalid query parameters or missing required headers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "uuid",
+                      "value": "123e4567-e89b-12d3-a456-426655440000"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "COMPLETED"
+                    },
+                    {
+                      "key": "request_type",
+                      "value": "DELETION"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"time\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1d283ed5-ba8e-4081-834c-077733836b81",
+              "name": "Unauthenticated Request - Invalid or missing authorization token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "uuid",
+                      "value": "123e4567-e89b-12d3-a456-426655440000"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "COMPLETED"
+                    },
+                    {
+                      "key": "request_type",
+                      "value": "DELETION"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Invalid authorization token\",\n  \"time\": \"2023-10-07T10:30:00Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63424804-a55b-4d35-a7ed-441e9689fc48",
+              "name": "Forbidden Request - Insufficient permissions for the organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "uuid",
+                      "value": "123e4567-e89b-12d3-a456-426655440000"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "COMPLETED"
+                    },
+                    {
+                      "key": "request_type",
+                      "value": "DELETION"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"time\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af834c20-6e54-4188-a397-52a528f71078",
+              "name": "Not Found - Privacy request not found or not accessible by this organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "requests"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "uuid",
+                      "value": "123e4567-e89b-12d3-a456-426655440000"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "10"
+                    },
+                    {
+                      "key": "status",
+                      "value": "COMPLETED"
+                    },
+                    {
+                      "key": "request_type",
+                      "value": "DELETION"
+                    },
+                    {
+                      "key": "date_from",
+                      "value": "2023-01-01"
+                    },
+                    {
+                      "key": "date_to",
+                      "value": "2023-12-31"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) Organization ID for the request",
+                    "key": "LR-Org-ID",
+                    "value": "ORG_ID"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"time\": \"2019-04-13T03:35:34Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://privacy-api.liveramp.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a05bde04-b92a-47d8-aaa3-652b00e7ec18",
+    "name": "Privacy API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "An API for delivering privacy requests directly to LiveRamp.",
+      "type": "text/plain"
+    }
+  }
+}

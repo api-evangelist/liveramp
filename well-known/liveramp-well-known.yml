@@ -1,0 +1,117 @@
+generated: '2026-08-13'
+method: probed
+source: live GET probes of /.well-known/* on every apis.yml and OpenAPI servers[] host
+summary:
+  hosts_probed: 6
+  paths_probed_per_host: 7
+  real_documents: 1
+  note: >-
+    One real document: an RFC 9727 api-catalog linkset on the developer portal. Every other 200
+    observed on developers.liveramp.com is the Webflow single-page-app catch-all returning the
+    same 140,390-byte HTML shell for any /.well-known/* path — recorded here as a miss, not a
+    document, and deliberately NOT wired as a SecurityTxt / AgentCard / ai-plugin pointer.
+hosts:
+- host: https://developers.liveramp.com
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: application/json
+    file: liveramp-api-catalog.json
+    real: true
+    note: RFC 9727 linkset naming all ten LiveRamp developer-portal API surfaces.
+  - path: /.well-known/security.txt
+    status: 200
+    real: false
+    note: HTML SPA shell (140390 bytes), not an RFC 9116 document.
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    real: false
+    note: HTML SPA shell, not JSON.
+  - path: /.well-known/agent-card.json
+    status: 200
+    real: false
+    note: HTML SPA shell, not an A2A AgentCard. No agent card is published.
+  - path: /.well-known/agent.json
+    status: 200
+    real: false
+    note: HTML SPA shell, not an A2A AgentCard.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://liveramp.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.liveramp.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://privacy-api.liveramp.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.habu.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://docs.liveramp.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  note: >-
+    docs.liveramp.com answers every path with a 404 that redirects into an
+    app.dev.liveramp.com/error/unauthorized page — the documentation host is behind an
+    authenticated app shell.

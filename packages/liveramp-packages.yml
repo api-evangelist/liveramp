@@ -1,0 +1,122 @@
+generated: '2026-08-13'
+method: searched
+source: registry.npmjs.org, pypi.org, repo1.maven.org, trunk.cocoapods.org, api.github.com,
+  ats.rlcdn.com
+note: >-
+  LiveRamp publishes no general-purpose REST client library for the Activation, AbiliTec, RampID,
+  Privacy or Data Marketplace APIs — those are documented as raw HTTP. The first-party client
+  code that does exist is (a) a Python client for the Clean Room API, (b) the ATS mobile SDK for
+  iOS, and (c) the ATS browser library delivered from LiveRamp's own CDN. The @liveramp/* npm
+  scope and com.liveramp Maven group are real and first-party but hold internal engineering
+  utilities (promise helpers, Cascading/Hadoop tooling), not API clients, so they are recorded
+  with official:true and api_client:false.
+packages:
+- language: python
+  registry: pypi
+  name: liveramp-clean-room
+  url: https://pypi.org/project/liveramp-clean-room/
+  install: pip install liveramp-clean-room
+  official: true
+  api_client: true
+  covers: LiveRamp Clean Room API
+  version: 0.3.3
+  published: '2024-07-15'
+  author: Datahub Eng <datahub_ops@liveramp.com>
+  note: >-
+    First-party by author email. DECAY SIGNAL — the last release (2024-07-15) predates the Clean
+    Room API specification LiveRamp currently publishes, which the Clean Room changelog shows
+    being updated into 2026. A consumer picking this SDK up today is two years behind the
+    contract.
+- language: swift
+  registry: cocoapods
+  name: LRAtsSDK
+  url: https://cocoapods.org/pods/LRAtsSDK
+  install: pod 'LRAtsSDK'
+  official: true
+  api_client: true
+  covers: LiveRamp Authenticated Traffic Solution (ATS)
+  version: 3.2.3
+  published: '2026-06-09'
+  source_code: https://github.com/LiveRamp/ats-sdk-ios
+  note: >-
+    Actively released. Note that LiveRamp has announced the ATS Mobile SDK is DEPRECATED with a
+    target sunset of 2026-09-30 and directs integrators to the ATS API instead — see
+    lifecycle/liveramp-lifecycle.yml.
+- language: swift
+  registry: github
+  name: ats-sdk-ios-google-adapter
+  url: https://github.com/LiveRamp/ats-sdk-ios-google-adapter
+  install: Swift Package Manager / CocoaPods
+  official: true
+  api_client: false
+  covers: Google Mobile Ads mediation adapter for the ATS iOS SDK
+  version: null
+  published: null
+  note: >-
+    Checked GitHub releases and CocoaPods trunk; no published release/version metadata endpoint
+    answered for this adapter, so version and date are honestly null. Repository last pushed
+    2026-06-09.
+- language: javascript
+  registry: cdn
+  name: ats.js
+  url: https://ats.rlcdn.com/ats.js
+  install: <script src="https://ats.rlcdn.com/ats.js"></script>
+  official: true
+  api_client: true
+  covers: LiveRamp Authenticated Traffic Solution (browser)
+  version: null
+  published: null
+  note: >-
+    HTTP 200, real minified bundle exposing window.ats. The distribution URL is UNPINNED — there
+    is no version in the path and no jsDelivr/unpkg metadata endpoint to query, because the file
+    is served from LiveRamp's own rlcdn.com CDN rather than a package registry. A consumer cannot
+    tell which build they are loading; neither can we. Recorded as version: null deliberately.
+- language: javascript
+  registry: npm
+  name: '@liveramp/higher-order-promise'
+  url: https://www.npmjs.com/package/@liveramp/higher-order-promise
+  install: npm install @liveramp/higher-order-promise
+  official: true
+  api_client: false
+  version: 1.0.5
+  published: '2020-12-01'
+  note: Internal engineering utility in the first-party @liveramp npm scope. Not an API client.
+- language: javascript
+  registry: npm
+  name: '@liveramp/typed-mutations'
+  url: https://www.npmjs.com/package/@liveramp/typed-mutations
+  install: npm install @liveramp/typed-mutations
+  official: true
+  api_client: false
+  version: 1.0.3
+  published: '2020-12-02'
+  note: Internal engineering utility in the first-party @liveramp npm scope. Not an API client.
+- language: java
+  registry: maven
+  name: com.liveramp:cascading_ext
+  url: https://repo1.maven.org/maven2/com/liveramp/cascading_ext/
+  official: true
+  api_client: false
+  version: null
+  published: null
+  note: >-
+    The com.liveramp Maven group is real and first-party (cascading_ext, commons, jack, workflow2,
+    daemon_lib, hyperminhash). These are Hadoop/Cascading data-engineering libraries, not API
+    clients. search.maven.org's JSON endpoint returned an HTML page rather than JSON on this run,
+    so latest version and date are honestly null.
+registries_checked:
+- registry: npm
+  result: '@liveramp scope present; no first-party REST API client'
+- registry: pypi
+  result: liveramp-clean-room found; the PyPI package "habu" is an unrelated third-party hacking
+    toolkit and is NOT LiveRamp
+- registry: maven-central
+  result: com.liveramp group present; data-engineering libraries only
+- registry: rubygems
+  result: 404 for liveramp
+- registry: nuget
+  result: no first-party package found
+- registry: pkg.go.dev
+  result: LiveRamp publishes Go repos (iabconsent, ccpa, substation) but no API client
+- registry: cocoapods
+  result: LRAtsSDK 3.2.3

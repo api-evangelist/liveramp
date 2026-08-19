@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "LiveRamp Activation Deliveries OAuth Connections API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth Connections",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Begin OAuth connection attempt",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.liveramp.com/activation/v2/v2/oauthconnectionattempt"
+          },
+          "docs": "Begin OAuth connection attempt"
+        },
+        {
+          "info": {
+            "name": "List OAuth connections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/oauthconnections"
+          },
+          "docs": "List OAuth connections"
+        },
+        {
+          "info": {
+            "name": "Get OAuth connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/oauthconnections/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get OAuth connection"
+        },
+        {
+          "info": {
+            "name": "Get OAuth connection status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.liveramp.com/activation/v2/v2/oauthconnections/:id/status",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get OAuth connection status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

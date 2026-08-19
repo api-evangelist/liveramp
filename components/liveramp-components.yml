@@ -1,0 +1,55 @@
+generated: '2026-08-13'
+method: searched
+source: https://ats.rlcdn.com/ats.js, https://developers.liveramp.com/authenticatedtraffic-api/,
+  https://github.com/LiveRamp/ats-sdk-ios
+note: >-
+  LiveRamp ships no embeddable UI component library (no web components, no element library, no
+  embedded dashboard). What it does ship on the client side is the Authenticated Traffic Solution
+  (ATS) family — a browser script and mobile SDKs that publishers embed to turn an authenticated
+  user into a RampID envelope. Recorded here because it is genuinely client-side, distinct from
+  the server-side SDKs in packages/.
+families:
+- name: Authenticated Traffic Solution (ATS) — browser
+  kind: script-tag library
+  loader: https://ats.rlcdn.com/ats.js
+  global: window.ats
+  install: <script src="https://ats.rlcdn.com/ats.js"></script>
+  versioning: unpinned
+  http_status: 200
+  note: >-
+    Loaded from LiveRamp's own rlcdn.com CDN. The URL carries no version, so the build a publisher
+    receives can change underneath them without notice; there is no package-registry metadata
+    endpoint to pin against.
+  configured_via: an ATS Placement created in the LiveRamp Console
+  docs: https://developers.liveramp.com/authenticatedtraffic-api/
+- name: Authenticated Traffic Solution (ATS) — mobile
+  kind: native mobile SDK
+  status: deprecated
+  sunset_date: '2026-09-30'
+  replacement: LiveRamp ATS API
+  components:
+  - {platform: iOS, name: LRAtsSDK, version: 3.2.3, published: '2026-06-09',
+     repository: 'https://github.com/LiveRamp/ats-sdk-ios'}
+  - {platform: iOS, name: ats-sdk-ios-google-adapter, purpose: Google Mobile Ads mediation adapter,
+     repository: 'https://github.com/LiveRamp/ats-sdk-ios-google-adapter'}
+  - {platform: iOS, name: ats-sdk-ios-google-ima-adapter, purpose: Google IMA integration,
+     repository: 'https://github.com/LiveRamp/ats-sdk-ios-google-ima-adapter'}
+  - {platform: Android, name: Android ATS Mobile SDK, latest_announced: 2.10.0,
+     source: 'https://developers.liveramp.com/authenticatedtraffic-api/changelog'}
+  note: >-
+    LiveRamp has announced the ATS Mobile SDK is deprecated with a target sunset of 2026-09-30 and
+    directs publishers to call the ATS Envelope API directly instead. Do not start a new mobile
+    integration on these.
+- name: Consent-string libraries
+  kind: open-source client/server helpers
+  components:
+  - {name: iabconsent, language: Go, repository: 'https://github.com/LiveRamp/iabconsent',
+     purpose: IAB Consent String specs v1.1 and v2}
+  - {name: ccpa, language: Go, repository: 'https://github.com/LiveRamp/ccpa',
+     purpose: IAB U.S. Privacy String / CCPA Opt-Out Storage Format}
+  - {name: privacy-manager-consent-state, repository: 'https://github.com/LiveRamp/privacy-manager-consent-state'}
+not_found:
+- web components
+- embeddable dashboards
+- hosted checkout / prebuilt UI surfaces
+- a design system package
