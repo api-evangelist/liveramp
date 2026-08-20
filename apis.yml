@@ -222,6 +222,10 @@ apis:
   tags:
   - Analytics
   - Automation
+  - Job
+  tags_raw:
+  - Analytics
+  - Automation
   - Jobs
   properties:
   - type: Documentation
