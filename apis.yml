@@ -11,6 +11,18 @@ description: LiveRamp is a data collaboration platform that lets enterprises con
   ten developer sub-sites; API credentials are issued as Service Accounts by a LiveRamp
   representative rather than through self-serve signup.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: sales-gated
@@ -1459,6 +1471,9 @@ apis:
   - type: LLMsTxt
     url: https://developers.liveramp.com/privacy-api/llms.txt
 common:
+- type: CapabilityMap
+  url: capabilities/liveramp-capability-edges.yml
+  name: LiveRamp Business Capability Map
 - type: Overlay
   url: overlays/liveramp-activation-api-overlay.yaml
 - type: Overlay
