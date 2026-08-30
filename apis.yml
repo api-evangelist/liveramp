@@ -231,6 +231,8 @@ apis:
   humanURL: https://developers.liveramp.com/activation-api
   baseURL: https://api.liveramp.com/activation
   tags:
+  - Clean Room
+  tags_raw:
   - Cleanroom
   properties:
   - type: OpenAPI
@@ -1326,6 +1328,8 @@ apis:
   humanURL: https://developers.liveramp.com/activation-api
   baseURL: https://api.liveramp.com/activation
   tags:
+  - Privacy Requests
+  tags_raw:
   - PrivacyRequests
   properties:
   - type: OpenAPI
