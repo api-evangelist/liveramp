@@ -1,0 +1,178 @@
+openapi: 3.2.0
+info:
+  title: Activation View Deliveries API
+  description: An API for destination management and segment delivery
+  version: 2.9.0
+servers:
+- description: Production API server
+  url: https://api.liveramp.com/activation
+tags:
+- name: View Deliveries
+  description: ''
+paths:
+  /v2/deliveries:
+    get:
+      tags:
+      - View Deliveries
+      operationId: Get v2/Deliveries
+      description: ''
+      summary: Fetch a list of Deliveries
+      responses:
+        '200':
+          description: v2/Deliveries retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DeliveryMultiResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: query
+        name: limit
+        description: Number of v2/Deliveries to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - in: query
+        name: integrationConnectionID
+        required: false
+        schema:
+          type: string
+          description: Link to v2/IntegrationConnection resource via its id
+      - in: query
+        name: segmentIDs
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    OperationType:
+      type: string
+      enum:
+      - ADD
+      - DELETE
+    v2DeliveryMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    v2DeliveryMultiResponse:
+      type: object
+      properties:
+        v2/Deliveries:
+          description: Array of retrieved v2/Deliveries
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DeliveryOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DeliveryMultiResponsePagination'
+    DeviceType:
+      type: string
+      enum:
+      - PII
+      - WEB
+      - IOS
+      - ANDROID
+      - CUSTOM_ID
+      - MIXED
+      - OTHER
+      - RAMP_ID
+    DeliveryStatus:
+      type: string
+      enum:
+      - FAILED
+      - CANCELLED
+      - PENDING
+      - IN_PROGRESS
+      - DELIVERED
+    v2DeliveryOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/DeliveryStatus'
+          type: string
+        deviceType:
+          allOf:
+          - $ref: '#/components/schemas/DeviceType'
+          type: string
+        recordCount:
+          type: integer
+          format: int32
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        segmentID:
+          type: string
+        integrationConnectionID:
+          type: string
+          description: Link to v2/IntegrationConnection resource via its id
+        operationType:
+          allOf:
+          - $ref: '#/components/schemas/OperationType'
+          type: string
+      required:
+      - id
+      - status
+      - deviceType
+      - updatedAt
+      - integrationConnectionID
+      - operationType
+      description: Delivery information about a Segment to a IntegrationConnection

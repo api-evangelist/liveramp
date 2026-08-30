@@ -1,0 +1,318 @@
+openapi: 3.2.0
+info:
+  title: Activation OAuth Configuration API
+  description: An API for destination management and segment delivery
+  version: 2.9.0
+servers:
+- description: Production API server
+  url: https://api.liveramp.com/activation
+tags:
+- name: OAuth Configuration
+  description: ''
+paths:
+  /v2/oauth-connections:
+    get:
+      tags:
+      - OAuth Configuration
+      operationId: Get v2/OauthConnections
+      description: ''
+      summary: Fetch a list of OAuth Connections
+      responses:
+        '200':
+          description: v2/OauthConnections retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2OauthConnectionMultiResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: query
+        name: limit
+        description: Number of v2/OauthConnections to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - in: query
+        name: oAuthEndpointID
+        required: false
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/oauth-connections/{id}:
+    get:
+      tags:
+      - OAuth Configuration
+      operationId: Get v2/OauthConnection
+      description: ''
+      summary: Fetch a single OAuth Connection
+      responses:
+        '200':
+          description: v2/OauthConnection retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2OauthConnectionOutput'
+        '404':
+          description: v2/OauthConnection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/oauth-connection-attempts:
+    post:
+      tags:
+      - OAuth Configuration
+      operationId: Create v2/OauthConnectionAttempt
+      description: ''
+      summary: Begin an OAuth authorization flow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2OauthConnectionAttemptInput'
+      responses:
+        '201':
+          description: v2/OauthConnectionAttempt created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    example: 123e4567-e89b-12d3-a456-426655440000
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/oauth-connection-attempts/{id}:
+    get:
+      tags:
+      - OAuth Configuration
+      operationId: Get v2/OauthConnectionAttempt
+      description: ''
+      summary: Fetch the status of an OAuth flow
+      responses:
+        '200':
+          description: v2/OauthConnectionAttempt retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2OauthConnectionAttemptOutput'
+        '404':
+          description: v2/OauthConnectionAttempt not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    v2OauthConnectionAttemptInput:
+      type: object
+      properties:
+        redirectUrl:
+          description: URL that the user will be taken to after completing the OAuth flow
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+        state:
+          type: string
+        oAuthEndpointID:
+          description: oAuthEndpointID of the Integration you wish to authorize
+          type: string
+        oAuthConnectionID:
+          description: When status is AUTHORIZED, this references the OAuth Connection that was created. Pass this ID during create if you wish to reauthorize an existing OAuth Connection
+          type: string
+      required:
+      - oAuthEndpointID
+      description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    v2OauthConnectionOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        oAuthEndpointID:
+          type: string
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+      - id
+      - name
+      - oAuthEndpointID
+      - createdAt
+      - updatedAt
+      description: Represents an OAuth credential for a given OAuth Endpoint that the user has permission to use
+    OAuthConnectionAttemptStatus:
+      type: string
+      enum:
+      - AUTHORIZED
+      - FAILED
+      - PENDING
+      - PROCESSING
+    v2OauthConnectionMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    v2OauthConnectionAttemptOutput:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        authorizationUrl:
+          description: URL of login page to redirect customers to for authorization
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OAuthConnectionAttemptStatus'
+          type: string
+        statusDetail:
+          description: Additional information about the status, mainly used when status is FAILED
+          type: string
+        redirectUrl:
+          description: URL that the user will be taken to after completing the OAuth flow
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+        state:
+          type: string
+        oAuthEndpointID:
+          description: oAuthEndpointID of the Integration you wish to authorize
+          type: string
+        oAuthConnectionID:
+          description: When status is AUTHORIZED, this references the OAuth Connection that was created. Pass this ID during create if you wish to reauthorize an existing OAuth Connection
+          type: string
+      required:
+      - id
+      - authorizationUrl
+      - status
+      - oAuthEndpointID
+      description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
+    v2OauthConnectionMultiResponse:
+      type: object
+      properties:
+        v2/OauthConnections:
+          description: Array of retrieved v2/OauthConnections
+          type: array
+          items:
+            $ref: '#/components/schemas/v2OauthConnectionOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2OauthConnectionMultiResponsePagination'

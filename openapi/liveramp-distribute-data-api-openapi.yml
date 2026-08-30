@@ -1,0 +1,313 @@
+openapi: 3.2.0
+info:
+  title: Activation Distribute Data API
+  description: An API for destination management and segment delivery
+  version: 2.9.0
+servers:
+- description: Production API server
+  url: https://api.liveramp.com/activation
+tags:
+- name: Distribute Data
+  description: ''
+paths:
+  /v2/distribution-managers/{v2DistributionManagerId}/segment-configs:
+    post:
+      tags:
+      - Distribute Data
+      operationId: Create v2/DistributionManager::SegmentConfigs
+      description: ''
+      summary: Add Segments to a Distribution Manager. Limited to 500 segments at a time.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/v2DistributionManagerSegmentConfigInput'
+      responses:
+        '207':
+          description: SegmentConfig resources processed, statuses in body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    status:
+                      $ref: '#/components/schemas/StandardError'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: v2DistributionManagerId
+        description: Id of parent v2/DistributionManager
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+    delete:
+      tags:
+      - Distribute Data
+      operationId: Delete v2/DistributionManager::SegmentConfigs
+      description: ''
+      summary: Remove Segments from a Distribution Manager. Limited to 500 segments at a time.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+      responses:
+        '207':
+          description: SegmentConfig deletes processed, statuses in body
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    status:
+                      $ref: '#/components/schemas/StandardError'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: v2DistributionManagerId
+        description: Id of parent v2/DistributionManager
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+      - Distribute Data
+      operationId: Get v2/DistributionManager::SegmentConfigs
+      description: ''
+      summary: Fetch a list of Segments within a Distribution Manager
+      responses:
+        '200':
+          description: SegmentConfigs retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: v2DistributionManagerId
+        description: Id of parent v2/DistributionManager
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: Number of SegmentConfigs to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/distribution-managers/{v2DistributionManagerId}/segment-configs/{id}:
+    get:
+      tags:
+      - Distribute Data
+      operationId: Get v2/DistributionManager::SegmentConfig
+      description: ''
+      summary: Fetch a single Segment within a Distribution Manager
+      responses:
+        '200':
+          description: SegmentConfig retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
+        '404':
+          description: SegmentConfig or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: v2DistributionManagerId
+        description: Id of parent v2/DistributionManager
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    v2DistributionManagerSegmentConfigMultiResponse:
+      type: object
+      properties:
+        segmentConfigs:
+          description: Array of retrieved v2/DistributionManager::SegmentConfigs
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
+    v2DistributionManagerSegmentConfigMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    v2DistributionManagerSegmentConfigOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        segmentID:
+          type: string
+        segmentType:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+        destinationSegmentID:
+          type: string
+        distributionManagerID:
+          type: string
+          description: Link to v2/DistributionManager resource via its id
+      required:
+      - id
+      - segmentID
+      - segmentType
+      - distributionManagerID
+      description: A list of segment IDs to distribute
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    v2DistributionManagerSegmentConfigInput:
+      type: object
+      properties:
+        segmentID:
+          type: string
+        segmentType:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+        destinationSegmentID:
+          type: string
+        distributionManagerID:
+          type: string
+          description: Link to v2/DistributionManager resource via its id
+      required:
+      - segmentID
+      - segmentType
+      - distributionManagerID
+      description: A list of segment IDs to distribute
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE

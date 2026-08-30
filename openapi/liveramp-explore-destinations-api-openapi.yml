@@ -1,0 +1,371 @@
+openapi: 3.2.0
+info:
+  title: Activation Explore Destinations API
+  description: An API for destination management and segment delivery
+  version: 2.9.0
+servers:
+- description: Production API server
+  url: https://api.liveramp.com/activation
+tags:
+- name: Explore Destinations
+  description: View Destinations and Integrations where you can distribute data
+paths:
+  /v2/destinations:
+    get:
+      tags:
+      - Explore Destinations
+      operationId: Get v2/Destinations
+      description: ''
+      summary: Fetch a list of Destinations
+      responses:
+        '200':
+          description: v2/Destinations retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DestinationMultiResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: query
+        name: limit
+        description: Number of v2/Destinations to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/destinations/{id}:
+    get:
+      tags:
+      - Explore Destinations
+      operationId: Get v2/Destination
+      description: ''
+      summary: Fetch a single Destination
+      responses:
+        '200':
+          description: v2/Destination retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DestinationOutput'
+        '404':
+          description: v2/Destination not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/destinations/{v2DestinationId}/integrations:
+    get:
+      tags:
+      - Explore Destinations
+      operationId: Get v2/Destination::Integrations
+      description: ''
+      summary: Fetch a list of Integrations within a Destination
+      responses:
+        '200':
+          description: Integrations retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DestinationIntegrationMultiResponse'
+        '404':
+          description: Parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: v2DestinationId
+        description: Id of parent v2/Destination
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: limit
+        description: Number of Integrations to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - in: query
+        name: type
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/IntegrationType'
+          type: string
+      - in: query
+        name: view
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/IntegrationView'
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/destinations/{v2DestinationId}/integrations/{id}:
+    get:
+      tags:
+      - Explore Destinations
+      operationId: Get v2/Destination::Integration
+      description: ''
+      summary: Fetch a single Integration
+      responses:
+        '200':
+          description: Integration retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DestinationIntegrationOutput'
+        '404':
+          description: Integration or parent resource(s) not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: v2DestinationId
+        description: Id of parent v2/Destination
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    IntegrationType:
+      type: string
+      enum:
+      - ONBOARDING
+      - FULFILLMENT
+      - DATA_STORE
+    IntegrationProperty:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+      - name
+      - description
+    v2DestinationMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    v2DestinationIntegrationMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    v2DestinationIntegrationMultiResponse:
+      type: object
+      properties:
+        integrations:
+          description: Array of retrieved v2/Destination::Integrations
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DestinationIntegrationOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DestinationIntegrationMultiResponsePagination'
+    v2DestinationIntegrationOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/IntegrationType'
+          type: string
+        deviceTypes:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DeviceType'
+            type: string
+          type: array
+        requiredProperties:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/IntegrationProperty'
+            type: object
+          type: array
+        oAuthEndpointID:
+          description: Used when creating an OAuthConnectionAttempt. Only returned if the Integration requires OAuth
+          type: string
+        unavailableReason:
+          type: string
+      required:
+      - id
+      - name
+      - description
+      - type
+      - deviceTypes
+      - requiredProperties
+      description: An outline of the required configuration to send data to a destination
+    IntegrationView:
+      type: string
+      enum:
+      - STANDARD
+      - STANDARD_WITH_UNAVAILABLE
+    v2DestinationOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        logoUrl:
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+      required:
+      - id
+      - name
+      - logoUrl
+      description: A LiveRamp partner that can receive data from LiveRamp
+    DeviceType:
+      type: string
+      enum:
+      - PII
+      - WEB
+      - IOS
+      - ANDROID
+      - CUSTOM_ID
+      - MIXED
+      - OTHER
+      - RAMP_ID
+    v2DestinationMultiResponse:
+      type: object
+      properties:
+        v2/Destinations:
+          description: Array of retrieved v2/Destinations
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DestinationOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DestinationMultiResponsePagination'

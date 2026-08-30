@@ -1,0 +1,705 @@
+openapi: 3.2.0
+info:
+  title: Activation Configure Distributions API
+  description: An API for destination management and segment delivery
+  version: 2.9.0
+servers:
+- description: Production API server
+  url: https://api.liveramp.com/activation
+tags:
+- name: Configure Distributions
+  description: ''
+paths:
+  /v2/distribution-managers:
+    post:
+      tags:
+      - Configure Distributions
+      operationId: Create v2/DistributionManager
+      description: ''
+      summary: Create a Distribution Manager
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2DistributionManagerInput'
+      responses:
+        '201':
+          description: v2/DistributionManager created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+      - Configure Distributions
+      operationId: Get v2/DistributionManagers
+      description: ''
+      summary: Fetch a list of Distribution Managers
+      responses:
+        '200':
+          description: v2/DistributionManagers retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DistributionManagerMultiResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: query
+        name: limit
+        description: Number of v2/DistributionManagers to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - in: query
+        name: integrationConnectionID
+        required: false
+        schema:
+          type: string
+          description: Link to v2/IntegrationConnection resource via its id
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/distribution-managers/{id}:
+    get:
+      tags:
+      - Configure Distributions
+      operationId: Get v2/DistributionManager
+      description: ''
+      summary: Fetch a single Distribution Manager
+      responses:
+        '200':
+          description: v2/DistributionManager retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DistributionManagerOutput'
+        '404':
+          description: v2/DistributionManager not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+    put:
+      tags:
+      - Configure Distributions
+      operationId: Modify v2/DistributionManager
+      description: ''
+      summary: Update a Distribution Manager
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2DistributionManagerPuttable'
+      responses:
+        '200':
+          description: v2/DistributionManager modified successfully
+        '404':
+          description: v2/DistributionManager not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+    delete:
+      tags:
+      - Configure Distributions
+      operationId: Delete v2/DistributionManager
+      description: ''
+      summary: Delete a Distribution Manager
+      responses:
+        '200':
+          description: v2/DistributionManager deleted successfully
+        '404':
+          description: v2/DistributionManager not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/integration-connections:
+    post:
+      tags:
+      - Configure Distributions
+      operationId: Create v2/IntegrationConnection
+      description: ''
+      summary: Create an Integration Connection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2IntegrationConnectionInput'
+      responses:
+        '201':
+          description: v2/IntegrationConnection created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+      - Configure Distributions
+      operationId: Get v2/IntegrationConnections
+      description: ''
+      summary: Fetch a list of Integration Connections
+      responses:
+        '200':
+          description: v2/IntegrationConnections retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2IntegrationConnectionMultiResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: query
+        name: limit
+        description: Number of v2/IntegrationConnections to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/integration-connections/{id}:
+    get:
+      tags:
+      - Configure Distributions
+      operationId: Get v2/IntegrationConnection
+      description: ''
+      summary: Fetch a single Integration Connection
+      responses:
+        '200':
+          description: v2/IntegrationConnection retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2IntegrationConnectionOutput'
+        '404':
+          description: v2/IntegrationConnection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+    put:
+      tags:
+      - Configure Distributions
+      operationId: Modify v2/IntegrationConnection
+      description: ''
+      summary: Update an Integration Connection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2IntegrationConnectionPuttable'
+      responses:
+        '200':
+          description: v2/IntegrationConnection modified successfully
+        '404':
+          description: v2/IntegrationConnection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+    delete:
+      tags:
+      - Configure Distributions
+      operationId: Delete v2/IntegrationConnection
+      description: ''
+      summary: Delete an Integration Connection
+      responses:
+        '200':
+          description: v2/IntegrationConnection deleted successfully
+        '404':
+          description: v2/IntegrationConnection not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    v2DistributionManagerMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    v2DistributionManagerPuttable:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          type: string
+        expireAt:
+          description: The date at which all deliveries will be stopped and the status will be set to inactive
+          type:
+          - string
+          - 'null'
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+      required:
+      - name
+      - status
+      - expireAt
+      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+    v2IntegrationConnectionMultiResponse:
+      type: object
+      properties:
+        v2/IntegrationConnections:
+          description: Array of retrieved v2/IntegrationConnections
+          type: array
+          items:
+            $ref: '#/components/schemas/v2IntegrationConnectionOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2IntegrationConnectionMultiResponsePagination'
+    v2IntegrationConnectionPuttable:
+      type: object
+      properties:
+        oAuthConnectionID:
+          description: Required when the Integration has an oAuthEndpointID
+          type: string
+        properties:
+          description: A value must be specified for each of the requireProperties from Integration
+          items:
+            allOf:
+            - $ref: '#/components/schemas/IntegrationConnectionProperty'
+            type: object
+          type: array
+        deviceTypes:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DeviceType'
+            type: string
+          type: array
+      required:
+      - properties
+      - deviceTypes
+      description: A connection to an Integration
+    IntegrationConnectionProperty:
+      type: object
+      properties:
+        propertyKey:
+          type: string
+        propertyValue:
+          type: string
+      required:
+      - propertyKey
+      - propertyValue
+    v2IntegrationConnectionOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        integrationID:
+          items:
+            type: string
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: Link to v2/Destination::Integration resource via [v2/DestinationId, integrationId]
+        oAuthConnectionID:
+          description: Required when the Integration has an oAuthEndpointID
+          type: string
+        properties:
+          description: A value must be specified for each of the requireProperties from Integration
+          items:
+            allOf:
+            - $ref: '#/components/schemas/IntegrationConnectionProperty'
+            type: object
+          type: array
+        deviceTypes:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DeviceType'
+            type: string
+          type: array
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+      - id
+      - integrationID
+      - properties
+      - deviceTypes
+      - createdAt
+      - updatedAt
+      description: A connection to an Integration
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    Status:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    v2IntegrationConnectionInput:
+      type: object
+      properties:
+        integrationID:
+          items:
+            type: string
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: Link to v2/Destination::Integration resource via [v2/DestinationId, integrationId]
+        oAuthConnectionID:
+          description: Required when the Integration has an oAuthEndpointID
+          type: string
+        properties:
+          description: A value must be specified for each of the requireProperties from Integration
+          items:
+            allOf:
+            - $ref: '#/components/schemas/IntegrationConnectionProperty'
+            type: object
+          type: array
+        deviceTypes:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DeviceType'
+            type: string
+          type: array
+        distributionManagerName:
+          description: If provided, the Integration Connection create call will also create a Distribution Manager with this name. Useful in workflows where you want to create an Integration Connection and Distribuiton Manager with one API call
+          type: string
+      required:
+      - integrationID
+      - properties
+      - deviceTypes
+      description: A connection to an Integration
+    v2DistributionManagerInput:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        integrationConnectionID:
+          type: string
+          description: Link to v2/IntegrationConnection resource via its id
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          type: string
+        expireAt:
+          description: The date at which all deliveries will be stopped and the status will be set to inactive
+          type:
+          - string
+          - 'null'
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+      required:
+      - name
+      - integrationConnectionID
+      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+    v2DistributionManagerOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          maxLength: 50
+        integrationConnectionID:
+          type: string
+          description: Link to v2/IntegrationConnection resource via its id
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          type: string
+        expireAt:
+          description: The date at which all deliveries will be stopped and the status will be set to inactive
+          type:
+          - string
+          - 'null'
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+      - id
+      - name
+      - integrationConnectionID
+      - status
+      - expireAt
+      - createdAt
+      - updatedAt
+      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+    v2IntegrationConnectionMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    DeviceType:
+      type: string
+      enum:
+      - PII
+      - WEB
+      - IOS
+      - ANDROID
+      - CUSTOM_ID
+      - MIXED
+      - OTHER
+      - RAMP_ID
+    v2DistributionManagerMultiResponse:
+      type: object
+      properties:
+        v2/DistributionManagers:
+          description: Array of retrieved v2/DistributionManagers
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerMultiResponsePagination'

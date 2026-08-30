@@ -1,0 +1,172 @@
+openapi: 3.2.0
+info:
+  title: Activation V2/Segment Status API
+  description: An API for destination management and segment delivery
+  version: 2.9.0
+servers:
+- description: Production API server
+  url: https://api.liveramp.com/activation
+tags:
+- name: v2/SegmentStatus
+  description: (resource)  Represents a segment's status
+paths:
+  /v2/segment-statuses:
+    get:
+      tags:
+      - v2/SegmentStatus
+      operationId: Get v2/SegmentStatuses
+      description: 'Limited to either first-party (onboarding) or data marketplace segments. Exactly one of these segmentID params must be passed in
+
+        '
+      summary: Fetch a list of Segments' statuses.
+      responses:
+        '200':
+          description: v2/SegmentStatuses retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2SegmentStatusMultiResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: query
+        name: limit
+        description: Number of v2/SegmentStatuses to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - in: query
+        name: segmentType
+        required: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+      - in: query
+        name: segmentIDs
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    taxonomyTaxonomySegmentSyncStatus:
+      type: string
+      description: 'NOT_CONFIGURED_TO_SYNC: the Taxonomy::Segment is in a taxonomy that is not configured to sync to a destination.
+
+
+        NEVER_SYNCED: The Taxonomy::Segment has not been synced to the destination.
+
+
+        OUT_OF_SYNC: The Taxonomy::Segment has been synced to the destination and the destinationSegmentID exists, but the properties have been updated and need to be resynced.
+
+
+        SYNCED: The Taxonomy::Segment is in sync with the destination.'
+      enum:
+      - NOT_CONFIGURED_TO_SYNC
+      - NEVER_SYNCED
+      - OUT_OF_SYNC
+      - SYNCED
+    v2SegmentStatusOutput:
+      type: object
+      properties:
+        integrationConnectionID:
+          type: string
+        taxonomy:
+          allOf:
+          - $ref: '#/components/schemas/TaxonomyStatus'
+          type: object
+        segmentID:
+          type: string
+        segmentType:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+      required:
+      - taxonomy
+      - segmentID
+      - segmentType
+      description: Represents a segment's status
+    v2SegmentStatusMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    TaxonomyStatus:
+      type: object
+      properties:
+        taxonomySyncStatus:
+          allOf:
+          - $ref: '#/components/schemas/taxonomyTaxonomySegmentSyncStatus'
+          type: string
+        destinationSegmentID:
+          type: string
+      required: []
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    v2SegmentStatusMultiResponse:
+      type: object
+      properties:
+        v2/SegmentStatuses:
+          description: Array of retrieved v2/SegmentStatuses
+          type: array
+          items:
+            $ref: '#/components/schemas/v2SegmentStatusOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2SegmentStatusMultiResponsePagination'
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE

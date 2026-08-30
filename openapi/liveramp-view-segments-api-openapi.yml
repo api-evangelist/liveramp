@@ -1,0 +1,193 @@
+openapi: 3.2.0
+info:
+  title: Activation View Segments API
+  description: An API for destination management and segment delivery
+  version: 2.9.0
+servers:
+- description: Production API server
+  url: https://api.liveramp.com/activation
+tags:
+- name: View Segments
+  description: ''
+paths:
+  /v2/segments:
+    get:
+      tags:
+      - View Segments
+      operationId: Get v2/Segments
+      description: ''
+      summary: Fetch a list of Segments
+      responses:
+        '200':
+          description: v2/Segments retrieved successfully
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2SegmentMultiResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: query
+        name: limit
+        description: Number of v2/Segments to return
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+      - in: query
+        name: after
+        description: This value is a cursor that enables continued paginated queries. Its value can be found under "_pagination.after" in the previous response from this endpoint.
+        schema:
+          type: string
+      - in: query
+        name: valueName
+        description: Search by a field name+value pair. If valueName is set, fieldName must also be set
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: fieldName
+        description: Search by a field name+value pair. If fieldName is set, valueName must also be set
+        required: false
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+  /v2/segments/{id}:
+    get:
+      tags:
+      - View Segments
+      operationId: Get v2/Segment
+      description: ''
+      summary: Fetch a single Segment
+      responses:
+        '200':
+          description: v2/Segment retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2SegmentOutput'
+        '404':
+          description: v2/Segment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Bearer Authorization using the access token generated with your service account
+        in: header
+        name: Authorization
+        required: true
+        schema:
+          type: string
+      - description: LiveRamp Org ID to make requests as. Starting Jan 2022, this is recommended over the Liveramp Customer ID header
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    v2SegmentOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        field:
+          allOf:
+          - $ref: '#/components/schemas/Field'
+          type: object
+        value:
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+      required:
+      - id
+      - field
+      - value
+      - type
+      description: Represents a field-value pair that can be added to a Distribution Manager
+    v2SegmentMultiResponse:
+      type: object
+      properties:
+        v2/Segments:
+          description: Array of retrieved v2/Segments
+          type: array
+          items:
+            $ref: '#/components/schemas/v2SegmentOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2SegmentMultiResponsePagination'
+    Field:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        audienceId:
+          type: string
+      required:
+      - id
+      - name
+      - audienceId
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
+    v2SegmentMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.

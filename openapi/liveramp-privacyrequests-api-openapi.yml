@@ -1,0 +1,446 @@
+openapi: 3.2.0
+info:
+  title: Privacy Requests API
+  description: An API for delivering privacy requests directly to LiveRamp.
+  version: 1.0.0
+servers:
+- description: Production environment
+  url: https://privacy-api.liveramp.com
+- description: Staging environment
+  url: https://privacy-api.staging.liveramp.com
+security:
+- BearerAuth: []
+tags:
+- name: PrivacyRequests
+  description: (resource)  Manage privacy requests.
+paths:
+  /v1/requests:
+    post:
+      tags:
+      - PrivacyRequests
+      operationId: Create PrivacyRequests
+      description: Creates a new privacy request for data deletion or opt-out. Accepts personal information (email, name, address) or mobile advertising identifiers (MAID) to identify the data subject and processes the request according to the specified type. At least one identifier (email or MAID) must be provided. Returns a unique request UUID for tracking and handles duplicate detection.
+      summary: Create PrivacyRequests
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePrivacyRequestInput'
+            examples:
+              deletion_request:
+                summary: Deletion request with full personal information
+                value:
+                  email: john.doe@example.com
+                  first_name: John
+                  last_name: Doe
+                  phone: +1-555-123-4567
+                  street: 123 Main St
+                  city: San Francisco
+                  state: CA
+                  zip_code: '94105'
+                  request_type: DELETION
+              optout_request:
+                summary: Opt-out request
+                value:
+                  email: user@example.com
+                  first_name: User
+                  last_name: Example
+                  request_type: OPT_OUT
+              maid_deletion_request:
+                summary: Deletion request using Mobile Advertising ID
+                value:
+                  maid: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                  request_type: DELETION
+              maid_optout_request:
+                summary: Opt-out request using MAID
+                value:
+                  maid: 12345678-90ab-cdef-1234-567890abcdef
+                  request_type: OPT_OUT
+      responses:
+        '200':
+          description: Request acknowledged - duplicate detected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivacyRequestResponse'
+        '201':
+          description: Creates a new privacy request successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivacyRequestResponse'
+              examples:
+                new_deletion:
+                  summary: New deletion request created
+                  value:
+                    request_uuid: 456e7890-f12b-34c5-d678-901234567890
+                    status: ACCEPTED
+                    message: Request created successfully
+                    is_duplicate: false
+        '400':
+          description: Bad Request - Invalid request format or missing required headers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '401':
+          description: Unauthenticated Request - Invalid or missing authorization token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '403':
+          description: Forbidden Request - Insufficient permissions for the organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '422':
+          description: Input Validation Error - Invalid field values, format, or missing required identifier (must provide at least email or MAID)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - description: Organization ID for the request
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+          example: ORG_ID
+    get:
+      tags:
+      - PrivacyRequests
+      operationId: Get PrivacyRequests
+      description: Retrieves privacy requests with optional filtering. If a UUID is provided as a query parameter, a single request is returned; otherwise a paginated list of requests is returned.
+      summary: Get PrivacyRequests
+      responses:
+        '200':
+          description: Success - Returns either a single privacy request or a list of requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivacyRequestListResponse'
+              examples:
+                single_request:
+                  summary: Single request retrieved by UUID
+                  value:
+                    privacy_request:
+                      request_uuid: 123e4567-e89b-12d3-a456-426655440000
+                      request_type: DELETION
+                      status: PROCESSING
+                      date_received: '2023-10-07T10:30:00Z'
+                      date_processed: '2023-10-07T11:15:30Z'
+                      date_completed: null
+                      error_message: null
+                list_requests:
+                  summary: List of requests with pagination
+                  value:
+                    privacy_requests:
+                    - request_uuid: 123e4567-e89b-12d3-a456-426655440000
+                      request_type: DELETION
+                      status: COMPLETED
+                      date_received: '2023-10-07T10:30:00Z'
+                      date_processed: '2023-10-07T11:15:30Z'
+                      date_completed: '2023-10-07T12:45:15Z'
+                      error_message: null
+                    - request_uuid: 456e7890-f12b-34c5-d678-901234567890
+                      request_type: OPT_OUT
+                      status: PROCESSING
+                      date_received: '2023-10-07T14:20:00Z'
+                      date_processed: '2023-10-07T14:25:10Z'
+                      date_completed: null
+                      error_message: null
+                    total: 25
+                    page: 1
+                    page_size: 10
+        '400':
+          description: Bad Request - Invalid query parameters or missing required headers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '401':
+          description: Unauthenticated Request - Invalid or missing authorization token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+              example:
+                message: Invalid authorization token
+                time: '2023-10-07T10:30:00Z'
+        '403':
+          description: Forbidden Request - Insufficient permissions for the organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+        '404':
+          description: Not Found - Privacy request not found or not accessible by this organization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StandardError'
+      parameters:
+      - name: uuid
+        in: query
+        required: false
+        description: The UUID of a specific privacy request to retrieve. If provided, returns a single request; if omitted, returns a paginated list of requests.
+        schema:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+      - name: page
+        in: query
+        required: false
+        description: Page number for pagination.
+        schema:
+          type: integer
+          format: int32
+          default: 1
+          minimum: 1
+          example: 1
+      - name: page_size
+        in: query
+        required: false
+        description: Number of items per page.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+          minimum: 1
+          maximum: 100
+          example: 10
+      - name: status
+        in: query
+        required: false
+        description: Filter by request status.
+        schema:
+          type: string
+          enum:
+          - ACCEPTED
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: COMPLETED
+      - name: request_type
+        in: query
+        required: false
+        description: Filter by request type.
+        schema:
+          type: string
+          enum:
+          - DELETION
+          - OPT_OUT
+          example: DELETION
+      - name: date_from
+        in: query
+        required: false
+        description: Filter from date in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+          example: '2023-01-01'
+      - name: date_to
+        in: query
+        required: false
+        description: Filter to date in YYYY-MM-DD format.
+        schema:
+          type: string
+          format: date
+          example: '2023-12-31'
+      - description: Organization ID for the request
+        in: header
+        name: LR-Org-ID
+        required: true
+        schema:
+          type: string
+          example: ORG_ID
+components:
+  schemas:
+    PrivacyRequestListResponse:
+      type: object
+      properties:
+        privacy_requests:
+          description: Array of privacy requests or single request if UUID specified.
+          items:
+            $ref: '#/components/schemas/PrivacyRequestDetails'
+          type: array
+          example:
+          - request_uuid: 123e4567-e89b-12d3-a456-426655440000
+            request_type: DELETION
+            status: ACCEPTED
+            date_received: '2023-10-07T10:30:00Z'
+        privacy_request:
+          description: Single privacy request when retrieved by UUID.
+          $ref: '#/components/schemas/PrivacyRequestDetails'
+        total:
+          description: Total number of requests (only present for list operations).
+          type: integer
+          format: int32
+          example: 25
+        page:
+          description: Current page number (only present for list operations).
+          type: integer
+          format: int32
+          example: 1
+        page_size:
+          description: Number of items per page (only present for list operations).
+          type: integer
+          format: int32
+          example: 10
+    PrivacyRequestResponse:
+      type: object
+      properties:
+        request_uuid:
+          description: The UUID of the privacy request.
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        status:
+          description: The status of the privacy request.
+          type: string
+          enum:
+          - ACCEPTED
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: ACCEPTED
+        message:
+          description: Additional message about the request.
+          type: string
+          example: Request created successfully
+        is_duplicate:
+          description: Whether this is a duplicate request.
+          type: boolean
+          example: false
+      required:
+      - request_uuid
+      - status
+    StandardError:
+      type: object
+      properties:
+        message:
+          description: The error message/description of the error.
+          type: string
+        time:
+          description: The time the error occurred.
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+      - message
+      - time
+    CreatePrivacyRequestInput:
+      type: object
+      properties:
+        request_type:
+          description: The type of privacy request.
+          type: string
+          enum:
+          - DELETION
+          - OPT_OUT
+          example: DELETION
+        email:
+          description: The email address of the data subject. Either email or maid must be provided.
+          type: string
+          example: test@email.com
+        maid:
+          description: Mobile Advertising ID (IDFA for iOS or AAID for Android) of the data subject. Either email or maid must be provided.
+          type: string
+          format: uuid
+          example: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        first_name:
+          description: The first name of the data subject.
+          type: string
+          example: John
+        last_name:
+          description: The last name of the data subject.
+          type: string
+          example: Doe
+        phone:
+          description: The phone number of the data subject.
+          type: string
+          example: +1-555-123-4567
+        street:
+          description: The street address of the data subject.
+          type: string
+          example: 123 Main St
+        city:
+          description: The city of the data subject.
+          type: string
+          example: San Francisco
+        state:
+          description: The state of the data subject.
+          type: string
+          example: CA
+        zip_code:
+          description: The zip code of the data subject.
+          type: string
+          example: '94105'
+      required:
+      - request_type
+      description: 'Input for creating privacy requests. Must include at least one identifier: email or maid.'
+      oneOf:
+      - required:
+        - email
+      - required:
+        - maid
+    PrivacyRequestDetails:
+      type: object
+      properties:
+        request_uuid:
+          description: The UUID of the privacy request.
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        request_type:
+          description: The type of privacy request.
+          type: string
+          enum:
+          - DELETION
+          - OPT_OUT
+          example: DELETION
+        status:
+          description: The status of the privacy request.
+          type: string
+          enum:
+          - ACCEPTED
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: ACCEPTED
+        date_received:
+          description: The date the request was received.
+          type: string
+          format: date-time
+          example: '2023-10-07T10:30:00Z'
+        date_processed:
+          description: The date the request was processed.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2023-10-07T11:15:30Z'
+        date_completed:
+          description: The date the request was completed.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2023-10-07T12:45:15Z'
+        error_message:
+          description: Error message if the request failed.
+          type: string
+          example: Processing failed due to invalid email format
+      required:
+      - request_uuid
+      - request_type
+      - status
+      - date_received
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
