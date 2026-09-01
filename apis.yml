@@ -44,6 +44,17 @@ tags:
 - Data Collaboration
 - Identity Resolution
 - Activation
+- Cleanroom
+- Privacy
+- AdTech
+- Marketing
+- Consent
+- Audience Segments
+tags_raw:
+- Data Connectivity
+- Data Collaboration
+- Identity Resolution
+- Activation
 - Clean Room
 - Privacy
 - AdTech
@@ -231,7 +242,7 @@ apis:
   humanURL: https://developers.liveramp.com/activation-api
   baseURL: https://api.liveramp.com/activation
   tags:
-  - Clean Room
+  - Cleanroom
   tags_raw:
   - Cleanroom
   properties:
