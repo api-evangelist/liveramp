@@ -200,6 +200,10 @@ apis:
     activation. Documented on its own ReadMe site rather than the main developer portal.
   humanURL: https://sidecar.readme.io/
   tags:
+  - Supply Side Platform
+  - Programmatic
+  - Identity
+  tags_raw:
   - SSP
   - Programmatic
   - Identity
