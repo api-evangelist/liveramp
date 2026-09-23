@@ -16,7 +16,7 @@ paths:
       - Distribute Data
       operationId: Create v2/DistributionManager::SegmentConfigs
       description: ''
-      summary: Add Segments to a Distribution Manager. Limited to 500 segments at a time.
+      summary: Add Segments to a Distribution Manager. Limited to 500 segments at a time
       requestBody:
         content:
           application/json:
@@ -68,7 +68,7 @@ paths:
       - Distribute Data
       operationId: Delete v2/DistributionManager::SegmentConfigs
       description: ''
-      summary: Remove Segments from a Distribution Manager. Limited to 500 segments at a time.
+      summary: Remove Segments from a Distribution Manager. Limited to 500 segments at a time
       requestBody:
         content:
           application/json:
@@ -223,16 +223,23 @@ paths:
           type: string
 components:
   schemas:
-    v2DistributionManagerSegmentConfigMultiResponse:
+    StandardError:
       type: object
       properties:
-        segmentConfigs:
-          description: Array of retrieved v2/DistributionManager::SegmentConfigs
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
     v2DistributionManagerSegmentConfigMultiResponsePagination:
       type: object
       properties:
@@ -270,23 +277,6 @@ components:
       - segmentType
       - distributionManagerID
       description: A list of segment IDs to distribute
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
     v2DistributionManagerSegmentConfigInput:
       type: object
       properties:
@@ -306,6 +296,16 @@ components:
       - segmentType
       - distributionManagerID
       description: A list of segment IDs to distribute
+    v2DistributionManagerSegmentConfigMultiResponse:
+      type: object
+      properties:
+        segmentConfigs:
+          description: Array of retrieved v2/DistributionManager::SegmentConfigs
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
     SegmentType:
       type: string
       enum:

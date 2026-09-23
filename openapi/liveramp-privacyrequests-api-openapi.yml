@@ -12,7 +12,7 @@ security:
 - BearerAuth: []
 tags:
 - name: PrivacyRequests
-  description: (resource)  Manage privacy requests.
+  description: (resource) Manage privacy requests.
 paths:
   /v1/requests:
     post:
@@ -259,6 +259,20 @@ paths:
           example: ORG_ID
 components:
   schemas:
+    StandardError:
+      type: object
+      properties:
+        message:
+          description: The error message/description of the error.
+          type: string
+        time:
+          description: The time the error occurred.
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+      - message
+      - time
     PrivacyRequestListResponse:
       type: object
       properties:
@@ -318,20 +332,58 @@ components:
       required:
       - request_uuid
       - status
-    StandardError:
+    PrivacyRequestDetails:
       type: object
       properties:
-        message:
-          description: The error message/description of the error.
+        request_uuid:
+          description: The UUID of the privacy request.
           type: string
-        time:
-          description: The time the error occurred.
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        request_type:
+          description: The type of privacy request.
           type: string
-          format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
+          enum:
+          - DELETION
+          - OPT_OUT
+          example: DELETION
+        status:
+          description: The status of the privacy request.
+          type: string
+          enum:
+          - ACCEPTED
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: ACCEPTED
+        date_received:
+          description: The date the request was received.
+          type: string
+          format: date-time
+          example: '2023-10-07T10:30:00Z'
+        date_processed:
+          description: The date the request was processed.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2023-10-07T11:15:30Z'
+        date_completed:
+          description: The date the request was completed.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '2023-10-07T12:45:15Z'
+        error_message:
+          description: Error message if the request failed.
+          type: string
+          example: Processing failed due to invalid email format
       required:
-      - message
-      - time
+      - request_uuid
+      - request_type
+      - status
+      - date_received
     CreatePrivacyRequestInput:
       type: object
       properties:
@@ -387,58 +439,6 @@ components:
         - email
       - required:
         - maid
-    PrivacyRequestDetails:
-      type: object
-      properties:
-        request_uuid:
-          description: The UUID of the privacy request.
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426655440000
-        request_type:
-          description: The type of privacy request.
-          type: string
-          enum:
-          - DELETION
-          - OPT_OUT
-          example: DELETION
-        status:
-          description: The status of the privacy request.
-          type: string
-          enum:
-          - ACCEPTED
-          - PROCESSING
-          - COMPLETED
-          - FAILED
-          example: ACCEPTED
-        date_received:
-          description: The date the request was received.
-          type: string
-          format: date-time
-          example: '2023-10-07T10:30:00Z'
-        date_processed:
-          description: The date the request was processed.
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: '2023-10-07T11:15:30Z'
-        date_completed:
-          description: The date the request was completed.
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: '2023-10-07T12:45:15Z'
-        error_message:
-          description: Error message if the request failed.
-          type: string
-          example: Processing failed due to invalid email format
-      required:
-      - request_uuid
-      - request_type
-      - status
-      - date_received
   securitySchemes:
     BearerAuth:
       type: http

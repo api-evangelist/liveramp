@@ -424,86 +424,6 @@ paths:
           type: string
 components:
   schemas:
-    v2DistributionManagerMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
-    v2DistributionManagerPuttable:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 50
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Status'
-          type: string
-        expireAt:
-          description: The date at which all deliveries will be stopped and the status will be set to inactive
-          type:
-          - string
-          - 'null'
-          format: ISO8601 UTC date
-          example: '2019-04-13'
-      required:
-      - name
-      - status
-      - expireAt
-      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
-    v2IntegrationConnectionMultiResponse:
-      type: object
-      properties:
-        v2/IntegrationConnections:
-          description: Array of retrieved v2/IntegrationConnections
-          type: array
-          items:
-            $ref: '#/components/schemas/v2IntegrationConnectionOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2IntegrationConnectionMultiResponsePagination'
-    v2IntegrationConnectionPuttable:
-      type: object
-      properties:
-        oAuthConnectionID:
-          description: Required when the Integration has an oAuthEndpointID
-          type: string
-        properties:
-          description: A value must be specified for each of the requireProperties from Integration
-          items:
-            allOf:
-            - $ref: '#/components/schemas/IntegrationConnectionProperty'
-            type: object
-          type: array
-        deviceTypes:
-          items:
-            allOf:
-            - $ref: '#/components/schemas/DeviceType'
-            type: string
-          type: array
-      required:
-      - properties
-      - deviceTypes
-      description: A connection to an Integration
-    IntegrationConnectionProperty:
-      type: object
-      properties:
-        propertyKey:
-          type: string
-        propertyValue:
-          type: string
-      required:
-      - propertyKey
-      - propertyValue
     v2IntegrationConnectionOutput:
       type: object
       properties:
@@ -565,69 +485,46 @@ components:
       - httpStatus
       - errorCode
       - message
-    Status:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-    v2IntegrationConnectionInput:
+    v2DistributionManagerMultiResponsePagination:
       type: object
       properties:
-        integrationID:
-          items:
-            type: string
-          minItems: 2
-          maxItems: 2
-          type: array
-          description: Link to v2/Destination::Integration resource via [v2/DestinationId, integrationId]
-        oAuthConnectionID:
-          description: Required when the Integration has an oAuthEndpointID
-          type: string
-        properties:
-          description: A value must be specified for each of the requireProperties from Integration
-          items:
-            allOf:
-            - $ref: '#/components/schemas/IntegrationConnectionProperty'
-            type: object
-          type: array
-        deviceTypes:
-          items:
-            allOf:
-            - $ref: '#/components/schemas/DeviceType'
-            type: string
-          type: array
-        distributionManagerName:
-          description: If provided, the Integration Connection create call will also create a Distribution Manager with this name. Useful in workflows where you want to create an Integration Connection and Distribuiton Manager with one API call
-          type: string
-      required:
-      - integrationID
-      - properties
-      - deviceTypes
-      description: A connection to an Integration
-    v2DistributionManagerInput:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 50
-        integrationConnectionID:
-          type: string
-          description: Link to v2/IntegrationConnection resource via its id
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Status'
-          type: string
-        expireAt:
-          description: The date at which all deliveries will be stopped and the status will be set to inactive
+        after:
           type:
           - string
           - 'null'
-          format: ISO8601 UTC date
-          example: '2019-04-13'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    IntegrationConnectionProperty:
+      type: object
+      properties:
+        propertyKey:
+          type: string
+        propertyValue:
+          type: string
       required:
-      - name
-      - integrationConnectionID
-      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+      - propertyKey
+      - propertyValue
+    v2IntegrationConnectionMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
     v2DistributionManagerOutput:
       type: object
       properties:
@@ -667,21 +564,44 @@ components:
       - createdAt
       - updatedAt
       description: A link between an IntegrationConnection and segments with configuration for how data is distributed
-    v2IntegrationConnectionMultiResponsePagination:
+    v2IntegrationConnectionPuttable:
       type: object
       properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
+        oAuthConnectionID:
+          description: Required when the Integration has an oAuthEndpointID
+          type: string
+        properties:
+          description: A value must be specified for each of the requireProperties from Integration
+          items:
+            allOf:
+            - $ref: '#/components/schemas/IntegrationConnectionProperty'
+            type: object
+          type: array
+        deviceTypes:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DeviceType'
+            type: string
+          type: array
+      required:
+      - properties
+      - deviceTypes
+      description: A connection to an Integration
+    v2DistributionManagerMultiResponse:
+      type: object
+      properties:
+        v2/DistributionManagers:
+          description: Array of retrieved v2/DistributionManagers
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerMultiResponsePagination'
+    Status:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
     DeviceType:
       type: string
       enum:
@@ -693,13 +613,93 @@ components:
       - MIXED
       - OTHER
       - RAMP_ID
-    v2DistributionManagerMultiResponse:
+    v2IntegrationConnectionMultiResponse:
       type: object
       properties:
-        v2/DistributionManagers:
-          description: Array of retrieved v2/DistributionManagers
+        v2/IntegrationConnections:
+          description: Array of retrieved v2/IntegrationConnections
           type: array
           items:
-            $ref: '#/components/schemas/v2DistributionManagerOutput'
+            $ref: '#/components/schemas/v2IntegrationConnectionOutput'
         _pagination:
-          $ref: '#/components/schemas/v2DistributionManagerMultiResponsePagination'
+          $ref: '#/components/schemas/v2IntegrationConnectionMultiResponsePagination'
+    v2DistributionManagerPuttable:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          type: string
+        expireAt:
+          description: The date at which all deliveries will be stopped and the status will be set to inactive
+          type:
+          - string
+          - 'null'
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+      required:
+      - name
+      - status
+      - expireAt
+      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+    v2DistributionManagerInput:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        integrationConnectionID:
+          type: string
+          description: Link to v2/IntegrationConnection resource via its id
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          type: string
+        expireAt:
+          description: The date at which all deliveries will be stopped and the status will be set to inactive
+          type:
+          - string
+          - 'null'
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+      required:
+      - name
+      - integrationConnectionID
+      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+    v2IntegrationConnectionInput:
+      type: object
+      properties:
+        integrationID:
+          items:
+            type: string
+          minItems: 2
+          maxItems: 2
+          type: array
+          description: Link to v2/Destination::Integration resource via [v2/DestinationId, integrationId]
+        oAuthConnectionID:
+          description: Required when the Integration has an oAuthEndpointID
+          type: string
+        properties:
+          description: A value must be specified for each of the requireProperties from Integration
+          items:
+            allOf:
+            - $ref: '#/components/schemas/IntegrationConnectionProperty'
+            type: object
+          type: array
+        deviceTypes:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DeviceType'
+            type: string
+          type: array
+        distributionManagerName:
+          description: If provided, the Integration Connection create call will also create a Distribution Manager with this name. Useful in workflows where you want to create an Integration Connection and Distribuiton Manager with one API call
+          type: string
+      required:
+      - integrationID
+      - properties
+      - deviceTypes
+      description: A connection to an Integration

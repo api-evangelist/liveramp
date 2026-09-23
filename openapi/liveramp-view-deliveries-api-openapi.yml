@@ -73,6 +73,23 @@ paths:
           type: string
 components:
   schemas:
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
     OperationType:
       type: string
       enum:
@@ -93,23 +110,6 @@ components:
         total:
           type: integer
           description: The total number of results.
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
     v2DeliveryMultiResponse:
       type: object
       properties:
@@ -120,25 +120,6 @@ components:
             $ref: '#/components/schemas/v2DeliveryOutput'
         _pagination:
           $ref: '#/components/schemas/v2DeliveryMultiResponsePagination'
-    DeviceType:
-      type: string
-      enum:
-      - PII
-      - WEB
-      - IOS
-      - ANDROID
-      - CUSTOM_ID
-      - MIXED
-      - OTHER
-      - RAMP_ID
-    DeliveryStatus:
-      type: string
-      enum:
-      - FAILED
-      - CANCELLED
-      - PENDING
-      - IN_PROGRESS
-      - DELIVERED
     v2DeliveryOutput:
       type: object
       properties:
@@ -176,3 +157,22 @@ components:
       - integrationConnectionID
       - operationType
       description: Delivery information about a Segment to a IntegrationConnection
+    DeviceType:
+      type: string
+      enum:
+      - PII
+      - WEB
+      - IOS
+      - ANDROID
+      - CUSTOM_ID
+      - MIXED
+      - OTHER
+      - RAMP_ID
+    DeliveryStatus:
+      type: string
+      enum:
+      - FAILED
+      - CANCELLED
+      - PENDING
+      - IN_PROGRESS
+      - DELIVERED

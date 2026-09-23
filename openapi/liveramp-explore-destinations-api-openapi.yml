@@ -216,37 +216,6 @@ paths:
           type: string
 components:
   schemas:
-    IntegrationType:
-      type: string
-      enum:
-      - ONBOARDING
-      - FULFILLMENT
-      - DATA_STORE
-    IntegrationProperty:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-      required:
-      - name
-      - description
-    v2DestinationMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
     v2DestinationIntegrationMultiResponsePagination:
       type: object
       properties:
@@ -262,6 +231,37 @@ components:
         total:
           type: integer
           description: The total number of results.
+    v2DestinationMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    v2DestinationOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        logoUrl:
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+      required:
+      - id
+      - name
+      - logoUrl
+      description: A LiveRamp partner that can receive data from LiveRamp
     StandardError:
       type: object
       properties:
@@ -289,6 +289,21 @@ components:
             $ref: '#/components/schemas/v2DestinationIntegrationOutput'
         _pagination:
           $ref: '#/components/schemas/v2DestinationIntegrationMultiResponsePagination'
+    IntegrationView:
+      type: string
+      enum:
+      - STANDARD
+      - STANDARD_WITH_UNAVAILABLE
+    v2DestinationMultiResponse:
+      type: object
+      properties:
+        v2/Destinations:
+          description: Array of retrieved v2/Destinations
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DestinationOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DestinationMultiResponsePagination'
     v2DestinationIntegrationOutput:
       type: object
       properties:
@@ -327,27 +342,6 @@ components:
       - deviceTypes
       - requiredProperties
       description: An outline of the required configuration to send data to a destination
-    IntegrationView:
-      type: string
-      enum:
-      - STANDARD
-      - STANDARD_WITH_UNAVAILABLE
-    v2DestinationOutput:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        logoUrl:
-          type: string
-          format: url
-          example: https://www.domain.com (url)
-      required:
-      - id
-      - name
-      - logoUrl
-      description: A LiveRamp partner that can receive data from LiveRamp
     DeviceType:
       type: string
       enum:
@@ -359,13 +353,19 @@ components:
       - MIXED
       - OTHER
       - RAMP_ID
-    v2DestinationMultiResponse:
+    IntegrationProperty:
       type: object
       properties:
-        v2/Destinations:
-          description: Array of retrieved v2/Destinations
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DestinationOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DestinationMultiResponsePagination'
+        name:
+          type: string
+        description:
+          type: string
+      required:
+      - name
+      - description
+    IntegrationType:
+      type: string
+      enum:
+      - ONBOARDING
+      - FULFILLMENT
+      - DATA_STORE

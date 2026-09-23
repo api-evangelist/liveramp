@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: v1.0.0
-  title: External APIs for Customer Integration Data Source Parameters API
+  title: External APIs for Customer Integration Data Source…
   description: APIs to create and fetch Clean Room and related details from LiveRamp (previously Habu) for Customer Integration.
   contact:
     name: LiveRamp (previously Habu)
@@ -54,6 +54,16 @@ paths:
       - Data Source Parameters
 components:
   schemas:
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     DataSourceParameters:
       type: array
       items:
@@ -73,16 +83,6 @@ components:
           type: integer
         dataSourceId:
           type: string
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
   responses:
     NotFound:
       description: The specified resource was not found
@@ -93,8 +93,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:
@@ -111,8 +111,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -120,8 +120,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:

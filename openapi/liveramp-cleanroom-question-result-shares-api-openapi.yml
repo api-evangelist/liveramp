@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: v1.0.0
-  title: External APIs for Customer Integration Cleanroom Question Result Shares API
+  title: External APIs for Customer Integration Cleanroom Question…
   description: APIs to create and fetch Clean Room and related details from LiveRamp (previously Habu) for Customer Integration.
   contact:
     name: LiveRamp (previously Habu)
@@ -88,27 +88,56 @@ paths:
       tags:
       - Cleanroom Question Result Shares
 components:
+  schemas:
+    CleanRoomQuestionResultShare:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Cleanroom Question Result Share ID
+        PartnerID:
+          type: string
+          description: Partner ID
+        PostRunQueryID:
+          type: string
+          description: Post Run Query ID
+    UpsertCleanRoomQuestionResultShares:
+      type: object
+      properties:
+        PartnerID:
+          type: string
+          description: Partner ID
+        PostRunQueryID:
+          type: string
+          description: Post Run Query ID
+    UpsertCleanRoomQuestionResultSharesApiInput:
+      description: A list of Cleanroom Result Shares
+      type: array
+      items:
+        $ref: '#/components/schemas/UpsertCleanRoomQuestionResultShares'
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    UpsertCleanRoomQuestionResultShareResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    CleanRoomQuestionResultShares:
+      description: A list of Cleanroom Result Shares
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomQuestionResultShare'
   responses:
     NotFound:
       description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -125,53 +154,24 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-  schemas:
-    UpsertCleanRoomQuestionResultShares:
-      type: object
-      properties:
-        PartnerID:
-          type: string
-          description: Partner ID
-        PostRunQueryID:
-          type: string
-          description: Post Run Query ID
-    CleanRoomQuestionResultShares:
-      description: A list of Cleanroom Result Shares
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomQuestionResultShare'
-    CleanRoomQuestionResultShare:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Cleanroom Question Result Share ID
-        PartnerID:
-          type: string
-          description: Partner ID
-        PostRunQueryID:
-          type: string
-          description: Post Run Query ID
-    UpsertCleanRoomQuestionResultSharesApiInput:
-      description: A list of Cleanroom Result Shares
-      type: array
-      items:
-        $ref: '#/components/schemas/UpsertCleanRoomQuestionResultShares'
-    UpsertCleanRoomQuestionResultShareResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

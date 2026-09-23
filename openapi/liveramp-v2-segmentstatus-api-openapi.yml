@@ -8,17 +8,15 @@ servers:
   url: https://api.liveramp.com/activation
 tags:
 - name: v2/SegmentStatus
-  description: (resource)  Represents a segment's status
+  description: (resource) Represents a segment's status
 paths:
   /v2/segment-statuses:
     get:
       tags:
       - v2/SegmentStatus
       operationId: Get v2/SegmentStatuses
-      description: 'Limited to either first-party (onboarding) or data marketplace segments. Exactly one of these segmentID params must be passed in
-
-        '
-      summary: Fetch a list of Segments' statuses.
+      description: Limited to either first-party (onboarding) or data marketplace segments. Exactly one of these segmentID params must be passed in
+      summary: Fetch a list of Segments' statuses
       responses:
         '200':
           description: v2/SegmentStatuses retrieved successfully
@@ -76,58 +74,6 @@ paths:
           type: string
 components:
   schemas:
-    taxonomyTaxonomySegmentSyncStatus:
-      type: string
-      description: 'NOT_CONFIGURED_TO_SYNC: the Taxonomy::Segment is in a taxonomy that is not configured to sync to a destination.
-
-
-        NEVER_SYNCED: The Taxonomy::Segment has not been synced to the destination.
-
-
-        OUT_OF_SYNC: The Taxonomy::Segment has been synced to the destination and the destinationSegmentID exists, but the properties have been updated and need to be resynced.
-
-
-        SYNCED: The Taxonomy::Segment is in sync with the destination.'
-      enum:
-      - NOT_CONFIGURED_TO_SYNC
-      - NEVER_SYNCED
-      - OUT_OF_SYNC
-      - SYNCED
-    v2SegmentStatusOutput:
-      type: object
-      properties:
-        integrationConnectionID:
-          type: string
-        taxonomy:
-          allOf:
-          - $ref: '#/components/schemas/TaxonomyStatus'
-          type: object
-        segmentID:
-          type: string
-        segmentType:
-          allOf:
-          - $ref: '#/components/schemas/SegmentType'
-          type: string
-      required:
-      - taxonomy
-      - segmentID
-      - segmentType
-      description: Represents a segment's status
-    v2SegmentStatusMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
     TaxonomyStatus:
       type: object
       properties:
@@ -155,6 +101,21 @@ components:
       - httpStatus
       - errorCode
       - message
+    v2SegmentStatusMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
     v2SegmentStatusMultiResponse:
       type: object
       properties:
@@ -165,6 +126,43 @@ components:
             $ref: '#/components/schemas/v2SegmentStatusOutput'
         _pagination:
           $ref: '#/components/schemas/v2SegmentStatusMultiResponsePagination'
+    v2SegmentStatusOutput:
+      type: object
+      properties:
+        integrationConnectionID:
+          type: string
+        taxonomy:
+          allOf:
+          - $ref: '#/components/schemas/TaxonomyStatus'
+          type: object
+        segmentID:
+          type: string
+        segmentType:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+      required:
+      - taxonomy
+      - segmentID
+      - segmentType
+      description: Represents a segment's status
+    taxonomyTaxonomySegmentSyncStatus:
+      type: string
+      description: 'NOT_CONFIGURED_TO_SYNC: the Taxonomy::Segment is in a taxonomy that is not configured to sync to a destination.
+
+
+        NEVER_SYNCED: The Taxonomy::Segment has not been synced to the destination.
+
+
+        OUT_OF_SYNC: The Taxonomy::Segment has been synced to the destination and the destinationSegmentID exists, but the properties have been updated and need to be resynced.
+
+
+        SYNCED: The Taxonomy::Segment is in sync with the destination.'
+      enum:
+      - NOT_CONFIGURED_TO_SYNC
+      - NEVER_SYNCED
+      - OUT_OF_SYNC
+      - SYNCED
     SegmentType:
       type: string
       enum:

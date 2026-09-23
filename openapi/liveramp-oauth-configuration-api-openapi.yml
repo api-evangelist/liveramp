@@ -186,25 +186,6 @@ paths:
           type: string
 components:
   schemas:
-    v2OauthConnectionAttemptInput:
-      type: object
-      properties:
-        redirectUrl:
-          description: URL that the user will be taken to after completing the OAuth flow
-          type: string
-          format: url
-          example: https://www.domain.com (url)
-        state:
-          type: string
-        oAuthEndpointID:
-          description: oAuthEndpointID of the Integration you wish to authorize
-          type: string
-        oAuthConnectionID:
-          description: When status is AUTHORIZED, this references the OAuth Connection that was created. Pass this ID during create if you wish to reauthorize an existing OAuth Connection
-          type: string
-      required:
-      - oAuthEndpointID
-      description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
     StandardError:
       type: object
       properties:
@@ -222,52 +203,6 @@ components:
       - httpStatus
       - errorCode
       - message
-    v2OauthConnectionOutput:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        oAuthEndpointID:
-          type: string
-        createdAt:
-          type: string
-          format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
-        updatedAt:
-          type: string
-          format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
-      required:
-      - id
-      - name
-      - oAuthEndpointID
-      - createdAt
-      - updatedAt
-      description: Represents an OAuth credential for a given OAuth Endpoint that the user has permission to use
-    OAuthConnectionAttemptStatus:
-      type: string
-      enum:
-      - AUTHORIZED
-      - FAILED
-      - PENDING
-      - PROCESSING
-    v2OauthConnectionMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
     v2OauthConnectionAttemptOutput:
       type: object
       properties:
@@ -306,6 +241,45 @@ components:
       - status
       - oAuthEndpointID
       description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
+    v2OauthConnectionMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    v2OauthConnectionOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        oAuthEndpointID:
+          type: string
+        createdAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+        updatedAt:
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+      - id
+      - name
+      - oAuthEndpointID
+      - createdAt
+      - updatedAt
+      description: Represents an OAuth credential for a given OAuth Endpoint that the user has permission to use
     v2OauthConnectionMultiResponse:
       type: object
       properties:
@@ -316,3 +290,29 @@ components:
             $ref: '#/components/schemas/v2OauthConnectionOutput'
         _pagination:
           $ref: '#/components/schemas/v2OauthConnectionMultiResponsePagination'
+    OAuthConnectionAttemptStatus:
+      type: string
+      enum:
+      - AUTHORIZED
+      - FAILED
+      - PENDING
+      - PROCESSING
+    v2OauthConnectionAttemptInput:
+      type: object
+      properties:
+        redirectUrl:
+          description: URL that the user will be taken to after completing the OAuth flow
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+        state:
+          type: string
+        oAuthEndpointID:
+          description: oAuthEndpointID of the Integration you wish to authorize
+          type: string
+        oAuthConnectionID:
+          description: When status is AUTHORIZED, this references the OAuth Connection that was created. Pass this ID during create if you wish to reauthorize an existing OAuth Connection
+          type: string
+      required:
+      - oAuthEndpointID
+      description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion

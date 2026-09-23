@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: v1.0.0
-  title: External APIs for Customer Integration Cleanroom Question Datasets API
+  title: External APIs for Customer Integration Cleanroom Question…
   description: APIs to create and fetch Clean Room and related details from LiveRamp (previously Habu) for Customer Integration.
   contact:
     name: LiveRamp (previously Habu)
@@ -192,55 +192,21 @@ paths:
       - Cleanroom Question Datasets
 components:
   schemas:
-    DatasetField:
+    ReturnObject:
       type: object
       properties:
-        datasetId:
+        code:
           type: string
-          description: Dataset ID
-        id:
+        message:
           type: string
-          description: Dataset Field ID
-        name:
-          type: string
-          description: Dataset Field Name
-        value:
-          type: string
-          description: Dataset Field Value
-        type:
-          type: string
-          description: Dataset Field Type
-    DatasetParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Dataset Parameter Name
-        value:
-          type: string
-          description: Dataset Parameter Value
-        type:
-          type: string
-          description: Dataset Parameter Type
-    QuestionDataTypeOptions:
+      required:
+      - code
+      - message
+    CleanRoomQuestionDatasets:
       type: array
       items:
-        $ref: '#/components/schemas/QuestionDataTypeOption'
-      description: List of Cleanroom Question Data Type Options
-    QuestionDataTypeOption:
-      type: object
-      properties:
-        dataTypeName:
-          type: string
-        datasetOptions:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
+        $ref: '#/components/schemas/CleanRoomQuestionDataset'
+      description: List of Cleanroom Question Datasets
     CleanRoomQuestionDataset:
       type: object
       properties:
@@ -293,11 +259,55 @@ components:
           items:
             $ref: '#/components/schemas/DatasetField'
           description: Dataset Fields
-    CleanRoomStakeholders:
+    DatasetField:
+      type: object
+      properties:
+        datasetId:
+          type: string
+          description: Dataset ID
+        id:
+          type: string
+          description: Dataset Field ID
+        name:
+          type: string
+          description: Dataset Field Name
+        value:
+          type: string
+          description: Dataset Field Value
+        type:
+          type: string
+          description: Dataset Field Type
+    QuestionDataTypeOption:
+      type: object
+      properties:
+        dataTypeName:
+          type: string
+        datasetOptions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+    QuestionDataTypeOptions:
       type: array
       items:
-        $ref: '#/components/schemas/CleanRoomStakeholder'
-      description: List of Cleanroom Stakeholders
+        $ref: '#/components/schemas/QuestionDataTypeOption'
+      description: List of Cleanroom Question Data Type Options
+    DatasetParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset Parameter Name
+        value:
+          type: string
+          description: Dataset Parameter Value
+        type:
+          type: string
+          description: Dataset Parameter Type
     CleanRoomStakeholder:
       type: object
       properties:
@@ -316,24 +326,23 @@ components:
         macro:
           type: string
           description: name of Question Data Type
-    CleanRoomQuestionDatasets:
+    CleanRoomStakeholders:
       type: array
       items:
-        $ref: '#/components/schemas/CleanRoomQuestionDataset'
-      description: List of Cleanroom Question Datasets
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
+        $ref: '#/components/schemas/CleanRoomStakeholder'
+      description: List of Cleanroom Stakeholders
   responses:
     NotFound:
       description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:
@@ -361,15 +370,6 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:

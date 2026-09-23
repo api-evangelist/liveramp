@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: v1.0.0
-  title: External APIs for Customer Integration Cleanroom Partners API
+  title: External APIs for Customer Integration Cleanroom Partners…
   description: APIs to create and fetch Clean Room and related details from LiveRamp (previously Habu) for Customer Integration.
   contact:
     name: LiveRamp (previously Habu)
@@ -436,96 +436,6 @@ paths:
       - Cleanroom Partners
 components:
   schemas:
-    CleanRoomPartnerResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Cleanroom Partner ID
-        partnerOrganizationId:
-          type: string
-          description: Cleanroom Partner Organization ID
-        name:
-          type: string
-          description: Partner Organization name
-        userCount:
-          type: integer
-          description: CleanRoom User count
-        cleanRoomUsers:
-          $ref: '#/components/schemas/CleanRoomUsers'
-    CleanRoomUsers:
-      description: A list of Cleanroom Users and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomUser'
-    CleanRoomRoles:
-      description: A list of Cleanroom Roles
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomRole'
-    CleanRoomPartners:
-      description: A list of Cleanroom Partners and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomPartnerResponse'
-    CleanRoomUser:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Cleanroom User ID
-        cleanRoomId:
-          type: string
-          description: Cleanroom ID
-        user:
-          $ref: '#/components/schemas/User'
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
-        role:
-          $ref: '#/components/schemas/CleanRoomRole'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    TimeAudit:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          description: User ID
-        name:
-          type: string
-          description: Name of the user
-        email:
-          type: string
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
     AddCleanRoomPartnerRequest:
       type: object
       properties:
@@ -535,15 +445,6 @@ components:
         invitationNote:
           type: string
           default: We are making some insights based on our data available to you in a Clean Room and would like to invite you to take a look. Getting started is super easy.
-    UserAudit:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: Identifier of the user who created the object
-        updatedBy:
-          type: string
-          description: Identifier of the user who last updated the object
     InvitationDetail:
       type: object
       properties:
@@ -572,16 +473,21 @@ components:
           $ref: '#/components/schemas/InviteStatus'
         timeAudit:
           $ref: '#/components/schemas/TimeAudit'
-    CleanRoomRole:
+    TimeAudit:
+      type: object
       properties:
-        id:
+        createdAt:
           type: string
-        name:
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
           type: string
-        cleanRoomId:
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
           type: string
-        organizationId:
-          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
     InviteStatus:
       type: string
       enum:
@@ -592,27 +498,103 @@ components:
       - REQUEST_SENT_ADMIN
       - IN_PROGRESS
       - DECLINED_BY_ADMIN
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User ID
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+    CleanRoomPartnerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Cleanroom Partner ID
+        partnerOrganizationId:
+          type: string
+          description: Cleanroom Partner Organization ID
+        name:
+          type: string
+          description: Partner Organization name
+        userCount:
+          type: integer
+          description: CleanRoom User count
+        cleanRoomUsers:
+          $ref: '#/components/schemas/CleanRoomUsers'
+    CleanRoomRoles:
+      description: A list of Cleanroom Roles
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomRole'
+    CleanRoomUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Cleanroom User ID
+        cleanRoomId:
+          type: string
+          description: Cleanroom ID
+        user:
+          $ref: '#/components/schemas/User'
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+        role:
+          $ref: '#/components/schemas/CleanRoomRole'
+    CleanRoomUsers:
+      description: A list of Cleanroom Users and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomUser'
+    CleanRoomPartners:
+      description: A list of Cleanroom Partners and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomPartnerResponse'
+    UserAudit:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: Identifier of the user who created the object
+        updatedBy:
+          type: string
+          description: Identifier of the user who last updated the object
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    CleanRoomRole:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        cleanRoomId:
+          type: string
+        organizationId:
+          type: string
   responses:
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
     BadRequest:
       description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
       content:
         application/json:
           schema:
@@ -629,8 +611,26 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     NotFound:
       description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:

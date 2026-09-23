@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: v1.0.0
-  title: External APIs for Customer Integration Data Connection Views API
+  title: External APIs for Customer Integration Data Connection…
   description: APIs to create and fetch Clean Room and related details from LiveRamp (previously Habu) for Customer Integration.
   contact:
     name: LiveRamp (previously Habu)
@@ -206,36 +206,8 @@ components:
         updatedBy:
           type: string
           description: Identifier of the user who last updated the object
-    DataConnectionViewSourceInput:
+    DataConnectionViewDetails:
       type: object
-      properties:
-        dataConnectionId:
-          type: string
-          description: ID of the source data connection
-        macro:
-          type: string
-          description: Macro alias for the source data connection in the view query
-      required:
-      - dataConnectionId
-      - macro
-    TimeAudit:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
-    DataConnectionViewUpdateDetails:
-      type: object
-      description: Fields to update on a data connection view. Omitted fields retain their existing values.
       properties:
         name:
           type: string
@@ -248,47 +220,20 @@ components:
           description: Source data connections referenced by the view query
           items:
             $ref: '#/components/schemas/DataConnectionViewSourceInput'
-    DataConnectionViewResponse:
+      required:
+      - name
+      - query
+      - dataConnections
+    ReturnObject:
       type: object
       properties:
-        id:
+        code:
           type: string
-          description: ID of the data connection view
-        name:
+        message:
           type: string
-          description: Name of the data connection view
-        query:
-          type: string
-          description: SQL query for the data connection view
-        version:
-          type: string
-          description: Version of the data connection view
-        stage:
-          type: string
-          description: Stage of the data connection view
-        sourceId:
-          type: string
-          description: ID of the data source associated with the view
-        status:
-          type: string
-          description: Status of the data connection view
-        importDataTypeId:
-          type: string
-          description: ID of the import data type associated with the view
-        dataConnections:
-          type: array
-          description: Source data connections referenced by the view
-          items:
-            $ref: '#/components/schemas/DataConnectionViewSource'
-        fields:
-          type: array
-          description: Output fields defined for the view
-          items:
-            $ref: '#/components/schemas/DataConnectionViewField'
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
+      required:
+      - code
+      - message
     DataConnectionViewSource:
       type: object
       properties:
@@ -313,51 +258,21 @@ components:
       properties:
         success:
           type: boolean
-    DataConnectionViews:
-      description: Paginated list of Data Connection Views
+    TimeAudit:
       type: object
       properties:
-        dataConnectionViews:
-          type: array
-          description: Data connection views for the current page
-          items:
-            $ref: '#/components/schemas/DataConnectionViewResponse'
-        limit:
-          type: integer
-          description: The number of data connection views returned per page
-        offset:
-          type: integer
-          description: The offset used for pagination
-        hasMore:
-          type: boolean
-          description: Whether there are more data connection views beyond this page
-    DataConnectionViewDetails:
-      type: object
-      properties:
-        name:
+        createdAt:
           type: string
-          description: Name of the data connection view
-        query:
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
           type: string
-          description: SQL query for the data connection view
-        dataConnections:
-          type: array
-          description: Source data connections referenced by the view query
-          items:
-            $ref: '#/components/schemas/DataConnectionViewSourceInput'
-      required:
-      - name
-      - query
-      - dataConnections
-    DataConnectionViewField:
-      type: object
-      properties:
-        name:
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
           type: string
-          description: Name of the output field
-        type:
-          type: string
-          description: Data type of the output field
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
     PartitionFieldConfig:
       type: object
       properties:
@@ -469,19 +384,104 @@ components:
           description: Indicates whether this field is a partition column
         partitionFieldConfig:
           $ref: '#/components/schemas/PartitionFieldConfig'
-    ReturnObject:
+    DataConnectionViewSourceInput:
       type: object
       properties:
-        code:
+        dataConnectionId:
           type: string
-        message:
+          description: ID of the source data connection
+        macro:
           type: string
+          description: Macro alias for the source data connection in the view query
       required:
-      - code
-      - message
+      - dataConnectionId
+      - macro
+    DataConnectionViewResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the data connection view
+        name:
+          type: string
+          description: Name of the data connection view
+        query:
+          type: string
+          description: SQL query for the data connection view
+        version:
+          type: string
+          description: Version of the data connection view
+        stage:
+          type: string
+          description: Stage of the data connection view
+        sourceId:
+          type: string
+          description: ID of the data source associated with the view
+        status:
+          type: string
+          description: Status of the data connection view
+        importDataTypeId:
+          type: string
+          description: ID of the import data type associated with the view
+        dataConnections:
+          type: array
+          description: Source data connections referenced by the view
+          items:
+            $ref: '#/components/schemas/DataConnectionViewSource'
+        fields:
+          type: array
+          description: Output fields defined for the view
+          items:
+            $ref: '#/components/schemas/DataConnectionViewField'
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+    DataConnectionViewField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the output field
+        type:
+          type: string
+          description: Data type of the output field
+    DataConnectionViews:
+      description: Paginated list of Data Connection Views
+      type: object
+      properties:
+        dataConnectionViews:
+          type: array
+          description: Data connection views for the current page
+          items:
+            $ref: '#/components/schemas/DataConnectionViewResponse'
+        limit:
+          type: integer
+          description: The number of data connection views returned per page
+        offset:
+          type: integer
+          description: The offset used for pagination
+        hasMore:
+          type: boolean
+          description: Whether there are more data connection views beyond this page
+    DataConnectionViewUpdateDetails:
+      type: object
+      description: Fields to update on a data connection view. Omitted fields retain their existing values.
+      properties:
+        name:
+          type: string
+          description: Name of the data connection view
+        query:
+          type: string
+          description: SQL query for the data connection view
+        dataConnections:
+          type: array
+          description: Source data connections referenced by the view query
+          items:
+            $ref: '#/components/schemas/DataConnectionViewSourceInput'
   responses:
-    InternalServerError:
-      description: Internal Server Error
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:
@@ -489,8 +489,17 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -509,15 +518,6 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:

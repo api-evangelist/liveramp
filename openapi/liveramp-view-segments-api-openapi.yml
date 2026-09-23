@@ -131,6 +131,23 @@ components:
       - value
       - type
       description: Represents a field-value pair that can be added to a Distribution Manager
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
     v2SegmentMultiResponse:
       type: object
       properties:
@@ -154,28 +171,6 @@ components:
       - id
       - name
       - audienceId
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE
     v2SegmentMultiResponsePagination:
       type: object
       properties:
@@ -191,3 +186,8 @@ components:
         total:
           type: integer
           description: The total number of results.
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE

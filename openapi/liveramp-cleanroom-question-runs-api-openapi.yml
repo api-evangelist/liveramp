@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: v1.0.0
-  title: External APIs for Customer Integration Cleanroom Question Runs API
+  title: External APIs for Customer Integration Cleanroom Question…
   description: APIs to create and fetch Clean Room and related details from LiveRamp (previously Habu) for Customer Integration.
   contact:
     name: LiveRamp (previously Habu)
@@ -481,71 +481,28 @@ paths:
       tags:
       - Cleanroom Question Runs
 components:
-  responses:
-    PreconditionFailed:
-      description: Precondition Failed - a required precondition for the request has not been met
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    QuestionRunStatusUpdate:
-      description: Successfully sent the updated Cleanroom Question Run status
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
+    GetExplainPlanResponse:
+      type: object
+      description: Response containing the execution plan for a SQL cleanroom question run
+      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
+      properties:
+        success:
+          type: boolean
+          description: Whether the explain plan retrieval was successful
+        explainPlan:
+          type: string
+          description: When success is true, the execution plan details. When success is false, this field should be omitted or null.
+        errorMessage:
+          type: string
+          description: When success is false, details explaining why the explain plan could not be retrieved.
+      required:
+      - success
+    CleanroomQuestionRunPartitionParameters:
+      description: A list of Cleanroom Question Run Partition Parameters
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameter'
     QuestionRunStatus:
       description: Model containing the Cleanroom Question Run status details
       required:
@@ -563,33 +520,39 @@ components:
           example:
             detail1: Value1
             detail2: Value2
-    AuditDetails:
-      properties:
-        eventTime:
-          type: string
-          format: date-time
-        eventType:
-          type: string
-        message:
-          type: string
-        details:
-          additionalProperties:
-            type: object
-    CleanroomQuestionRunPartitionParameters:
-      description: A list of Cleanroom Question Run Partition Parameters
+    QuestionRunsMetadata:
+      description: A list of Cleanroom Question Runs and their Metadata
       type: array
       items:
-        $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameter'
-    ReturnObject:
-      type: object
+        $ref: '#/components/schemas/QuestionRunMetadata'
+    CleanroomQuestionRunActivationSummary:
+      description: Model containing the Cleanroom Question Run Activation Summary
       properties:
-        code:
+        cleanroomQuestionRunId:
           type: string
-        message:
+        cleanroomQuestionRunName:
           type: string
-      required:
-      - code
-      - message
+        activationSummary:
+          type: array
+          items:
+            $ref: '#/components/schemas/ActivationSummary'
+    ActivationSummary:
+      properties:
+        activationPartner:
+          type: string
+        activationChannel:
+          type: string
+        segmentCode:
+          type: string
+        identityType:
+          type: string
+        lastProcessed:
+          type: string
+          format: date-time
+        recordsSent:
+          type: integer
+        status:
+          type: string
     RunTableMetadata:
       type: object
       properties:
@@ -599,16 +562,6 @@ components:
           type: string
         columnName:
           type: string
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    QuestionRunsMetadata:
-      description: A list of Cleanroom Question Runs and their Metadata
-      type: array
-      items:
-        $ref: '#/components/schemas/QuestionRunMetadata'
     QuestionRunMetadata:
       description: Model containing the Cleanroom Question Run Metadata
       properties:
@@ -669,27 +622,18 @@ components:
           type: string
         questionVersion:
           type: integer
-    RunTableStats:
+    CleanroomQuestionRunPartitionParameter:
       type: object
-      additionalProperties:
-        type: string
-    ActivationSummary:
       properties:
-        activationPartner:
+        name:
           type: string
-        activationChannel:
+          description: Name of Cleanroom Question Run Partition Parameter
+        value:
           type: string
-        segmentCode:
+          description: Value of Cleanroom Question Run Partition Parameter
+        dataType:
           type: string
-        identityType:
-          type: string
-        lastProcessed:
-          type: string
-          format: date-time
-        recordsSent:
-          type: integer
-        status:
-          type: string
+          description: Data Type of Cleanroom Question Run Partition Parameter
     QuestionRunResultData:
       description: Model containing the Cleanroom Question Run Result Data
       properties:
@@ -707,54 +651,10 @@ components:
           type: array
           items:
             type: string
-    CleanroomQuestionRunAuditDetails:
-      description: Model containing the Cleanroom Question Run Audit Details
-      properties:
-        cleanroomQuestionRunId:
-          type: string
-        auditDetails:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditDetails'
-    GetExplainPlanResponse:
+    RunTableStats:
       type: object
-      description: Response containing the execution plan for a SQL cleanroom question run
-      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-      properties:
-        success:
-          type: boolean
-          description: Whether the explain plan retrieval was successful
-        explainPlan:
-          type: string
-          description: When success is true, the execution plan details. When success is false, this field should be omitted or null.
-        errorMessage:
-          type: string
-          description: When success is false, details explaining why the explain plan could not be retrieved.
-      required:
-      - success
-    CleanroomQuestionRunPartitionParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of Cleanroom Question Run Partition Parameter
-        value:
-          type: string
-          description: Value of Cleanroom Question Run Partition Parameter
-        dataType:
-          type: string
-          description: Data Type of Cleanroom Question Run Partition Parameter
-    CleanroomQuestionRunActivationSummary:
-      description: Model containing the Cleanroom Question Run Activation Summary
-      properties:
-        cleanroomQuestionRunId:
-          type: string
-        cleanroomQuestionRunName:
-          type: string
-        activationSummary:
-          type: array
-          items:
-            $ref: '#/components/schemas/ActivationSummary'
+      additionalProperties:
+        type: string
     QuestionRunCreateParameters:
       description: Model containing the Cleanroom Question Run parameters for a Create Run request
       required:
@@ -770,6 +670,106 @@ components:
           example:
             param1: Value1
             param2: Value2
+    CleanroomQuestionRunAuditDetails:
+      description: Model containing the Cleanroom Question Run Audit Details
+      properties:
+        cleanroomQuestionRunId:
+          type: string
+        auditDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditDetails'
+    AuditDetails:
+      properties:
+        eventTime:
+          type: string
+          format: date-time
+        eventType:
+          type: string
+        message:
+          type: string
+        details:
+          additionalProperties:
+            type: object
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+  responses:
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    PreconditionFailed:
+      description: Precondition Failed - a required precondition for the request has not been met
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    QuestionRunStatusUpdate:
+      description: Successfully sent the updated Cleanroom Question Run status
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

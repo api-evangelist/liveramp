@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: v1.0.0
-  title: External APIs for Customer Integration Cleanroom Question Permissions API
+  title: External APIs for Customer Integration Cleanroom Question…
   description: APIs to create and fetch Clean Room and related details from LiveRamp (previously Habu) for Customer Integration.
   contact:
     name: LiveRamp (previously Habu)
@@ -92,6 +92,27 @@ components:
       items:
         $ref: '#/components/schemas/CleanRoomQuestionPermissions'
       description: Array of Cleanroom Question Permissions
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    QuestionPermission:
+      type: string
+      enum:
+      - UNKNOWN_PERMISSION
+      - VIEW_CODE
+      - EDIT
+      - CLONE
+      - RUN
+      - IN_PROGRESS
+      - VIEW_RESULTS
+      - DELETE
     CleanRoomQuestionPermissionsUpdateInput:
       type: object
       properties:
@@ -104,23 +125,6 @@ components:
       items:
         $ref: '#/components/schemas/CleanRoomQuestionPermissionsUpdateInput'
       description: Array of Cleanroom Question Permission Updates
-    QuestionAccess:
-      type: string
-      enum:
-      - UNKNOWN_ACCESS
-      - QUESTION_OWNER_ONLY
-      - ALL_CLEAN_ROOM_PARTNERS
-    QuestionPermission:
-      type: string
-      enum:
-      - UNKNOWN_PERMISSION
-      - VIEW_CODE
-      - EDIT
-      - CLONE
-      - RUN
-      - IN_PROGRESS
-      - VIEW_RESULTS
-      - DELETE
     CleanRoomQuestionPermissions:
       type: object
       properties:
@@ -130,16 +134,12 @@ components:
           $ref: '#/components/schemas/QuestionPermission'
         access:
           $ref: '#/components/schemas/QuestionAccess'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
+    QuestionAccess:
+      type: string
+      enum:
+      - UNKNOWN_ACCESS
+      - QUESTION_OWNER_ONLY
+      - ALL_CLEAN_ROOM_PARTNERS
   responses:
     NotFound:
       description: The specified resource was not found
@@ -150,8 +150,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:
@@ -168,8 +168,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -177,8 +177,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:

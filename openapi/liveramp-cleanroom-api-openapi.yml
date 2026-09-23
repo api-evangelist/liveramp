@@ -126,44 +126,15 @@ paths:
       tags:
       - Cleanroom
 components:
-  responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
+    BfmtJoinColumns:
+      description: Detailed information about the Bfmt Join Columns
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
     Datasets:
       description: Detailed information about the datasets
       type: object
@@ -182,20 +153,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BfmtJoinColumns'
+    CleanroomQuestionRunPartitionParameters:
+      description: A list of Cleanroom Question Run Partition Parameters
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameter'
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     DeleteResponse:
       type: object
       properties:
         success:
           type: boolean
-    MeasurementExecutionTemplateResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        cleanRoomExecutionInstanceId:
-          type: string
-        cleanRoomExecutionTemplateId:
-          type: string
     CleanRoomExecutionInstanceInput:
       type: object
       properties:
@@ -217,33 +194,27 @@ components:
           type: string
         runtimeParameters:
           $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameters'
-    BfmtJoinColumns:
-      description: Detailed information about the Bfmt Join Columns
+    MeasurementExecutionTemplateResponse:
       type: object
       properties:
-        key:
+        success:
+          type: boolean
+        cleanRoomExecutionInstanceId:
           type: string
-        value:
+        cleanRoomExecutionTemplateId:
           type: string
-    CleanRoomMeasurementExecutionInstanceStatusResponse:
+    CleanroomQuestionRunPartitionParameter:
       type: object
       properties:
-        Id:
-          type: string
-        status:
-          type: string
-        startTime:
-          type: string
-        endTime:
-          type: string
         name:
           type: string
-        detailedStatusReport:
+          description: Name of Cleanroom Question Run Partition Parameter
+        value:
           type: string
-        cleanRoomExecutionTemplateID:
+          description: Value of Cleanroom Question Run Partition Parameter
+        dataType:
           type: string
-        outputs:
-          $ref: '#/components/schemas/ExecutionInstanceOutputs'
+          description: Data Type of Cleanroom Question Run Partition Parameter
     ExecutionInstanceOutputs:
       description: Clean Room Measurement Execution Instance Outputs
       type: array
@@ -265,33 +236,62 @@ components:
           method:
             type: string
             description: Http method
-    CleanroomQuestionRunPartitionParameter:
+    CleanRoomMeasurementExecutionInstanceStatusResponse:
       type: object
       properties:
+        Id:
+          type: string
+        status:
+          type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
         name:
           type: string
-          description: Name of Cleanroom Question Run Partition Parameter
-        value:
+        detailedStatusReport:
           type: string
-          description: Value of Cleanroom Question Run Partition Parameter
-        dataType:
+        cleanRoomExecutionTemplateID:
           type: string
-          description: Data Type of Cleanroom Question Run Partition Parameter
-    CleanroomQuestionRunPartitionParameters:
-      description: A list of Cleanroom Question Run Partition Parameters
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameter'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
+        outputs:
+          $ref: '#/components/schemas/ExecutionInstanceOutputs'
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2
