@@ -209,41 +209,6 @@ paths:
       - Cleanroom Users
 components:
   schemas:
-    UserAudit:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: Identifier of the user who created the object
-        updatedBy:
-          type: string
-          description: Identifier of the user who last updated the object
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          description: User ID
-        name:
-          type: string
-          description: Name of the user
-        email:
-          type: string
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
     TimeAudit:
       type: object
       properties:
@@ -259,6 +224,56 @@ components:
           type: string
           format: date-time
           description: Timestamp for when the object was deleted (if applicable)
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    UserAudit:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: Identifier of the user who created the object
+        updatedBy:
+          type: string
+          description: Identifier of the user who last updated the object
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User ID
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+    AddCleanRoomUserRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: (deprecated) id of the user in the organization
+        roleId:
+          type: string
+          description: (deprecated) id of Role that you want to assign the user
+        email:
+          type: string
+          description: email of the user in the organization
+        role:
+          type: string
+          description: Role that you want to assign the user
     CleanRoomUser:
       type: object
       properties:
@@ -291,42 +306,9 @@ components:
           type: string
         organizationId:
           type: string
-    AddCleanRoomUserRequest:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: (deprecated) id of the user in the organization
-        roleId:
-          type: string
-          description: (deprecated) id of Role that you want to assign the user
-        email:
-          type: string
-          description: email of the user in the organization
-        role:
-          type: string
-          description: Role that you want to assign the user
   responses:
-    ResourceConflict:
-      description: Conflict with the current state of the resource
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -343,8 +325,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:
@@ -354,6 +336,24 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    ResourceConflict:
+      description: Conflict with the current state of the resource
       content:
         application/json:
           schema:

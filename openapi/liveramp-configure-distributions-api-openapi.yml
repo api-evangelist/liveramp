@@ -14,7 +14,7 @@ paths:
     post:
       tags:
       - Configure Distributions
-      operationId: Create v2/DistributionManager
+      operationId: CreateV2/DistributionManager
       description: ''
       summary: Create a Distribution Manager
       requestBody:
@@ -51,10 +51,12 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Create v2/DistributionManager
     get:
       tags:
       - Configure Distributions
-      operationId: Get v2/DistributionManagers
+      operationId: GetV2/DistributionManagers
       description: ''
       summary: Fetch a list of Distribution Managers
       responses:
@@ -104,11 +106,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/DistributionManagers
   /v2/distribution-managers/{id}:
     get:
       tags:
       - Configure Distributions
-      operationId: Get v2/DistributionManager
+      operationId: GetV2/DistributionManager
       description: ''
       summary: Fetch a single Distribution Manager
       responses:
@@ -142,10 +146,12 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/DistributionManager
     put:
       tags:
       - Configure Distributions
-      operationId: Modify v2/DistributionManager
+      operationId: ModifyV2/DistributionManager
       description: ''
       summary: Update a Distribution Manager
       requestBody:
@@ -186,10 +192,12 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Modify v2/DistributionManager
     delete:
       tags:
       - Configure Distributions
-      operationId: Delete v2/DistributionManager
+      operationId: DeleteV2/DistributionManager
       description: ''
       summary: Delete a Distribution Manager
       responses:
@@ -219,11 +227,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Delete v2/DistributionManager
   /v2/integration-connections:
     post:
       tags:
       - Configure Distributions
-      operationId: Create v2/IntegrationConnection
+      operationId: CreateV2/IntegrationConnection
       description: ''
       summary: Create an Integration Connection
       requestBody:
@@ -260,10 +270,12 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Create v2/IntegrationConnection
     get:
       tags:
       - Configure Distributions
-      operationId: Get v2/IntegrationConnections
+      operationId: GetV2/IntegrationConnections
       description: ''
       summary: Fetch a list of Integration Connections
       responses:
@@ -307,11 +319,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/IntegrationConnections
   /v2/integration-connections/{id}:
     get:
       tags:
       - Configure Distributions
-      operationId: Get v2/IntegrationConnection
+      operationId: GetV2/IntegrationConnection
       description: ''
       summary: Fetch a single Integration Connection
       responses:
@@ -345,10 +359,12 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/IntegrationConnection
     put:
       tags:
       - Configure Distributions
-      operationId: Modify v2/IntegrationConnection
+      operationId: ModifyV2/IntegrationConnection
       description: ''
       summary: Update an Integration Connection
       requestBody:
@@ -389,10 +405,12 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Modify v2/IntegrationConnection
     delete:
       tags:
       - Configure Distributions
-      operationId: Delete v2/IntegrationConnection
+      operationId: DeleteV2/IntegrationConnection
       description: ''
       summary: Delete an Integration Connection
       responses:
@@ -422,8 +440,20 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Delete v2/IntegrationConnection
 components:
   schemas:
+    v2IntegrationConnectionMultiResponse:
+      type: object
+      properties:
+        v2/IntegrationConnections:
+          description: Array of retrieved v2/IntegrationConnections
+          type: array
+          items:
+            $ref: '#/components/schemas/v2IntegrationConnectionOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2IntegrationConnectionMultiResponsePagination'
     v2IntegrationConnectionOutput:
       type: object
       properties:
@@ -468,6 +498,54 @@ components:
       - createdAt
       - updatedAt
       description: A connection to an Integration
+    Status:
+      type: string
+      enum:
+      - ACTIVE
+      - INACTIVE
+    IntegrationConnectionProperty:
+      type: object
+      properties:
+        propertyKey:
+          type: string
+        propertyValue:
+          type: string
+      required:
+      - propertyKey
+      - propertyValue
+    v2IntegrationConnectionPuttable:
+      type: object
+      properties:
+        oAuthConnectionID:
+          description: Required when the Integration has an oAuthEndpointID
+          type: string
+        properties:
+          description: A value must be specified for each of the requireProperties from Integration
+          items:
+            allOf:
+            - $ref: '#/components/schemas/IntegrationConnectionProperty'
+            type: object
+          type: array
+        deviceTypes:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DeviceType'
+            type: string
+          type: array
+      required:
+      - properties
+      - deviceTypes
+      description: A connection to an Integration
+    v2DistributionManagerMultiResponse:
+      type: object
+      properties:
+        v2/DistributionManagers:
+          description: Array of retrieved v2/DistributionManagers
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerMultiResponsePagination'
     StandardError:
       type: object
       properties:
@@ -485,46 +563,28 @@ components:
       - httpStatus
       - errorCode
       - message
-    v2DistributionManagerMultiResponsePagination:
+    v2DistributionManagerPuttable:
       type: object
       properties:
-        after:
+        name:
+          type: string
+          maxLength: 50
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          type: string
+        expireAt:
+          description: The date at which all deliveries will be stopped and the status will be set to inactive
           type:
           - string
           - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
-    IntegrationConnectionProperty:
-      type: object
-      properties:
-        propertyKey:
-          type: string
-        propertyValue:
-          type: string
+          format: ISO8601 UTC date
+          example: '2019-04-13'
       required:
-      - propertyKey
-      - propertyValue
-    v2IntegrationConnectionMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
+      - name
+      - status
+      - expireAt
+      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
     v2DistributionManagerOutput:
       type: object
       properties:
@@ -564,87 +624,21 @@ components:
       - createdAt
       - updatedAt
       description: A link between an IntegrationConnection and segments with configuration for how data is distributed
-    v2IntegrationConnectionPuttable:
+    v2IntegrationConnectionMultiResponsePagination:
       type: object
       properties:
-        oAuthConnectionID:
-          description: Required when the Integration has an oAuthEndpointID
-          type: string
-        properties:
-          description: A value must be specified for each of the requireProperties from Integration
-          items:
-            allOf:
-            - $ref: '#/components/schemas/IntegrationConnectionProperty'
-            type: object
-          type: array
-        deviceTypes:
-          items:
-            allOf:
-            - $ref: '#/components/schemas/DeviceType'
-            type: string
-          type: array
-      required:
-      - properties
-      - deviceTypes
-      description: A connection to an Integration
-    v2DistributionManagerMultiResponse:
-      type: object
-      properties:
-        v2/DistributionManagers:
-          description: Array of retrieved v2/DistributionManagers
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DistributionManagerOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DistributionManagerMultiResponsePagination'
-    Status:
-      type: string
-      enum:
-      - ACTIVE
-      - INACTIVE
-    DeviceType:
-      type: string
-      enum:
-      - PII
-      - WEB
-      - IOS
-      - ANDROID
-      - CUSTOM_ID
-      - MIXED
-      - OTHER
-      - RAMP_ID
-    v2IntegrationConnectionMultiResponse:
-      type: object
-      properties:
-        v2/IntegrationConnections:
-          description: Array of retrieved v2/IntegrationConnections
-          type: array
-          items:
-            $ref: '#/components/schemas/v2IntegrationConnectionOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2IntegrationConnectionMultiResponsePagination'
-    v2DistributionManagerPuttable:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 50
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Status'
-          type: string
-        expireAt:
-          description: The date at which all deliveries will be stopped and the status will be set to inactive
+        after:
           type:
           - string
           - 'null'
-          format: ISO8601 UTC date
-          example: '2019-04-13'
-      required:
-      - name
-      - status
-      - expireAt
-      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
     v2DistributionManagerInput:
       type: object
       properties:
@@ -669,6 +663,17 @@ components:
       - name
       - integrationConnectionID
       description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+    DeviceType:
+      type: string
+      enum:
+      - PII
+      - WEB
+      - IOS
+      - ANDROID
+      - CUSTOM_ID
+      - MIXED
+      - OTHER
+      - RAMP_ID
     v2IntegrationConnectionInput:
       type: object
       properties:
@@ -703,3 +708,18 @@ components:
       - properties
       - deviceTypes
       description: A connection to an Integration
+    v2DistributionManagerMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.

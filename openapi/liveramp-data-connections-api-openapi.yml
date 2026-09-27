@@ -292,54 +292,16 @@ paths:
       - Data Connections
 components:
   schemas:
-    IdentifierTypes:
-      description: A list of Identifier Types
-      type: array
-      items:
-        $ref: '#/components/schemas/IdentifierType'
-    DataConnectionRetryResponse:
+    DeleteResponse:
       type: object
       properties:
         success:
           type: boolean
-    PartitionFieldConfig:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Fixed
-          - Range
-          - Rolling
-          description: Fixed is used for String and Integer type fields, Range and Rolling is for Date and Timestamp
-        values:
-          type: array
-          items:
-            type: string
-        rollingUnit:
-          type: string
-          enum:
-          - Days
-          - Months
-          description: Applicable only in case of Rolling Date and Timestamp fields
-        isEnforced:
-          type: boolean
-          default: false
-          description: Indicates whether the partition field values are enforced for the CRQ run
-    FieldConfigurations:
-      description: A list of Field Configurations
+    DataConnections:
+      description: A list of Data Connections
       type: array
       items:
-        $ref: '#/components/schemas/FieldConfiguration'
-    IdentifierType:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
+        $ref: '#/components/schemas/DataConnectionResponse'
     DataConnectionResponse:
       type: object
       properties:
@@ -420,32 +382,7 @@ components:
           - Publisher Synthetic Dataset Library
         credentialSource:
           type: string
-    DataConnectionDetails:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the data connection
-        category:
-          type: string
-          description: Category of the data connection
-        credentialId:
-          type: string
-          description: Credential ID for the data connection
-        dataType:
-          $ref: '#/components/schemas/DataType'
-        dataSource:
-          $ref: '#/components/schemas/DataSource'
-        dataSourceConfiguration:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobParameters'
-    DataConnections:
-      description: A list of Data Connections
-      type: array
-      items:
-        $ref: '#/components/schemas/DataConnectionResponse'
-    JobParameters:
+    IdentifierType:
       type: object
       properties:
         id:
@@ -454,65 +391,45 @@ components:
           type: string
         displayName:
           type: string
-        value:
-          type: string
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    DeleteResponse:
+    DataConnectionRetryResponse:
       type: object
       properties:
         success:
           type: boolean
-    DataType:
+    IdentifierTypes:
+      description: A list of Identifier Types
+      type: array
+      items:
+        $ref: '#/components/schemas/IdentifierType'
+    PartitionFieldConfig:
       type: object
       properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
+        type:
           type: string
           enum:
-          - Ad Engagement
-          - Ad Exposure
-          - Ad Logs
-          - 'Amazon Marketing Cloud: Event-Level Ad Campaign Data'
-          - Binary Data
-          - CRM Data
-          - Campaign Data
-          - Campaign Mapping Data
-          - Code Container
-          - Conversion Events
-          - Databricks Container
-          - Databricks Notebook
-          - 'Facebook: Advanced Analytics Data'
-          - Generic
-          - 'Google Ads Data Hub: Event-Level Ad Campaign Data'
-          - Google Cloud Big Query
-          - Identity Graph
-          - JAR
-          - LinkedIn Marketing Solutions Config Data
-          - Machine Learning Model
-          - Member Profile
-          - Metadata
-          - Model Training
-          - Offline Conversions
-          - Page Data
-          - Service Container
-          - 'The Trade Desk: Raw Event Data Stream (REDS) Feed'
-          - 'The Trade Desk: Raw Event Data Stream (REDS) Metadata'
-          - Transaction Data
-          - User Data
-          - User-Segment Map
-          - WHEEL
+          - Fixed
+          - Range
+          - Rolling
+          description: Fixed is used for String and Integer type fields, Range and Rolling is for Date and Timestamp
+        values:
+          type: array
+          items:
+            type: string
+        rollingUnit:
+          type: string
+          enum:
+          - Days
+          - Months
+          description: Applicable only in case of Rolling Date and Timestamp fields
+        isEnforced:
+          type: boolean
+          default: false
+          description: Indicates whether the partition field values are enforced for the CRQ run
+    FieldConfigurations:
+      description: A list of Field Configurations
+      type: array
+      items:
+        $ref: '#/components/schemas/FieldConfiguration'
     FieldConfiguration:
       type: object
       properties:
@@ -600,6 +517,89 @@ components:
           description: Indicates whether this field is a partition column
         partitionFieldConfig:
           $ref: '#/components/schemas/PartitionFieldConfig'
+    DataType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+          enum:
+          - Ad Engagement
+          - Ad Exposure
+          - Ad Logs
+          - 'Amazon Marketing Cloud: Event-Level Ad Campaign Data'
+          - Binary Data
+          - CRM Data
+          - Campaign Data
+          - Campaign Mapping Data
+          - Code Container
+          - Conversion Events
+          - Databricks Container
+          - Databricks Notebook
+          - 'Facebook: Advanced Analytics Data'
+          - Generic
+          - 'Google Ads Data Hub: Event-Level Ad Campaign Data'
+          - Google Cloud Big Query
+          - Identity Graph
+          - JAR
+          - LinkedIn Marketing Solutions Config Data
+          - Machine Learning Model
+          - Member Profile
+          - Metadata
+          - Model Training
+          - Offline Conversions
+          - Page Data
+          - Service Container
+          - 'The Trade Desk: Raw Event Data Stream (REDS) Feed'
+          - 'The Trade Desk: Raw Event Data Stream (REDS) Metadata'
+          - Transaction Data
+          - User Data
+          - User-Segment Map
+          - WHEEL
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    DataConnectionDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the data connection
+        category:
+          type: string
+          description: Category of the data connection
+        credentialId:
+          type: string
+          description: Credential ID for the data connection
+        dataType:
+          $ref: '#/components/schemas/DataType'
+        dataSource:
+          $ref: '#/components/schemas/DataSource'
+        dataSourceConfiguration:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobParameters'
+    JobParameters:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        value:
+          type: string
   responses:
     BadRequest:
       description: Bad Request - Incorrect syntax or request
@@ -619,8 +619,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -637,8 +637,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:

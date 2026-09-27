@@ -14,7 +14,7 @@ paths:
     post:
       tags:
       - Distribute Data
-      operationId: Create v2/DistributionManager::SegmentConfigs
+      operationId: CreateV2/DistributionManager::SegmentConfigs
       description: ''
       summary: Add Segments to a Distribution Manager. Limited to 500 segments at a time
       requestBody:
@@ -63,10 +63,12 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Create v2/DistributionManager::SegmentConfigs
     delete:
       tags:
       - Distribute Data
-      operationId: Delete v2/DistributionManager::SegmentConfigs
+      operationId: DeleteV2/DistributionManager::SegmentConfigs
       description: ''
       summary: Remove Segments from a Distribution Manager. Limited to 500 segments at a time
       requestBody:
@@ -118,10 +120,12 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Delete v2/DistributionManager::SegmentConfigs
     get:
       tags:
       - Distribute Data
-      operationId: Get v2/DistributionManager::SegmentConfigs
+      operationId: GetV2/DistributionManager::SegmentConfigs
       description: ''
       summary: Fetch a list of Segments within a Distribution Manager
       responses:
@@ -177,11 +181,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/DistributionManager::SegmentConfigs
   /v2/distribution-managers/{v2DistributionManagerId}/segment-configs/{id}:
     get:
       tags:
       - Distribute Data
-      operationId: Get v2/DistributionManager::SegmentConfig
+      operationId: GetV2/DistributionManager::SegmentConfig
       description: ''
       summary: Fetch a single Segment within a Distribution Manager
       responses:
@@ -221,8 +227,44 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/DistributionManager::SegmentConfig
 components:
   schemas:
+    v2DistributionManagerSegmentConfigInput:
+      type: object
+      properties:
+        segmentID:
+          type: string
+        segmentType:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+        destinationSegmentID:
+          type: string
+        distributionManagerID:
+          type: string
+          description: Link to v2/DistributionManager resource via its id
+      required:
+      - segmentID
+      - segmentType
+      - distributionManagerID
+      description: A list of segment IDs to distribute
+    v2DistributionManagerSegmentConfigMultiResponse:
+      type: object
+      properties:
+        segmentConfigs:
+          description: Array of retrieved v2/DistributionManager::SegmentConfigs
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
     StandardError:
       type: object
       properties:
@@ -277,37 +319,3 @@ components:
       - segmentType
       - distributionManagerID
       description: A list of segment IDs to distribute
-    v2DistributionManagerSegmentConfigInput:
-      type: object
-      properties:
-        segmentID:
-          type: string
-        segmentType:
-          allOf:
-          - $ref: '#/components/schemas/SegmentType'
-          type: string
-        destinationSegmentID:
-          type: string
-        distributionManagerID:
-          type: string
-          description: Link to v2/DistributionManager resource via its id
-      required:
-      - segmentID
-      - segmentType
-      - distributionManagerID
-      description: A list of segment IDs to distribute
-    v2DistributionManagerSegmentConfigMultiResponse:
-      type: object
-      properties:
-        segmentConfigs:
-          description: Array of retrieved v2/DistributionManager::SegmentConfigs
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE

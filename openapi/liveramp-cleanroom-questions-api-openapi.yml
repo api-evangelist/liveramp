@@ -339,6 +339,40 @@ paths:
       - Cleanroom Questions
 components:
   schemas:
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    CleanRoomQuestionRun:
+      type: object
+      properties:
+        runId:
+          type: string
+          description: Run ID
+        status:
+          type: string
+        startTimestamp:
+          type: string
+          format: date-time
+          description: Start Timestamp of the Run
+        endTimestamp:
+          type: string
+          format: date-time
+          description: End Timestamp of the Run
+    CleanRoomQuestions:
+      description: A list of Cleanroom Questions and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomQuestion'
+    CleanroomQuestionComputeCapacity:
+      type: string
+      description: possible compute capacities for cleanroom questions. This can be set for Hybrid, LinkedIn, Snowflake and Habu Confidential Compute. Snowflake cleanroom questions can only be DEFAULT or LARGE.
+      enum:
+      - DEFAULT
+      - MEDIUM
+      - LARGE
+      - XLARGE
     SegmentationRequest:
       description: Request body for enabling or updating segmentation for a Cleanroom Question
       required:
@@ -353,6 +387,28 @@ components:
           type: string
           description: Ramp ID type
           example: NAME
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    UpdateCleanroomQuestionComputeCapacityResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the warehouse size was updated successfully
+    UpdateCleanroomQuestionComputeCapacityRequest:
+      type: object
+      properties:
+        computeCapacity:
+          $ref: '#/components/schemas/CleanroomQuestionComputeCapacity'
+          description: The new warehouse size for the cleanroom question
     CleanRoomQuestion:
       description: Model containing the Cleanroom Question details
       properties:
@@ -395,49 +451,6 @@ components:
           type: string
         questionId:
           type: string
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    CleanRoomQuestionRun:
-      type: object
-      properties:
-        runId:
-          type: string
-          description: Run ID
-        status:
-          type: string
-        startTimestamp:
-          type: string
-          format: date-time
-          description: Start Timestamp of the Run
-        endTimestamp:
-          type: string
-          format: date-time
-          description: End Timestamp of the Run
-    UpdateCleanroomQuestionComputeCapacityResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the warehouse size was updated successfully
-    UpdateCleanroomQuestionComputeCapacityRequest:
-      type: object
-      properties:
-        computeCapacity:
-          $ref: '#/components/schemas/CleanroomQuestionComputeCapacity'
-          description: The new warehouse size for the cleanroom question
     CleanRoomQuestionResponse:
       type: object
       properties:
@@ -498,38 +511,7 @@ components:
           type: boolean
           description: Indicates whether the operation succeeded
           example: true
-    CleanRoomQuestions:
-      description: A list of Cleanroom Questions and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomQuestion'
-    CleanroomQuestionComputeCapacity:
-      type: string
-      description: possible compute capacities for cleanroom questions. This can be set for Hybrid, LinkedIn, Snowflake and Habu Confidential Compute. Snowflake cleanroom questions can only be DEFAULT or LARGE.
-      enum:
-      - DEFAULT
-      - MEDIUM
-      - LARGE
-      - XLARGE
   responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
     InternalServerError:
       description: Internal Server Error
       content:
@@ -548,8 +530,26 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:

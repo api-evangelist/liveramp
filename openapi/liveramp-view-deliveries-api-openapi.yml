@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - View Deliveries
-      operationId: Get v2/Deliveries
+      operationId: GetV2/Deliveries
       description: ''
       summary: Fetch a list of Deliveries
       responses:
@@ -71,55 +71,10 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/Deliveries
 components:
   schemas:
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
-    OperationType:
-      type: string
-      enum:
-      - ADD
-      - DELETE
-    v2DeliveryMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
-    v2DeliveryMultiResponse:
-      type: object
-      properties:
-        v2/Deliveries:
-          description: Array of retrieved v2/Deliveries
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DeliveryOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DeliveryMultiResponsePagination'
     v2DeliveryOutput:
       type: object
       properties:
@@ -157,6 +112,46 @@ components:
       - integrationConnectionID
       - operationType
       description: Delivery information about a Segment to a IntegrationConnection
+    OperationType:
+      type: string
+      enum:
+      - ADD
+      - DELETE
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    DeliveryStatus:
+      type: string
+      enum:
+      - FAILED
+      - CANCELLED
+      - PENDING
+      - IN_PROGRESS
+      - DELIVERED
+    v2DeliveryMultiResponse:
+      type: object
+      properties:
+        v2/Deliveries:
+          description: Array of retrieved v2/Deliveries
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DeliveryOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DeliveryMultiResponsePagination'
     DeviceType:
       type: string
       enum:
@@ -168,11 +163,18 @@ components:
       - MIXED
       - OTHER
       - RAMP_ID
-    DeliveryStatus:
-      type: string
-      enum:
-      - FAILED
-      - CANCELLED
-      - PENDING
-      - IN_PROGRESS
-      - DELIVERED
+    v2DeliveryMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.

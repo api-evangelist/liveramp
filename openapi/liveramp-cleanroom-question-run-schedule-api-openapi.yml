@@ -210,16 +210,69 @@ paths:
       - Cleanroom Question Run Schedule
 components:
   schemas:
-    CleanroomQuestionRunScheduleParameters:
-      description: A list of Cleanroom Question Run Schedule Parameters
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanroomQuestionRunScheduleParameter'
+    DeleteCleanroomQuestionRunScheduleResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    CleanroomQuestionRunParameterType:
+      type: string
+      enum:
+      - PARTITION_PARAMETER
+      - RUN_PARAMETER
     CleanroomQuestionRunScheduleDateParameterType:
       type: string
       enum:
       - RELATIVE
       - ABSOLUTE
+    CreateCleanroomQuestionRunScheduleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+    CreateCleanroomQuestionRunScheduleInput:
+      type: object
+      properties:
+        parameters:
+          $ref: '#/components/schemas/CleanroomQuestionRunScheduleParameters'
+        daysOfWeek:
+          type: array
+          items:
+            $ref: '#/components/schemas/DaysOfWeek'
+        repeatDayofMonth:
+          type: array
+          items:
+            type: integer
+        startSchedule:
+          type: string
+        name:
+          type: string
+        repeatFrequency:
+          $ref: '#/components/schemas/RepeatFrequency'
+        endSchedule:
+          type: string
+    DateQualifier:
+      type: string
+      enum:
+      - DAYS
+      - MONTHS
+    RepeatFrequency:
+      type: string
+      enum:
+      - FREQUENCY_UNKNOWN
+      - DAILY
+      - WEEKLY
+      - MONTHLY
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     CleanroomQuestionRunScheduleParameter:
       type: object
       properties:
@@ -238,28 +291,11 @@ components:
           $ref: '#/components/schemas/DateQualifier'
         dateType:
           $ref: '#/components/schemas/CleanroomQuestionRunScheduleDateParameterType'
-    CreateCleanroomQuestionRunScheduleResponse:
-      type: object
-      properties:
-        id:
-          type: string
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    RepeatFrequency:
-      type: string
-      enum:
-      - FREQUENCY_UNKNOWN
-      - DAILY
-      - WEEKLY
-      - MONTHLY
+    CleanroomQuestionRunScheduleParameters:
+      description: A list of Cleanroom Question Run Schedule Parameters
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanroomQuestionRunScheduleParameter'
     GetAllRunSchedulesForCleanroomQuestionResponse:
       type: array
       items:
@@ -275,26 +311,6 @@ components:
       - THU
       - FRI
       - SAT
-    DateQualifier:
-      type: string
-      enum:
-      - DAYS
-      - MONTHS
-    ScheduleQuestionParameters:
-      type: object
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        qualifier:
-          $ref: '#/components/schemas/DateQualifier'
-        type:
-          type: string
-        isStatic:
-          type: boolean
-        parameterType:
-          type: string
     GetCleanroomQuestionRunScheduleResponse:
       type: object
       properties:
@@ -341,49 +357,24 @@ components:
             format: int64
         displayId:
           type: string
-    DeleteCleanroomQuestionRunScheduleResponse:
+    ScheduleQuestionParameters:
       type: object
       properties:
-        success:
-          type: boolean
-    CleanroomQuestionRunParameterType:
-      type: string
-      enum:
-      - PARTITION_PARAMETER
-      - RUN_PARAMETER
-    CreateCleanroomQuestionRunScheduleInput:
-      type: object
-      properties:
-        parameters:
-          $ref: '#/components/schemas/CleanroomQuestionRunScheduleParameters'
-        daysOfWeek:
-          type: array
-          items:
-            $ref: '#/components/schemas/DaysOfWeek'
-        repeatDayofMonth:
-          type: array
-          items:
-            type: integer
-        startSchedule:
-          type: string
         name:
           type: string
-        repeatFrequency:
-          $ref: '#/components/schemas/RepeatFrequency'
-        endSchedule:
+        value:
+          type: string
+        qualifier:
+          $ref: '#/components/schemas/DateQualifier'
+        type:
+          type: string
+        isStatic:
+          type: boolean
+        parameterType:
           type: string
   responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -400,8 +391,17 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:

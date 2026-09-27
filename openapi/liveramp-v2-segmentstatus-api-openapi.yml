@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - v2/SegmentStatus
-      operationId: Get v2/SegmentStatuses
+      operationId: GetV2/SegmentStatuses
       description: Limited to either first-party (onboarding) or data marketplace segments. Exactly one of these segmentID params must be passed in
       summary: Fetch a list of Segments' statuses
       responses:
@@ -72,8 +72,45 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/SegmentStatuses
 components:
   schemas:
+    v2SegmentStatusOutput:
+      type: object
+      properties:
+        integrationConnectionID:
+          type: string
+        taxonomy:
+          allOf:
+          - $ref: '#/components/schemas/TaxonomyStatus'
+          type: object
+        segmentID:
+          type: string
+        segmentType:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+      required:
+      - taxonomy
+      - segmentID
+      - segmentType
+      description: Represents a segment's status
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
+    v2SegmentStatusMultiResponse:
+      type: object
+      properties:
+        v2/SegmentStatuses:
+          description: Array of retrieved v2/SegmentStatuses
+          type: array
+          items:
+            $ref: '#/components/schemas/v2SegmentStatusOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2SegmentStatusMultiResponsePagination'
     TaxonomyStatus:
       type: object
       properties:
@@ -116,36 +153,6 @@ components:
         total:
           type: integer
           description: The total number of results.
-    v2SegmentStatusMultiResponse:
-      type: object
-      properties:
-        v2/SegmentStatuses:
-          description: Array of retrieved v2/SegmentStatuses
-          type: array
-          items:
-            $ref: '#/components/schemas/v2SegmentStatusOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2SegmentStatusMultiResponsePagination'
-    v2SegmentStatusOutput:
-      type: object
-      properties:
-        integrationConnectionID:
-          type: string
-        taxonomy:
-          allOf:
-          - $ref: '#/components/schemas/TaxonomyStatus'
-          type: object
-        segmentID:
-          type: string
-        segmentType:
-          allOf:
-          - $ref: '#/components/schemas/SegmentType'
-          type: string
-      required:
-      - taxonomy
-      - segmentID
-      - segmentType
-      description: Represents a segment's status
     taxonomyTaxonomySegmentSyncStatus:
       type: string
       description: 'NOT_CONFIGURED_TO_SYNC: the Taxonomy::Segment is in a taxonomy that is not configured to sync to a destination.
@@ -163,8 +170,3 @@ components:
       - NEVER_SYNCED
       - OUT_OF_SYNC
       - SYNCED
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE

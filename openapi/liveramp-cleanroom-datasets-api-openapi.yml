@@ -232,11 +232,37 @@ paths:
       - Cleanroom Datasets
 components:
   schemas:
-    IdentifierTypes:
-      description: A list of Identifier Types
+    DatasetPartitionParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Full parameter name including view macro prefix and date expansion suffixes
+        dataType:
+          type: string
+          description: Parameter data type
+        partitionFieldConfig:
+          $ref: '#/components/schemas/PartitionFieldConfig'
+    UpdateCleanroomDatasetPartnerAssignmentRequest:
       type: array
       items:
-        $ref: '#/components/schemas/IdentifierType'
+        $ref: '#/components/schemas/UpdateCleanroomDatasetPartnerAssignmentParameters'
+    DatasetPartitionParameterGroup:
+      type: object
+      properties:
+        dataConnectionId:
+          type: string
+          description: Data connection (import job) ID
+        dataConnectionName:
+          type: string
+          description: Data connection name
+        dataConnectionMacro:
+          type: string
+          description: Macro of the underlying data connection (set for view datasets)
+        partitionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetPartitionField'
     CleanRoomDataset:
       type: object
       properties:
@@ -279,24 +305,6 @@ components:
           description: Whether this dataset is a view
         partnerCanAssign:
           type: boolean
-    DatasetField:
-      type: object
-      properties:
-        datasetId:
-          type: string
-          description: Dataset ID
-        id:
-          type: string
-          description: Dataset Field ID
-        name:
-          type: string
-          description: Dataset Field Name
-        value:
-          type: string
-          description: Dataset Field Value
-        type:
-          type: string
-          description: Dataset Field Type
     DatasetParameter:
       type: object
       properties:
@@ -309,41 +317,6 @@ components:
         type:
           type: string
           description: Dataset Parameter Type
-    DatasetPartitionParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Full parameter name including view macro prefix and date expansion suffixes
-        dataType:
-          type: string
-          description: Parameter data type
-        partitionFieldConfig:
-          $ref: '#/components/schemas/PartitionFieldConfig'
-    PartitionFieldConfig:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Fixed
-          - Range
-          - Rolling
-          description: Fixed is used for String and Integer type fields, Range and Rolling is for Date and Timestamp
-        values:
-          type: array
-          items:
-            type: string
-        rollingUnit:
-          type: string
-          enum:
-          - Days
-          - Months
-          description: Applicable only in case of Rolling Date and Timestamp fields
-        isEnforced:
-          type: boolean
-          default: false
-          description: Indicates whether the partition field values are enforced for the CRQ run
     DatasetFieldMapping:
       type: object
       properties:
@@ -386,6 +359,13 @@ components:
           description: Indicates whether this field is a partition column
         partitionFieldConfig:
           $ref: '#/components/schemas/PartitionFieldConfig'
+    ConfigureCleanRoomDatasetRequest:
+      type: object
+      properties:
+        rampIDConsent:
+          type: boolean
+          default: false
+          description: Consent to the use of RampID as a join key in questions (https://storage.googleapis.com/lr-tech-docs-resources/Files/LiveRamp%20RampID%20Data%20Protection%20Attestation.pdf)
     IdentifierType:
       type: object
       properties:
@@ -395,6 +375,34 @@ components:
           type: string
         displayName:
           type: string
+    DatasetField:
+      type: object
+      properties:
+        datasetId:
+          type: string
+          description: Dataset ID
+        id:
+          type: string
+          description: Dataset Field ID
+        name:
+          type: string
+          description: Dataset Field Name
+        value:
+          type: string
+          description: Dataset Field Value
+        type:
+          type: string
+          description: Dataset Field Type
+    IdentifierTypes:
+      description: A list of Identifier Types
+      type: array
+      items:
+        $ref: '#/components/schemas/IdentifierType'
+    CleanRoomDatasets:
+      description: A list of Cleanroom Datasets
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomDataset'
     DatasetPartitionField:
       type: object
       properties:
@@ -408,6 +416,37 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DatasetPartitionParameter'
+    UpdateCleanroomDatasetPartnerAssignmentParameters:
+      type: object
+      properties:
+        datasetId:
+          type: string
+        partnerCanAssign:
+          type: boolean
+    PartitionFieldConfig:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Fixed
+          - Range
+          - Rolling
+          description: Fixed is used for String and Integer type fields, Range and Rolling is for Date and Timestamp
+        values:
+          type: array
+          items:
+            type: string
+        rollingUnit:
+          type: string
+          enum:
+          - Days
+          - Months
+          description: Applicable only in case of Rolling Date and Timestamp fields
+        isEnforced:
+          type: boolean
+          default: false
+          description: Indicates whether the partition field values are enforced for the CRQ run
     DatasetFilter:
       type: object
       properties:
@@ -437,13 +476,36 @@ components:
           items:
             type: string
           description: Values to filter the Dataset Field on
-    UpdateCleanroomDatasetPartnerAssignmentParameters:
+    CleanRoomDatasetUpdateRequest:
+      type: object
+      description: 'The following fields are required: datasetFieldMapping.[fieldName, isExcluded, rename], datasetFilter.[datasetFieldName , operator, values]; all others are optional'
+      properties:
+        datasetFieldMappings:
+          $ref: '#/components/schemas/DatasetFieldMappings'
+        datasetFilters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetFilter'
+    UpdateCleanroomDatasetPartnerAssignmentResponse:
       type: object
       properties:
-        datasetId:
-          type: string
-        partnerCanAssign:
+        success:
           type: boolean
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    DatasetFieldMappings:
+      description: A list of Dataset Field Mappings
+      type: array
+      items:
+        $ref: '#/components/schemas/DatasetFieldMapping'
     DatasetPartitionParameters:
       type: object
       description: Partition parameters discoverable when this dataset is assigned to a question
@@ -455,68 +517,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DatasetPartitionParameterGroup'
-    ConfigureCleanRoomDatasetRequest:
-      type: object
-      properties:
-        rampIDConsent:
-          type: boolean
-          default: false
-          description: Consent to the use of RampID as a join key in questions (https://storage.googleapis.com/lr-tech-docs-resources/Files/LiveRamp%20RampID%20Data%20Protection%20Attestation.pdf)
-    CleanRoomDatasetUpdateRequest:
-      type: object
-      description: 'The following fields are required: datasetFieldMapping.[fieldName, isExcluded, rename], datasetFilter.[datasetFieldName , operator, values]; all others are optional'
-      properties:
-        datasetFieldMappings:
-          $ref: '#/components/schemas/DatasetFieldMappings'
-        datasetFilters:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasetFilter'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    UpdateCleanroomDatasetPartnerAssignmentRequest:
-      type: array
-      items:
-        $ref: '#/components/schemas/UpdateCleanroomDatasetPartnerAssignmentParameters'
-    DatasetPartitionParameterGroup:
-      type: object
-      properties:
-        dataConnectionId:
-          type: string
-          description: Data connection (import job) ID
-        dataConnectionName:
-          type: string
-          description: Data connection name
-        dataConnectionMacro:
-          type: string
-          description: Macro of the underlying data connection (set for view datasets)
-        partitionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasetPartitionField'
-    UpdateCleanroomDatasetPartnerAssignmentResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    CleanRoomDatasets:
-      description: A list of Cleanroom Datasets
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomDataset'
-    DatasetFieldMappings:
-      description: A list of Dataset Field Mappings
-      type: array
-      items:
-        $ref: '#/components/schemas/DatasetFieldMapping'
   responses:
     BadRequest:
       description: Bad Request - Incorrect syntax or request
@@ -536,8 +536,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -554,8 +554,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:

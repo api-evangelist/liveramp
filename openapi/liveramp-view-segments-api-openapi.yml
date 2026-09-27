@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - View Segments
-      operationId: Get v2/Segments
+      operationId: GetV2/Segments
       description: ''
       summary: Fetch a list of Segments
       responses:
@@ -70,11 +70,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/Segments
   /v2/segments/{id}:
     get:
       tags:
       - View Segments
-      operationId: Get v2/Segment
+      operationId: GetV2/Segment
       description: ''
       summary: Fetch a single Segment
       responses:
@@ -108,56 +110,10 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/Segment
 components:
   schemas:
-    v2SegmentOutput:
-      type: object
-      properties:
-        id:
-          type: string
-        field:
-          allOf:
-          - $ref: '#/components/schemas/Field'
-          type: object
-        value:
-          type: string
-        type:
-          allOf:
-          - $ref: '#/components/schemas/SegmentType'
-          type: string
-      required:
-      - id
-      - field
-      - value
-      - type
-      description: Represents a field-value pair that can be added to a Distribution Manager
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
-    v2SegmentMultiResponse:
-      type: object
-      properties:
-        v2/Segments:
-          description: Array of retrieved v2/Segments
-          type: array
-          items:
-            $ref: '#/components/schemas/v2SegmentOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2SegmentMultiResponsePagination'
     Field:
       type: object
       properties:
@@ -186,8 +142,56 @@ components:
         total:
           type: integer
           description: The total number of results.
+    v2SegmentOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        field:
+          allOf:
+          - $ref: '#/components/schemas/Field'
+          type: object
+        value:
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+      required:
+      - id
+      - field
+      - value
+      - type
+      description: Represents a field-value pair that can be added to a Distribution Manager
     SegmentType:
       type: string
       enum:
       - ONBOARDING
       - DATA_MARKETPLACE
+    v2SegmentMultiResponse:
+      type: object
+      properties:
+        v2/Segments:
+          description: Array of retrieved v2/Segments
+          type: array
+          items:
+            $ref: '#/components/schemas/v2SegmentOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2SegmentMultiResponsePagination'
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message

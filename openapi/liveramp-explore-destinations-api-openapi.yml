@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - Explore Destinations
-      operationId: Get v2/Destinations
+      operationId: GetV2/Destinations
       description: ''
       summary: Fetch a list of Destinations
       responses:
@@ -58,11 +58,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/Destinations
   /v2/destinations/{id}:
     get:
       tags:
       - Explore Destinations
-      operationId: Get v2/Destination
+      operationId: GetV2/Destination
       description: ''
       summary: Fetch a single Destination
       responses:
@@ -96,11 +98,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/Destination
   /v2/destinations/{v2DestinationId}/integrations:
     get:
       tags:
       - Explore Destinations
-      operationId: Get v2/Destination::Integrations
+      operationId: GetV2/Destination::Integrations
       description: ''
       summary: Fetch a list of Integrations within a Destination
       responses:
@@ -170,11 +174,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/Destination::Integrations
   /v2/destinations/{v2DestinationId}/integrations/{id}:
     get:
       tags:
       - Explore Destinations
-      operationId: Get v2/Destination::Integration
+      operationId: GetV2/Destination::Integration
       description: ''
       summary: Fetch a single Integration
       responses:
@@ -214,6 +220,8 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/Destination::Integration
 components:
   schemas:
     v2DestinationIntegrationMultiResponsePagination:
@@ -231,54 +239,16 @@ components:
         total:
           type: integer
           description: The total number of results.
-    v2DestinationMultiResponsePagination:
+    IntegrationProperty:
       type: object
       properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
-    v2DestinationOutput:
-      type: object
-      properties:
-        id:
-          type: string
         name:
           type: string
-        logoUrl:
+        description:
           type: string
-          format: url
-          example: https://www.domain.com (url)
       required:
-      - id
       - name
-      - logoUrl
-      description: A LiveRamp partner that can receive data from LiveRamp
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
+      - description
     v2DestinationIntegrationMultiResponse:
       type: object
       properties:
@@ -289,21 +259,6 @@ components:
             $ref: '#/components/schemas/v2DestinationIntegrationOutput'
         _pagination:
           $ref: '#/components/schemas/v2DestinationIntegrationMultiResponsePagination'
-    IntegrationView:
-      type: string
-      enum:
-      - STANDARD
-      - STANDARD_WITH_UNAVAILABLE
-    v2DestinationMultiResponse:
-      type: object
-      properties:
-        v2/Destinations:
-          description: Array of retrieved v2/Destinations
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DestinationOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DestinationMultiResponsePagination'
     v2DestinationIntegrationOutput:
       type: object
       properties:
@@ -342,6 +297,75 @@ components:
       - deviceTypes
       - requiredProperties
       description: An outline of the required configuration to send data to a destination
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    v2DestinationMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    IntegrationView:
+      type: string
+      enum:
+      - STANDARD
+      - STANDARD_WITH_UNAVAILABLE
+    v2DestinationOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        logoUrl:
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+      required:
+      - id
+      - name
+      - logoUrl
+      description: A LiveRamp partner that can receive data from LiveRamp
+    v2DestinationMultiResponse:
+      type: object
+      properties:
+        v2/Destinations:
+          description: Array of retrieved v2/Destinations
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DestinationOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DestinationMultiResponsePagination'
+    IntegrationType:
+      type: string
+      enum:
+      - ONBOARDING
+      - FULFILLMENT
+      - DATA_STORE
     DeviceType:
       type: string
       enum:
@@ -353,19 +377,3 @@ components:
       - MIXED
       - OTHER
       - RAMP_ID
-    IntegrationProperty:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-      required:
-      - name
-      - description
-    IntegrationType:
-      type: string
-      enum:
-      - ONBOARDING
-      - FULFILLMENT
-      - DATA_STORE

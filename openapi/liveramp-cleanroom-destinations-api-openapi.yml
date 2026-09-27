@@ -197,79 +197,6 @@ paths:
       - Cleanroom Destinations
 components:
   schemas:
-    PrimageCredential:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-    ActivationChannelProvision:
-      type: object
-      properties:
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
-        cleanroomId:
-          type: string
-        partnerAccountId:
-          type: string
-        channelStatus:
-          type: string
-    JobCount:
-      type: object
-      properties:
-        jobType:
-          type: string
-        count:
-          type: integer
-          format: int32
-          minimum: 0
-    CleanroomProvisionedDestination:
-      type: object
-      properties:
-        partnerAccount:
-          $ref: '#/components/schemas/PartnerAccount'
-        ownership:
-          type: string
-          description: OWNER when the destination belongs to the cleanroom owner organization; PARTNER otherwise.
-          enum:
-          - OWNER
-          - PARTNER
-        channelStatus:
-          type: string
-          description: Provisioning Status of the this destination in the cleanroom like 'ACTIVE_CHANNEL', 'PENDING_CHANNEL'.
-        isUsedForActivation:
-          type: boolean
-          description: Whether this partner account is tied to activation in this cleanroom.
-    ProvisionCleanroomDestinationRequest:
-      type: object
-      properties:
-        destinations:
-          type: array
-          items:
-            type: string
-    ProvisionCleanroomDestinationResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/ActivationChannelProvision'
-    ConfigStatus:
-      type: string
-      enum:
-      - UNKNOWN_CONFIG_STATUS
-      - CONFIG_PENDING
-      - CONFIG_CONFIGURED
-      - CONFIG_FAILED
-      - CONFIG_AVAILABLE
-    ReviewDestinationProvisioningResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: true if the provisioning request decision was applied successfully.
     TimeAudit:
       type: object
       properties:
@@ -285,25 +212,11 @@ components:
           type: string
           format: date-time
           description: Timestamp for when the object was deleted (if applicable)
-    PrimageOrganizationCredential:
+    DeleteResponse:
       type: object
       properties:
-        ID:
-          type: string
-        name:
-          type: string
-        credentials:
-          type: array
-          items:
-            $ref: '#/components/schemas/PrimageCredential'
-    PicanmixType:
-      type: string
-      enum:
-      - UNKNOWN_PICANMIX_TYPE
-      - USER_LIST
-      - OFFLINE_CONVERSIONS
-      - EXPORTS
-      - QUESTION_USER_LIST
+        success:
+          type: boolean
     ListCleanroomDestinationsResponse:
       type: object
       properties:
@@ -320,6 +233,13 @@ components:
         offset:
           type: integer
           format: int32
+    ProvisionCleanroomDestinationRequest:
+      type: object
+      properties:
+        destinations:
+          type: array
+          items:
+            type: string
     LatestJobRunStatusCount:
       type: object
       properties:
@@ -347,24 +267,44 @@ components:
           type: integer
           format: int32
           minimum: 0
-    PartnerConfig:
+    PicanmixType:
+      type: string
+      enum:
+      - UNKNOWN_PICANMIX_TYPE
+      - USER_LIST
+      - OFFLINE_CONVERSIONS
+      - EXPORTS
+      - QUESTION_USER_LIST
+    ActivationChannelProvision:
       type: object
       properties:
-        ID:
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+        cleanroomId:
           type: string
-        name:
+        partnerAccountId:
           type: string
-        index:
-          type: integer
-          format: int32
-        type:
+        channelStatus:
           type: string
-        encrypted:
+    ReviewDestinationProvisioningResponse:
+      type: object
+      properties:
+        success:
           type: boolean
-    PartnerConfigs:
-      type: array
-      items:
-        $ref: '#/components/schemas/PartnerConfig'
+          description: true if the provisioning request decision was applied successfully.
+    ReviewDestinationProvisioningRequest:
+      type: object
+      required:
+      - decision
+      properties:
+        decision:
+          type: string
+          description: Decision to approve or reject the destination provisioning request.
+          enum:
+          - APPROVE
+          - REJECT
     UserAudit:
       type: object
       properties:
@@ -374,6 +314,56 @@ components:
         updatedBy:
           type: string
           description: Identifier of the user who last updated the object
+    ProvisionCleanroomDestinationResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ActivationChannelProvision'
+    CleanroomProvisionedDestination:
+      type: object
+      properties:
+        partnerAccount:
+          $ref: '#/components/schemas/PartnerAccount'
+        ownership:
+          type: string
+          description: OWNER when the destination belongs to the cleanroom owner organization; PARTNER otherwise.
+          enum:
+          - OWNER
+          - PARTNER
+        channelStatus:
+          type: string
+          description: Provisioning Status of the this destination in the cleanroom like 'ACTIVE_CHANNEL', 'PENDING_CHANNEL'.
+        isUsedForActivation:
+          type: boolean
+          description: Whether this partner account is tied to activation in this cleanroom.
+    JobCount:
+      type: object
+      properties:
+        jobType:
+          type: string
+        count:
+          type: integer
+          format: int32
+          minimum: 0
+    PrimageOrganizationCredential:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        credentials:
+          type: array
+          items:
+            $ref: '#/components/schemas/PrimageCredential'
+    PrimageCredential:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
     Partner:
       type: object
       properties:
@@ -403,6 +393,14 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/PartnerConfigs'
+    ConfigStatus:
+      type: string
+      enum:
+      - UNKNOWN_CONFIG_STATUS
+      - CONFIG_PENDING
+      - CONFIG_CONFIGURED
+      - CONFIG_FAILED
+      - CONFIG_AVAILABLE
     ReturnObject:
       type: object
       properties:
@@ -413,22 +411,6 @@ components:
       required:
       - code
       - message
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    ReviewDestinationProvisioningRequest:
-      type: object
-      required:
-      - decision
-      properties:
-        decision:
-          type: string
-          description: Decision to approve or reject the destination provisioning request.
-          enum:
-          - APPROVE
-          - REJECT
     PartnerAccount:
       type: object
       properties:
@@ -458,6 +440,24 @@ components:
           type: string
         publicKey:
           type: string
+    PartnerConfig:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        index:
+          type: integer
+          format: int32
+        type:
+          type: string
+        encrypted:
+          type: boolean
+    PartnerConfigs:
+      type: array
+      items:
+        $ref: '#/components/schemas/PartnerConfig'
   responses:
     BadRequest:
       description: Bad Request - Incorrect syntax or request
@@ -477,8 +477,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -495,8 +495,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:

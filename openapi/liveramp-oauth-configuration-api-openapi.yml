@@ -14,7 +14,7 @@ paths:
     get:
       tags:
       - OAuth Configuration
-      operationId: Get v2/OauthConnections
+      operationId: GetV2/OauthConnections
       description: ''
       summary: Fetch a list of OAuth Connections
       responses:
@@ -63,11 +63,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/OauthConnections
   /v2/oauth-connections/{id}:
     get:
       tags:
       - OAuth Configuration
-      operationId: Get v2/OauthConnection
+      operationId: GetV2/OauthConnection
       description: ''
       summary: Fetch a single OAuth Connection
       responses:
@@ -101,11 +103,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/OauthConnection
   /v2/oauth-connection-attempts:
     post:
       tags:
       - OAuth Configuration
-      operationId: Create v2/OauthConnectionAttempt
+      operationId: CreateV2/OauthConnectionAttempt
       description: ''
       summary: Begin an OAuth authorization flow
       requestBody:
@@ -144,11 +148,13 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Create v2/OauthConnectionAttempt
   /v2/oauth-connection-attempts/{id}:
     get:
       tags:
       - OAuth Configuration
-      operationId: Get v2/OauthConnectionAttempt
+      operationId: GetV2/OauthConnectionAttempt
       description: ''
       summary: Fetch the status of an OAuth flow
       responses:
@@ -184,8 +190,46 @@ paths:
         required: true
         schema:
           type: string
+      x-operation-id-source: normalized
+      x-operation-id-original: Get v2/OauthConnectionAttempt
 components:
   schemas:
+    OAuthConnectionAttemptStatus:
+      type: string
+      enum:
+      - AUTHORIZED
+      - FAILED
+      - PENDING
+      - PROCESSING
+    v2OauthConnectionAttemptInput:
+      type: object
+      properties:
+        redirectUrl:
+          description: URL that the user will be taken to after completing the OAuth flow
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+        state:
+          type: string
+        oAuthEndpointID:
+          description: oAuthEndpointID of the Integration you wish to authorize
+          type: string
+        oAuthConnectionID:
+          description: When status is AUTHORIZED, this references the OAuth Connection that was created. Pass this ID during create if you wish to reauthorize an existing OAuth Connection
+          type: string
+      required:
+      - oAuthEndpointID
+      description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
+    v2OauthConnectionMultiResponse:
+      type: object
+      properties:
+        v2/OauthConnections:
+          description: Array of retrieved v2/OauthConnections
+          type: array
+          items:
+            $ref: '#/components/schemas/v2OauthConnectionOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2OauthConnectionMultiResponsePagination'
     StandardError:
       type: object
       properties:
@@ -241,21 +285,6 @@ components:
       - status
       - oAuthEndpointID
       description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
-    v2OauthConnectionMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
     v2OauthConnectionOutput:
       type: object
       properties:
@@ -280,39 +309,18 @@ components:
       - createdAt
       - updatedAt
       description: Represents an OAuth credential for a given OAuth Endpoint that the user has permission to use
-    v2OauthConnectionMultiResponse:
+    v2OauthConnectionMultiResponsePagination:
       type: object
       properties:
-        v2/OauthConnections:
-          description: Array of retrieved v2/OauthConnections
-          type: array
-          items:
-            $ref: '#/components/schemas/v2OauthConnectionOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2OauthConnectionMultiResponsePagination'
-    OAuthConnectionAttemptStatus:
-      type: string
-      enum:
-      - AUTHORIZED
-      - FAILED
-      - PENDING
-      - PROCESSING
-    v2OauthConnectionAttemptInput:
-      type: object
-      properties:
-        redirectUrl:
-          description: URL that the user will be taken to after completing the OAuth flow
-          type: string
-          format: url
-          example: https://www.domain.com (url)
-        state:
-          type: string
-        oAuthEndpointID:
-          description: oAuthEndpointID of the Integration you wish to authorize
-          type: string
-        oAuthConnectionID:
-          description: When status is AUTHORIZED, this references the OAuth Connection that was created. Pass this ID during create if you wish to reauthorize an existing OAuth Connection
-          type: string
-      required:
-      - oAuthEndpointID
-      description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.

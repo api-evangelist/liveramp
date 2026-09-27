@@ -127,94 +127,11 @@ paths:
       - Cleanroom
 components:
   schemas:
-    BfmtJoinColumns:
-      description: Detailed information about the Bfmt Join Columns
-      type: object
-      properties:
-        key:
-          type: string
-        value:
-          type: string
-    Datasets:
-      description: Detailed information about the datasets
-      type: object
-      properties:
-        datasetType:
-          type: string
-        subType:
-          type: string
-        datasetId:
-          type: string
-        macro:
-          type: string
-        partitionValues:
-          $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameters'
-        bfmtJoinColumns:
-          type: array
-          items:
-            $ref: '#/components/schemas/BfmtJoinColumns'
-    CleanroomQuestionRunPartitionParameters:
-      description: A list of Cleanroom Question Run Partition Parameters
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameter'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
     DeleteResponse:
       type: object
       properties:
         success:
           type: boolean
-    CleanRoomExecutionInstanceInput:
-      type: object
-      properties:
-        executionInstanceName:
-          type: string
-        cleanRoomExecutionTemplateId:
-          type: string
-        codeVersion:
-          type: string
-        datasets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Datasets'
-        modelsToRun:
-          type: array
-          items:
-            type: string
-        outputType:
-          type: string
-        runtimeParameters:
-          $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameters'
-    MeasurementExecutionTemplateResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        cleanRoomExecutionInstanceId:
-          type: string
-        cleanRoomExecutionTemplateId:
-          type: string
-    CleanroomQuestionRunPartitionParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of Cleanroom Question Run Partition Parameter
-        value:
-          type: string
-          description: Value of Cleanroom Question Run Partition Parameter
-        dataType:
-          type: string
-          description: Data Type of Cleanroom Question Run Partition Parameter
     ExecutionInstanceOutputs:
       description: Clean Room Measurement Execution Instance Outputs
       type: array
@@ -236,6 +153,77 @@ components:
           method:
             type: string
             description: Http method
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    Datasets:
+      description: Detailed information about the datasets
+      type: object
+      properties:
+        datasetType:
+          type: string
+        subType:
+          type: string
+        datasetId:
+          type: string
+        macro:
+          type: string
+        partitionValues:
+          $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameters'
+        bfmtJoinColumns:
+          type: array
+          items:
+            $ref: '#/components/schemas/BfmtJoinColumns'
+    MeasurementExecutionTemplateResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        cleanRoomExecutionInstanceId:
+          type: string
+        cleanRoomExecutionTemplateId:
+          type: string
+    CleanroomQuestionRunPartitionParameters:
+      description: A list of Cleanroom Question Run Partition Parameters
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameter'
+    BfmtJoinColumns:
+      description: Detailed information about the Bfmt Join Columns
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    CleanRoomExecutionInstanceInput:
+      type: object
+      properties:
+        executionInstanceName:
+          type: string
+        cleanRoomExecutionTemplateId:
+          type: string
+        codeVersion:
+          type: string
+        datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Datasets'
+        modelsToRun:
+          type: array
+          items:
+            type: string
+        outputType:
+          type: string
+        runtimeParameters:
+          $ref: '#/components/schemas/CleanroomQuestionRunPartitionParameters'
     CleanRoomMeasurementExecutionInstanceStatusResponse:
       type: object
       properties:
@@ -255,18 +243,21 @@ components:
           type: string
         outputs:
           $ref: '#/components/schemas/ExecutionInstanceOutputs'
+    CleanroomQuestionRunPartitionParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of Cleanroom Question Run Partition Parameter
+        value:
+          type: string
+          description: Value of Cleanroom Question Run Partition Parameter
+        dataType:
+          type: string
+          description: Data Type of Cleanroom Question Run Partition Parameter
   responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -283,8 +274,17 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:

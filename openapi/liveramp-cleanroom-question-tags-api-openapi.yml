@@ -80,22 +80,63 @@ paths:
       tags:
       - Cleanroom Question Tags
 components:
+  responses:
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   schemas:
+    CleanRoomQuestionTags:
+      description: A list of Cleanroom Question Tags
+      type: array
+      items:
+        type: string
+    GetCleanRoomQuestionParametersResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        displayId:
+          type: string
+        parameters:
+          $ref: '#/components/schemas/CleanroomQuestionParameters'
     CleanroomQuestionParameters:
       description: A list of Cleanroom Question Parameters
       type: array
       items:
         $ref: '#/components/schemas/CleanroomQuestionParameter'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
     CleanroomQuestionParameter:
       type: object
       properties:
@@ -141,15 +182,22 @@ components:
           description: Cleanroom Question Parameter Default Value
         partitionFieldConfig:
           $ref: '#/components/schemas/PartitionFieldConfig'
-    GetCleanRoomQuestionParametersResponse:
+    ReturnObject:
       type: object
       properties:
-        name:
+        code:
           type: string
-        displayId:
+        message:
           type: string
-        parameters:
-          $ref: '#/components/schemas/CleanroomQuestionParameters'
+      required:
+      - code
+      - message
+    ValueConstraintType:
+      type: string
+      description: Type of value constraint applied to a parameter
+      enum:
+      - ENFORCED_LIST
+      - DEFAULT_VALUE
     PartitionFieldConfig:
       type: object
       properties:
@@ -174,54 +222,6 @@ components:
           type: boolean
           default: false
           description: Indicates whether the partition field values are enforced for the CRQ run
-    CleanRoomQuestionTags:
-      description: A list of Cleanroom Question Tags
-      type: array
-      items:
-        type: string
-    ValueConstraintType:
-      type: string
-      description: Type of value constraint applied to a parameter
-      enum:
-      - ENFORCED_LIST
-      - DEFAULT_VALUE
-  responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

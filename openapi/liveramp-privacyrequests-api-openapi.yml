@@ -18,7 +18,7 @@ paths:
     post:
       tags:
       - PrivacyRequests
-      operationId: Create PrivacyRequests
+      operationId: CreatePrivacyRequests
       description: Creates a new privacy request for data deletion or opt-out. Accepts personal information (email, name, address) or mobile advertising identifiers (MAID) to identify the data subject and processes the request according to the specified type. At least one identifier (email or MAID) must be provided. Returns a unique request UUID for tracking and handles duplicate detection.
       summary: Create PrivacyRequests
       requestBody:
@@ -109,10 +109,12 @@ paths:
         schema:
           type: string
           example: ORG_ID
+      x-operation-id-source: normalized
+      x-operation-id-original: Create PrivacyRequests
     get:
       tags:
       - PrivacyRequests
-      operationId: Get PrivacyRequests
+      operationId: GetPrivacyRequests
       description: Retrieves privacy requests with optional filtering. If a UUID is provided as a query parameter, a single request is returned; otherwise a paginated list of requests is returned.
       summary: Get PrivacyRequests
       responses:
@@ -257,22 +259,38 @@ paths:
         schema:
           type: string
           example: ORG_ID
+      x-operation-id-source: normalized
+      x-operation-id-original: Get PrivacyRequests
 components:
   schemas:
-    StandardError:
+    PrivacyRequestResponse:
       type: object
       properties:
+        request_uuid:
+          description: The UUID of the privacy request.
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        status:
+          description: The status of the privacy request.
+          type: string
+          enum:
+          - ACCEPTED
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: ACCEPTED
         message:
-          description: The error message/description of the error.
+          description: Additional message about the request.
           type: string
-        time:
-          description: The time the error occurred.
-          type: string
-          format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
+          example: Request created successfully
+        is_duplicate:
+          description: Whether this is a duplicate request.
+          type: boolean
+          example: false
       required:
-      - message
-      - time
+      - request_uuid
+      - status
     PrivacyRequestListResponse:
       type: object
       properties:
@@ -304,34 +322,20 @@ components:
           type: integer
           format: int32
           example: 10
-    PrivacyRequestResponse:
+    StandardError:
       type: object
       properties:
-        request_uuid:
-          description: The UUID of the privacy request.
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426655440000
-        status:
-          description: The status of the privacy request.
-          type: string
-          enum:
-          - ACCEPTED
-          - PROCESSING
-          - COMPLETED
-          - FAILED
-          example: ACCEPTED
         message:
-          description: Additional message about the request.
+          description: The error message/description of the error.
           type: string
-          example: Request created successfully
-        is_duplicate:
-          description: Whether this is a duplicate request.
-          type: boolean
-          example: false
+        time:
+          description: The time the error occurred.
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
       required:
-      - request_uuid
-      - status
+      - message
+      - time
     PrivacyRequestDetails:
       type: object
       properties:

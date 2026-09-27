@@ -192,6 +192,32 @@ paths:
       - Cleanroom Question Datasets
 components:
   schemas:
+    CleanRoomStakeholder:
+      type: object
+      properties:
+        organizationId:
+          type: string
+        organizationName:
+          type: string
+        ownership:
+          type: string
+    DatasetParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset Parameter Name
+        value:
+          type: string
+          description: Dataset Parameter Value
+        type:
+          type: string
+          description: Dataset Parameter Type
+    QuestionDataTypeOptions:
+      type: array
+      items:
+        $ref: '#/components/schemas/QuestionDataTypeOption'
+      description: List of Cleanroom Question Data Type Options
     ReturnObject:
       type: object
       properties:
@@ -202,11 +228,11 @@ components:
       required:
       - code
       - message
-    CleanRoomQuestionDatasets:
+    CleanRoomStakeholders:
       type: array
       items:
-        $ref: '#/components/schemas/CleanRoomQuestionDataset'
-      description: List of Cleanroom Question Datasets
+        $ref: '#/components/schemas/CleanRoomStakeholder'
+      description: List of Cleanroom Stakeholders
     CleanRoomQuestionDataset:
       type: object
       properties:
@@ -277,6 +303,15 @@ components:
         type:
           type: string
           description: Dataset Field Type
+    AssignCleanroomQuestionDatasetRequest:
+      type: object
+      properties:
+        organizationId:
+          type: string
+          description: ID of Organization ID to take ownership
+        macro:
+          type: string
+          description: name of Question Data Type
     QuestionDataTypeOption:
       type: object
       properties:
@@ -291,65 +326,12 @@ components:
                 type: string
               name:
                 type: string
-    QuestionDataTypeOptions:
+    CleanRoomQuestionDatasets:
       type: array
       items:
-        $ref: '#/components/schemas/QuestionDataTypeOption'
-      description: List of Cleanroom Question Data Type Options
-    DatasetParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Dataset Parameter Name
-        value:
-          type: string
-          description: Dataset Parameter Value
-        type:
-          type: string
-          description: Dataset Parameter Type
-    CleanRoomStakeholder:
-      type: object
-      properties:
-        organizationId:
-          type: string
-        organizationName:
-          type: string
-        ownership:
-          type: string
-    AssignCleanroomQuestionDatasetRequest:
-      type: object
-      properties:
-        organizationId:
-          type: string
-          description: ID of Organization ID to take ownership
-        macro:
-          type: string
-          description: name of Question Data Type
-    CleanRoomStakeholders:
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomStakeholder'
-      description: List of Cleanroom Stakeholders
+        $ref: '#/components/schemas/CleanRoomQuestionDataset'
+      description: List of Cleanroom Question Datasets
   responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
     InternalServerError:
       description: Internal Server Error
       content:
@@ -368,8 +350,26 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:

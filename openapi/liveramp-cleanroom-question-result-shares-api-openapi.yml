@@ -88,22 +88,64 @@ paths:
       tags:
       - Cleanroom Question Result Shares
 components:
+  responses:
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   schemas:
-    CleanRoomQuestionResultShare:
+    CleanRoomQuestionResultShares:
+      description: A list of Cleanroom Result Shares
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomQuestionResultShare'
+    UpsertCleanRoomQuestionResultShares:
       type: object
       properties:
-        id:
-          type: string
-          description: Cleanroom Question Result Share ID
         PartnerID:
           type: string
           description: Partner ID
         PostRunQueryID:
           type: string
           description: Post Run Query ID
-    UpsertCleanRoomQuestionResultShares:
+    CleanRoomQuestionResultShare:
       type: object
       properties:
+        id:
+          type: string
+          description: Cleanroom Question Result Share ID
         PartnerID:
           type: string
           description: Partner ID
@@ -130,48 +172,6 @@ components:
       properties:
         success:
           type: boolean
-    CleanRoomQuestionResultShares:
-      description: A list of Cleanroom Result Shares
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomQuestionResultShare'
-  responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

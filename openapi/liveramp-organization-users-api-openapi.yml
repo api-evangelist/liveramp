@@ -53,53 +53,9 @@ paths:
       tags:
       - Organization Users
 components:
-  schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          description: User ID
-        name:
-          type: string
-          description: Name of the user
-        email:
-          type: string
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    OrganizationUsers:
-      description: A list of Organization Users and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/OrganizationUser'
-    OrganizationUser:
-      type: object
-      properties:
-        roleName:
-          type: string
-          description: Name of the user role in the organization
-        user:
-          $ref: '#/components/schemas/User'
   responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -116,8 +72,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:
@@ -134,6 +90,50 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+  schemas:
+    OrganizationUsers:
+      description: A list of Organization Users and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationUser'
+    OrganizationUser:
+      type: object
+      properties:
+        roleName:
+          type: string
+          description: Name of the user role in the organization
+        user:
+          $ref: '#/components/schemas/User'
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User ID
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
   securitySchemes:
     application:
       type: oauth2

@@ -196,7 +196,87 @@ paths:
       tags:
       - Intelligence
 components:
+  responses:
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   schemas:
+    HIProvisionStatus:
+      type: string
+      description: Habu Intelligence provisioning lifecycle state for a Cleanroom
+      enum:
+      - UNSPECIFIED
+      - NOT_ENABLED
+      - PROVISIONING
+      - ENABLED
+      - FAILED
+    CleanRoomIntelligence:
+      type: object
+      description: HI bindings for a Cleanroom
+      properties:
+        cleanRoomId:
+          type: string
+        displayId:
+          type: string
+        provisionStatus:
+          $ref: '#/components/schemas/HIProvisionStatus'
+        snowflakeDatabase:
+          type: string
+          description: Name of the per-Cleanroom HI Snowflake database
+        snowflakeSchema:
+          type: string
+          description: Snowflake schema (always INTELLIGENCE today)
+        metabaseDatabaseId:
+          type: integer
+          format: int64
+          description: Numeric Metabase database id
+        metabaseCollectionId:
+          type: string
+          description: Metabase collection id (stored as string upstream)
+        metabaseUrl:
+          type: string
     LoadedIntelligenceQuestions:
       type: object
       description: Page of CRQs with HI data loaded
@@ -218,15 +298,6 @@ components:
       required:
       - code
       - message
-    HIProvisionStatus:
-      type: string
-      description: Habu Intelligence provisioning lifecycle state for a Cleanroom
-      enum:
-      - UNSPECIFIED
-      - NOT_ENABLED
-      - PROVISIONING
-      - ENABLED
-      - FAILED
     FlowIntelligenceOutput:
       type: object
       description: One question output of a flow with its HI report-table referent
@@ -245,15 +316,6 @@ components:
         runStatus:
           type: string
           description: Run status (only populated when flowRunId is provided)
-    CRQLoadStatus:
-      type: string
-      description: Per-CRQ load state for HI Snowflake report tables
-      enum:
-      - UNSPECIFIED
-      - NOT_LOADED
-      - LOADED
-      - STALE
-      - FAILED
     FlowIntelligence:
       type: object
       description: HI bindings for a Cleanroom Flow's question outputs
@@ -266,6 +328,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FlowIntelligenceOutput'
+    CRQLoadStatus:
+      type: string
+      description: Per-CRQ load state for HI Snowflake report tables
+      enum:
+      - UNSPECIFIED
+      - NOT_LOADED
+      - LOADED
+      - STALE
+      - FAILED
     CleanRoomQuestionIntelligence:
       type: object
       description: HI bindings for a Cleanroom Question
@@ -295,77 +366,6 @@ components:
           format: int64
         loadStatus:
           $ref: '#/components/schemas/CRQLoadStatus'
-    CleanRoomIntelligence:
-      type: object
-      description: HI bindings for a Cleanroom
-      properties:
-        cleanRoomId:
-          type: string
-        displayId:
-          type: string
-        provisionStatus:
-          $ref: '#/components/schemas/HIProvisionStatus'
-        snowflakeDatabase:
-          type: string
-          description: Name of the per-Cleanroom HI Snowflake database
-        snowflakeSchema:
-          type: string
-          description: Snowflake schema (always INTELLIGENCE today)
-        metabaseDatabaseId:
-          type: integer
-          format: int64
-          description: Numeric Metabase database id
-        metabaseCollectionId:
-          type: string
-          description: Metabase collection id (stored as string upstream)
-        metabaseUrl:
-          type: string
-  responses:
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2
