@@ -224,41 +224,6 @@ paths:
       x-operation-id-original: Get v2/Destination::Integration
 components:
   schemas:
-    v2DestinationIntegrationMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
-    IntegrationProperty:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-      required:
-      - name
-      - description
-    v2DestinationIntegrationMultiResponse:
-      type: object
-      properties:
-        integrations:
-          description: Array of retrieved v2/Destination::Integrations
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DestinationIntegrationOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DestinationIntegrationMultiResponsePagination'
     v2DestinationIntegrationOutput:
       type: object
       properties:
@@ -297,6 +262,53 @@ components:
       - deviceTypes
       - requiredProperties
       description: An outline of the required configuration to send data to a destination
+    IntegrationProperty:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+      - name
+      - description
+    v2DestinationMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    DeviceType:
+      type: string
+      enum:
+      - PII
+      - WEB
+      - IOS
+      - ANDROID
+      - CUSTOM_ID
+      - MIXED
+      - OTHER
+      - RAMP_ID
+    IntegrationView:
+      type: string
+      enum:
+      - STANDARD
+      - STANDARD_WITH_UNAVAILABLE
+    IntegrationType:
+      type: string
+      enum:
+      - ONBOARDING
+      - FULFILLMENT
+      - DATA_STORE
     StandardError:
       type: object
       properties:
@@ -314,26 +326,6 @@ components:
       - httpStatus
       - errorCode
       - message
-    v2DestinationMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
-    IntegrationView:
-      type: string
-      enum:
-      - STANDARD
-      - STANDARD_WITH_UNAVAILABLE
     v2DestinationOutput:
       type: object
       properties:
@@ -350,6 +342,31 @@ components:
       - name
       - logoUrl
       description: A LiveRamp partner that can receive data from LiveRamp
+    v2DestinationIntegrationMultiResponse:
+      type: object
+      properties:
+        integrations:
+          description: Array of retrieved v2/Destination::Integrations
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DestinationIntegrationOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DestinationIntegrationMultiResponsePagination'
+    v2DestinationIntegrationMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
     v2DestinationMultiResponse:
       type: object
       properties:
@@ -360,20 +377,3 @@ components:
             $ref: '#/components/schemas/v2DestinationOutput'
         _pagination:
           $ref: '#/components/schemas/v2DestinationMultiResponsePagination'
-    IntegrationType:
-      type: string
-      enum:
-      - ONBOARDING
-      - FULFILLMENT
-      - DATA_STORE
-    DeviceType:
-      type: string
-      enum:
-      - PII
-      - WEB
-      - IOS
-      - ANDROID
-      - CUSTOM_ID
-      - MIXED
-      - OTHER
-      - RAMP_ID

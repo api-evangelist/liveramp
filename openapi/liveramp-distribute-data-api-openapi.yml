@@ -231,6 +231,16 @@ paths:
       x-operation-id-original: Get v2/DistributionManager::SegmentConfig
 components:
   schemas:
+    v2DistributionManagerSegmentConfigMultiResponse:
+      type: object
+      properties:
+        segmentConfigs:
+          description: Array of retrieved v2/DistributionManager::SegmentConfigs
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
     v2DistributionManagerSegmentConfigInput:
       type: object
       properties:
@@ -250,21 +260,6 @@ components:
       - segmentType
       - distributionManagerID
       description: A list of segment IDs to distribute
-    v2DistributionManagerSegmentConfigMultiResponse:
-      type: object
-      properties:
-        segmentConfigs:
-          description: Array of retrieved v2/DistributionManager::SegmentConfigs
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE
     StandardError:
       type: object
       properties:
@@ -282,21 +277,11 @@ components:
       - httpStatus
       - errorCode
       - message
-    v2DistributionManagerSegmentConfigMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
     v2DistributionManagerSegmentConfigOutput:
       type: object
       properties:
@@ -319,3 +304,18 @@ components:
       - segmentType
       - distributionManagerID
       description: A list of segment IDs to distribute
+    v2DistributionManagerSegmentConfigMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.

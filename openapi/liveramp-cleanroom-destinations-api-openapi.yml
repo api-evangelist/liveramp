@@ -197,153 +197,15 @@ paths:
       - Cleanroom Destinations
 components:
   schemas:
-    TimeAudit:
+    PrimageCredential:
       type: object
       properties:
-        createdAt:
+        ID:
           type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
+        name:
           type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
+        value:
           type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    ListCleanroomDestinationsResponse:
-      type: object
-      properties:
-        partnerAccounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/CleanroomProvisionedDestination'
-        total:
-          type: integer
-          format: int32
-        limit:
-          type: integer
-          format: int32
-        offset:
-          type: integer
-          format: int32
-    ProvisionCleanroomDestinationRequest:
-      type: object
-      properties:
-        destinations:
-          type: array
-          items:
-            type: string
-    LatestJobRunStatusCount:
-      type: object
-      properties:
-        numSuccess:
-          type: integer
-          format: int32
-          minimum: 0
-        numProcessing:
-          type: integer
-          format: int32
-          minimum: 0
-        numThresholdWarning:
-          type: integer
-          format: int32
-          minimum: 0
-        numPartiallyFailed:
-          type: integer
-          format: int32
-          minimum: 0
-        numFailed:
-          type: integer
-          format: int32
-          minimum: 0
-        numQueued:
-          type: integer
-          format: int32
-          minimum: 0
-    PicanmixType:
-      type: string
-      enum:
-      - UNKNOWN_PICANMIX_TYPE
-      - USER_LIST
-      - OFFLINE_CONVERSIONS
-      - EXPORTS
-      - QUESTION_USER_LIST
-    ActivationChannelProvision:
-      type: object
-      properties:
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
-        cleanroomId:
-          type: string
-        partnerAccountId:
-          type: string
-        channelStatus:
-          type: string
-    ReviewDestinationProvisioningResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: true if the provisioning request decision was applied successfully.
-    ReviewDestinationProvisioningRequest:
-      type: object
-      required:
-      - decision
-      properties:
-        decision:
-          type: string
-          description: Decision to approve or reject the destination provisioning request.
-          enum:
-          - APPROVE
-          - REJECT
-    UserAudit:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: Identifier of the user who created the object
-        updatedBy:
-          type: string
-          description: Identifier of the user who last updated the object
-    ProvisionCleanroomDestinationResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/ActivationChannelProvision'
-    CleanroomProvisionedDestination:
-      type: object
-      properties:
-        partnerAccount:
-          $ref: '#/components/schemas/PartnerAccount'
-        ownership:
-          type: string
-          description: OWNER when the destination belongs to the cleanroom owner organization; PARTNER otherwise.
-          enum:
-          - OWNER
-          - PARTNER
-        channelStatus:
-          type: string
-          description: Provisioning Status of the this destination in the cleanroom like 'ACTIVE_CHANNEL', 'PENDING_CHANNEL'.
-        isUsedForActivation:
-          type: boolean
-          description: Whether this partner account is tied to activation in this cleanroom.
-    JobCount:
-      type: object
-      properties:
-        jobType:
-          type: string
-        count:
-          type: integer
-          format: int32
-          minimum: 0
     PrimageOrganizationCredential:
       type: object
       properties:
@@ -355,62 +217,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PrimageCredential'
-    PrimageCredential:
+    ReviewDestinationProvisioningRequest:
       type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
-    Partner:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-        logoUrl:
-          type: string
-        credentialSourceName:
-          type: string
-        partnerConfigArray:
-          $ref: '#/components/schemas/PartnerConfigs'
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
-        type:
-          $ref: '#/components/schemas/PicanmixType'
-        credentialSources:
-          type: array
-          items:
-            type: string
-        partnerConfigMap:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/PartnerConfigs'
-    ConfigStatus:
-      type: string
-      enum:
-      - UNKNOWN_CONFIG_STATUS
-      - CONFIG_PENDING
-      - CONFIG_CONFIGURED
-      - CONFIG_FAILED
-      - CONFIG_AVAILABLE
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
       required:
-      - code
-      - message
+      - decision
+      properties:
+        decision:
+          type: string
+          description: Decision to approve or reject the destination provisioning request.
+          enum:
+          - APPROVE
+          - REJECT
     PartnerAccount:
       type: object
       properties:
@@ -440,6 +257,116 @@ components:
           type: string
         publicKey:
           type: string
+    ProvisionCleanroomDestinationRequest:
+      type: object
+      properties:
+        destinations:
+          type: array
+          items:
+            type: string
+    ActivationChannelProvision:
+      type: object
+      properties:
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+        cleanroomId:
+          type: string
+        partnerAccountId:
+          type: string
+        channelStatus:
+          type: string
+    ConfigStatus:
+      type: string
+      enum:
+      - UNKNOWN_CONFIG_STATUS
+      - CONFIG_PENDING
+      - CONFIG_CONFIGURED
+      - CONFIG_FAILED
+      - CONFIG_AVAILABLE
+    TimeAudit:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
+    LatestJobRunStatusCount:
+      type: object
+      properties:
+        numSuccess:
+          type: integer
+          format: int32
+          minimum: 0
+        numProcessing:
+          type: integer
+          format: int32
+          minimum: 0
+        numThresholdWarning:
+          type: integer
+          format: int32
+          minimum: 0
+        numPartiallyFailed:
+          type: integer
+          format: int32
+          minimum: 0
+        numFailed:
+          type: integer
+          format: int32
+          minimum: 0
+        numQueued:
+          type: integer
+          format: int32
+          minimum: 0
+    Partner:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        logoUrl:
+          type: string
+        credentialSourceName:
+          type: string
+        partnerConfigArray:
+          $ref: '#/components/schemas/PartnerConfigs'
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+        type:
+          $ref: '#/components/schemas/PicanmixType'
+        credentialSources:
+          type: array
+          items:
+            type: string
+        partnerConfigMap:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PartnerConfigs'
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    ReviewDestinationProvisioningResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: true if the provisioning request decision was applied successfully.
     PartnerConfig:
       type: object
       properties:
@@ -454,10 +381,83 @@ components:
           type: string
         encrypted:
           type: boolean
+    CleanroomProvisionedDestination:
+      type: object
+      properties:
+        partnerAccount:
+          $ref: '#/components/schemas/PartnerAccount'
+        ownership:
+          type: string
+          description: OWNER when the destination belongs to the cleanroom owner organization; PARTNER otherwise.
+          enum:
+          - OWNER
+          - PARTNER
+        channelStatus:
+          type: string
+          description: Provisioning Status of the this destination in the cleanroom like 'ACTIVE_CHANNEL', 'PENDING_CHANNEL'.
+        isUsedForActivation:
+          type: boolean
+          description: Whether this partner account is tied to activation in this cleanroom.
+    ListCleanroomDestinationsResponse:
+      type: object
+      properties:
+        partnerAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/CleanroomProvisionedDestination'
+        total:
+          type: integer
+          format: int32
+        limit:
+          type: integer
+          format: int32
+        offset:
+          type: integer
+          format: int32
+    UserAudit:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: Identifier of the user who created the object
+        updatedBy:
+          type: string
+          description: Identifier of the user who last updated the object
+    JobCount:
+      type: object
+      properties:
+        jobType:
+          type: string
+        count:
+          type: integer
+          format: int32
+          minimum: 0
     PartnerConfigs:
       type: array
       items:
         $ref: '#/components/schemas/PartnerConfig'
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    ProvisionCleanroomDestinationResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/ActivationChannelProvision'
+    PicanmixType:
+      type: string
+      enum:
+      - UNKNOWN_PICANMIX_TYPE
+      - USER_LIST
+      - OFFLINE_CONVERSIONS
+      - EXPORTS
+      - QUESTION_USER_LIST
   responses:
     BadRequest:
       description: Bad Request - Incorrect syntax or request
@@ -486,8 +486,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:
@@ -495,8 +495,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:

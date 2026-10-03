@@ -444,16 +444,28 @@ paths:
       x-operation-id-original: Delete v2/IntegrationConnection
 components:
   schemas:
-    v2IntegrationConnectionMultiResponse:
+    v2DistributionManagerPuttable:
       type: object
       properties:
-        v2/IntegrationConnections:
-          description: Array of retrieved v2/IntegrationConnections
-          type: array
-          items:
-            $ref: '#/components/schemas/v2IntegrationConnectionOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2IntegrationConnectionMultiResponsePagination'
+        name:
+          type: string
+          maxLength: 50
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          type: string
+        expireAt:
+          description: The date at which all deliveries will be stopped and the status will be set to inactive
+          type:
+          - string
+          - 'null'
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+      required:
+      - name
+      - status
+      - expireAt
+      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
     v2IntegrationConnectionOutput:
       type: object
       properties:
@@ -498,93 +510,47 @@ components:
       - createdAt
       - updatedAt
       description: A connection to an Integration
+    v2IntegrationConnectionMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    v2IntegrationConnectionMultiResponse:
+      type: object
+      properties:
+        v2/IntegrationConnections:
+          description: Array of retrieved v2/IntegrationConnections
+          type: array
+          items:
+            $ref: '#/components/schemas/v2IntegrationConnectionOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2IntegrationConnectionMultiResponsePagination'
+    DeviceType:
+      type: string
+      enum:
+      - PII
+      - WEB
+      - IOS
+      - ANDROID
+      - CUSTOM_ID
+      - MIXED
+      - OTHER
+      - RAMP_ID
     Status:
       type: string
       enum:
       - ACTIVE
       - INACTIVE
-    IntegrationConnectionProperty:
-      type: object
-      properties:
-        propertyKey:
-          type: string
-        propertyValue:
-          type: string
-      required:
-      - propertyKey
-      - propertyValue
-    v2IntegrationConnectionPuttable:
-      type: object
-      properties:
-        oAuthConnectionID:
-          description: Required when the Integration has an oAuthEndpointID
-          type: string
-        properties:
-          description: A value must be specified for each of the requireProperties from Integration
-          items:
-            allOf:
-            - $ref: '#/components/schemas/IntegrationConnectionProperty'
-            type: object
-          type: array
-        deviceTypes:
-          items:
-            allOf:
-            - $ref: '#/components/schemas/DeviceType'
-            type: string
-          type: array
-      required:
-      - properties
-      - deviceTypes
-      description: A connection to an Integration
-    v2DistributionManagerMultiResponse:
-      type: object
-      properties:
-        v2/DistributionManagers:
-          description: Array of retrieved v2/DistributionManagers
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DistributionManagerOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DistributionManagerMultiResponsePagination'
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
-    v2DistributionManagerPuttable:
-      type: object
-      properties:
-        name:
-          type: string
-          maxLength: 50
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Status'
-          type: string
-        expireAt:
-          description: The date at which all deliveries will be stopped and the status will be set to inactive
-          type:
-          - string
-          - 'null'
-          format: ISO8601 UTC date
-          example: '2019-04-13'
-      required:
-      - name
-      - status
-      - expireAt
-      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
     v2DistributionManagerOutput:
       type: object
       properties:
@@ -624,7 +590,7 @@ components:
       - createdAt
       - updatedAt
       description: A link between an IntegrationConnection and segments with configuration for how data is distributed
-    v2IntegrationConnectionMultiResponsePagination:
+    v2DistributionManagerMultiResponsePagination:
       type: object
       properties:
         after:
@@ -639,41 +605,29 @@ components:
         total:
           type: integer
           description: The total number of results.
-    v2DistributionManagerInput:
+    v2IntegrationConnectionPuttable:
       type: object
       properties:
-        name:
+        oAuthConnectionID:
+          description: Required when the Integration has an oAuthEndpointID
           type: string
-          maxLength: 50
-        integrationConnectionID:
-          type: string
-          description: Link to v2/IntegrationConnection resource via its id
-        status:
-          allOf:
-          - $ref: '#/components/schemas/Status'
-          type: string
-        expireAt:
-          description: The date at which all deliveries will be stopped and the status will be set to inactive
-          type:
-          - string
-          - 'null'
-          format: ISO8601 UTC date
-          example: '2019-04-13'
+        properties:
+          description: A value must be specified for each of the requireProperties from Integration
+          items:
+            allOf:
+            - $ref: '#/components/schemas/IntegrationConnectionProperty'
+            type: object
+          type: array
+        deviceTypes:
+          items:
+            allOf:
+            - $ref: '#/components/schemas/DeviceType'
+            type: string
+          type: array
       required:
-      - name
-      - integrationConnectionID
-      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
-    DeviceType:
-      type: string
-      enum:
-      - PII
-      - WEB
-      - IOS
-      - ANDROID
-      - CUSTOM_ID
-      - MIXED
-      - OTHER
-      - RAMP_ID
+      - properties
+      - deviceTypes
+      description: A connection to an Integration
     v2IntegrationConnectionInput:
       type: object
       properties:
@@ -708,18 +662,64 @@ components:
       - properties
       - deviceTypes
       description: A connection to an Integration
-    v2DistributionManagerMultiResponsePagination:
+    StandardError:
       type: object
       properties:
-        after:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    v2DistributionManagerMultiResponse:
+      type: object
+      properties:
+        v2/DistributionManagers:
+          description: Array of retrieved v2/DistributionManagers
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerMultiResponsePagination'
+    v2DistributionManagerInput:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        integrationConnectionID:
+          type: string
+          description: Link to v2/IntegrationConnection resource via its id
+        status:
+          allOf:
+          - $ref: '#/components/schemas/Status'
+          type: string
+        expireAt:
+          description: The date at which all deliveries will be stopped and the status will be set to inactive
           type:
           - string
           - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
+          format: ISO8601 UTC date
+          example: '2019-04-13'
+      required:
+      - name
+      - integrationConnectionID
+      description: A link between an IntegrationConnection and segments with configuration for how data is distributed
+    IntegrationConnectionProperty:
+      type: object
+      properties:
+        propertyKey:
+          type: string
+        propertyValue:
+          type: string
+      required:
+      - propertyKey
+      - propertyValue

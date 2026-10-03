@@ -291,46 +291,63 @@ paths:
       tags:
       - Data Connections
 components:
+  responses:
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   schemas:
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    DataConnections:
-      description: A list of Data Connections
+    IdentifierTypes:
+      description: A list of Identifier Types
       type: array
       items:
-        $ref: '#/components/schemas/DataConnectionResponse'
-    DataConnectionResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the data connection
-        name:
-          type: string
-          description: Name of the data connection
-        category:
-          type: string
-          description: Category of the data connection
-        configStatus:
-          type: string
-          description: Configuration Status of the data connection
-        runStatus:
-          type: string
-          description: Run Status of the data connection job
-        stage:
-          type: string
-          description: Stage of the data connection - ACTIVE or PAUSED
-        dataType:
-          $ref: '#/components/schemas/DataType'
-        dataSource:
-          $ref: '#/components/schemas/DataSource'
-        dataSourceConfiguration:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobParameters'
+        $ref: '#/components/schemas/IdentifierType'
+    FieldConfigurations:
+      description: A list of Field Configurations
+      type: array
+      items:
+        $ref: '#/components/schemas/FieldConfiguration'
     DataSource:
       type: object
       properties:
@@ -396,11 +413,53 @@ components:
       properties:
         success:
           type: boolean
-    IdentifierTypes:
-      description: A list of Identifier Types
-      type: array
-      items:
-        $ref: '#/components/schemas/IdentifierType'
+    DataType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+          enum:
+          - Ad Engagement
+          - Ad Exposure
+          - Ad Logs
+          - 'Amazon Marketing Cloud: Event-Level Ad Campaign Data'
+          - Binary Data
+          - CRM Data
+          - Campaign Data
+          - Campaign Mapping Data
+          - Code Container
+          - Conversion Events
+          - Databricks Container
+          - Databricks Notebook
+          - 'Facebook: Advanced Analytics Data'
+          - Generic
+          - 'Google Ads Data Hub: Event-Level Ad Campaign Data'
+          - Google Cloud Big Query
+          - Identity Graph
+          - JAR
+          - LinkedIn Marketing Solutions Config Data
+          - Machine Learning Model
+          - Member Profile
+          - Metadata
+          - Model Training
+          - Offline Conversions
+          - Page Data
+          - Service Container
+          - 'The Trade Desk: Raw Event Data Stream (REDS) Feed'
+          - 'The Trade Desk: Raw Event Data Stream (REDS) Metadata'
+          - Transaction Data
+          - User Data
+          - User-Segment Map
+          - WHEEL
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
     PartitionFieldConfig:
       type: object
       properties:
@@ -425,11 +484,22 @@ components:
           type: boolean
           default: false
           description: Indicates whether the partition field values are enforced for the CRQ run
-    FieldConfigurations:
-      description: A list of Field Configurations
+    DataConnections:
+      description: A list of Data Connections
       type: array
       items:
-        $ref: '#/components/schemas/FieldConfiguration'
+        $ref: '#/components/schemas/DataConnectionResponse'
+    JobParameters:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        value:
+          type: string
     FieldConfiguration:
       type: object
       properties:
@@ -517,48 +587,6 @@ components:
           description: Indicates whether this field is a partition column
         partitionFieldConfig:
           $ref: '#/components/schemas/PartitionFieldConfig'
-    DataType:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-          enum:
-          - Ad Engagement
-          - Ad Exposure
-          - Ad Logs
-          - 'Amazon Marketing Cloud: Event-Level Ad Campaign Data'
-          - Binary Data
-          - CRM Data
-          - Campaign Data
-          - Campaign Mapping Data
-          - Code Container
-          - Conversion Events
-          - Databricks Container
-          - Databricks Notebook
-          - 'Facebook: Advanced Analytics Data'
-          - Generic
-          - 'Google Ads Data Hub: Event-Level Ad Campaign Data'
-          - Google Cloud Big Query
-          - Identity Graph
-          - JAR
-          - LinkedIn Marketing Solutions Config Data
-          - Machine Learning Model
-          - Member Profile
-          - Metadata
-          - Model Training
-          - Offline Conversions
-          - Page Data
-          - Service Container
-          - 'The Trade Desk: Raw Event Data Stream (REDS) Feed'
-          - 'The Trade Desk: Raw Event Data Stream (REDS) Metadata'
-          - Transaction Data
-          - User Data
-          - User-Segment Map
-          - WHEEL
     ReturnObject:
       type: object
       properties:
@@ -569,6 +597,35 @@ components:
       required:
       - code
       - message
+    DataConnectionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the data connection
+        name:
+          type: string
+          description: Name of the data connection
+        category:
+          type: string
+          description: Category of the data connection
+        configStatus:
+          type: string
+          description: Configuration Status of the data connection
+        runStatus:
+          type: string
+          description: Run Status of the data connection job
+        stage:
+          type: string
+          description: Stage of the data connection - ACTIVE or PAUSED
+        dataType:
+          $ref: '#/components/schemas/DataType'
+        dataSource:
+          $ref: '#/components/schemas/DataSource'
+        dataSourceConfiguration:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobParameters'
     DataConnectionDetails:
       type: object
       properties:
@@ -589,63 +646,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/JobParameters'
-    JobParameters:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-        value:
-          type: string
-  responses:
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

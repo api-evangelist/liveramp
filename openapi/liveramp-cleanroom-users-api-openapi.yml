@@ -209,26 +209,6 @@ paths:
       - Cleanroom Users
 components:
   schemas:
-    TimeAudit:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
     UserAudit:
       type: object
       properties:
@@ -238,16 +218,6 @@ components:
         updatedBy:
           type: string
           description: Identifier of the user who last updated the object
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
     User:
       type: object
       properties:
@@ -259,6 +229,11 @@ components:
           description: Name of the user
         email:
           type: string
+    CleanRoomUsers:
+      description: A list of Cleanroom Users and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomUser'
     AddCleanRoomUserRequest:
       type: object
       properties:
@@ -274,6 +249,31 @@ components:
         role:
           type: string
           description: Role that you want to assign the user
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    TimeAudit:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
     CleanRoomUser:
       type: object
       properties:
@@ -291,11 +291,11 @@ components:
           $ref: '#/components/schemas/UserAudit'
         role:
           $ref: '#/components/schemas/CleanRoomRole'
-    CleanRoomUsers:
-      description: A list of Cleanroom Users and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomUser'
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
     CleanRoomRole:
       properties:
         id:
@@ -309,6 +309,15 @@ components:
   responses:
     InternalServerError:
       description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:
@@ -334,26 +343,17 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
     ResourceConflict:
       description: Conflict with the current state of the resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:

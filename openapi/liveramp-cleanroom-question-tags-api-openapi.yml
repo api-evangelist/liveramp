@@ -90,6 +90,15 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
       content:
@@ -108,21 +117,22 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
     CleanRoomQuestionTags:
       description: A list of Cleanroom Question Tags
       type: array
       items:
         type: string
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     GetCleanRoomQuestionParametersResponse:
       type: object
       properties:
@@ -132,11 +142,6 @@ components:
           type: string
         parameters:
           $ref: '#/components/schemas/CleanroomQuestionParameters'
-    CleanroomQuestionParameters:
-      description: A list of Cleanroom Question Parameters
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanroomQuestionParameter'
     CleanroomQuestionParameter:
       type: object
       properties:
@@ -182,22 +187,17 @@ components:
           description: Cleanroom Question Parameter Default Value
         partitionFieldConfig:
           $ref: '#/components/schemas/PartitionFieldConfig'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
     ValueConstraintType:
       type: string
       description: Type of value constraint applied to a parameter
       enum:
       - ENFORCED_LIST
       - DEFAULT_VALUE
+    CleanroomQuestionParameters:
+      description: A list of Cleanroom Question Parameters
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanroomQuestionParameter'
     PartitionFieldConfig:
       type: object
       properties:

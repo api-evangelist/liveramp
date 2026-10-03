@@ -76,6 +76,55 @@ paths:
       x-operation-id-original: Get v2/SegmentStatuses
 components:
   schemas:
+    v2SegmentStatusMultiResponse:
+      type: object
+      properties:
+        v2/SegmentStatuses:
+          description: Array of retrieved v2/SegmentStatuses
+          type: array
+          items:
+            $ref: '#/components/schemas/v2SegmentStatusOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2SegmentStatusMultiResponsePagination'
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    taxonomyTaxonomySegmentSyncStatus:
+      type: string
+      description: 'NOT_CONFIGURED_TO_SYNC: the Taxonomy::Segment is in a taxonomy that is not configured to sync to a destination.
+
+
+        NEVER_SYNCED: The Taxonomy::Segment has not been synced to the destination.
+
+
+        OUT_OF_SYNC: The Taxonomy::Segment has been synced to the destination and the destinationSegmentID exists, but the properties have been updated and need to be resynced.
+
+
+        SYNCED: The Taxonomy::Segment is in sync with the destination.'
+      enum:
+      - NOT_CONFIGURED_TO_SYNC
+      - NEVER_SYNCED
+      - OUT_OF_SYNC
+      - SYNCED
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
     v2SegmentStatusOutput:
       type: object
       properties:
@@ -96,21 +145,6 @@ components:
       - segmentID
       - segmentType
       description: Represents a segment's status
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE
-    v2SegmentStatusMultiResponse:
-      type: object
-      properties:
-        v2/SegmentStatuses:
-          description: Array of retrieved v2/SegmentStatuses
-          type: array
-          items:
-            $ref: '#/components/schemas/v2SegmentStatusOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2SegmentStatusMultiResponsePagination'
     TaxonomyStatus:
       type: object
       properties:
@@ -121,23 +155,6 @@ components:
         destinationSegmentID:
           type: string
       required: []
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
     v2SegmentStatusMultiResponsePagination:
       type: object
       properties:
@@ -153,20 +170,3 @@ components:
         total:
           type: integer
           description: The total number of results.
-    taxonomyTaxonomySegmentSyncStatus:
-      type: string
-      description: 'NOT_CONFIGURED_TO_SYNC: the Taxonomy::Segment is in a taxonomy that is not configured to sync to a destination.
-
-
-        NEVER_SYNCED: The Taxonomy::Segment has not been synced to the destination.
-
-
-        OUT_OF_SYNC: The Taxonomy::Segment has been synced to the destination and the destinationSegmentID exists, but the properties have been updated and need to be resynced.
-
-
-        SYNCED: The Taxonomy::Segment is in sync with the destination.'
-      enum:
-      - NOT_CONFIGURED_TO_SYNC
-      - NEVER_SYNCED
-      - OUT_OF_SYNC
-      - SYNCED

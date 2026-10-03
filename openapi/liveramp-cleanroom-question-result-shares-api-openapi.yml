@@ -98,6 +98,15 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
       content:
@@ -116,21 +125,22 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
     CleanRoomQuestionResultShares:
       description: A list of Cleanroom Result Shares
       type: array
       items:
         $ref: '#/components/schemas/CleanRoomQuestionResultShare'
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     UpsertCleanRoomQuestionResultShares:
       type: object
       properties:
@@ -140,6 +150,16 @@ components:
         PostRunQueryID:
           type: string
           description: Post Run Query ID
+    UpsertCleanRoomQuestionResultShareResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    UpsertCleanRoomQuestionResultSharesApiInput:
+      description: A list of Cleanroom Result Shares
+      type: array
+      items:
+        $ref: '#/components/schemas/UpsertCleanRoomQuestionResultShares'
     CleanRoomQuestionResultShare:
       type: object
       properties:
@@ -152,26 +172,6 @@ components:
         PostRunQueryID:
           type: string
           description: Post Run Query ID
-    UpsertCleanRoomQuestionResultSharesApiInput:
-      description: A list of Cleanroom Result Shares
-      type: array
-      items:
-        $ref: '#/components/schemas/UpsertCleanRoomQuestionResultShares'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    UpsertCleanRoomQuestionResultShareResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
   securitySchemes:
     application:
       type: oauth2

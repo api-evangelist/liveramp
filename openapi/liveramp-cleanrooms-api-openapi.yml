@@ -243,27 +243,62 @@ paths:
       tags:
       - Cleanrooms
 components:
+  responses:
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    ResourceConflict:
+      description: Conflict with the current state of the resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   schemas:
-    TimeAudit:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
     QuestionDimension:
       type: object
       properties:
@@ -286,198 +321,6 @@ components:
           type: string
         description:
           type: string
-    DatasetMetadata:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        organizationID:
-          type: string
-        organizationName:
-          type: string
-        dataImportType:
-          type: string
-        macro:
-          type: string
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/AssetDatasetField'
-    QuestionMetric:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-        type:
-          type: string
-        computed:
-          type: boolean
-    CleanRooms:
-      description: A list of Cleanrooms and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoom'
-    CleanRoom:
-      description: Model containing the Cleanroom details
-      properties:
-        id:
-          type: string
-        displayId:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        ownerOrganization:
-          type: string
-        partners:
-          type: array
-          items:
-            type: string
-        startAt:
-          type: string
-        endAt:
-          type: string
-        questionsCount:
-          type: integer
-        status:
-          type: string
-        cleanRoomParameters:
-          type: object
-          additionalProperties:
-            type: string
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        cleanRoomTypeId:
-          type: string
-    QuestionDataTypeField:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-        format:
-          type: string
-        description:
-          type: string
-    CleanRoomParameterRequest:
-      type: object
-      required:
-      - CLOUD
-      - REGION
-      properties:
-        REGION:
-          type: string
-          enum:
-          - REGION_EU
-          - REGION_US
-          - REGION_APAC
-          - REGION_AFRICA
-          - REGION_UAE
-        SUB_REGION:
-          type: string
-          enum:
-          - SUB_REGION_EAST1
-          - SUB_REGION_WEST1
-          - SUB_REGION_NORTH1
-          - SUB_REGION_SOUTH1
-          - SUB_REGION_CENTRAL1
-          - SUB_REGION_NORTHEAST1
-          - SUB_REGION_SOUTHEAST1
-          - SUB_REGION_ME_CENTRAL1
-          - SUB_REGION_EU_WEST4
-          - SUB_REGION_EAST2
-        CLOUD:
-          type: string
-          enum:
-          - CLOUD_AWS
-          - CLOUD_GCP
-          - CLOUD_AZURE
-        ENABLE_EXPORT, ENABLE_VIEW_QUERY, ENABLE_HABU_INTELLIGENCE, ENABLE_PAIR, ENABLE_OPJA:
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-          description: Each of these values take a true or false, please separate them for example ENABLE_EXPORT = true, ENABLE_VIEW_QUERY = true
-      additionalProperties:
-        type: string
-        enum:
-        - DATA_DECIBEL
-        - CROWD_SIZE
-    CleanRoomRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the Cleanroom
-        description:
-          type: string
-          description: Description of the Cleanroom
-        startAt:
-          type: string
-          description: Start Date for the cleanroom, use format yyyy-mm-dd
-        endAt:
-          type: string
-          description: End Date for the cleanroom, use format yyyy-mm-dd
-        type:
-          $ref: '#/components/schemas/CleanRoomTypeRequest'
-        parameters:
-          $ref: '#/components/schemas/CleanRoomParameterRequest'
-      required:
-      - organizationId
-      - name
-      - startAt
-      - type
-    CleanRoomStakeholder:
-      type: object
-      properties:
-        organizationId:
-          type: string
-        organizationName:
-          type: string
-        ownership:
-          type: string
-    QuestionParameter:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-        type:
-          type: string
-        index:
-          type: integer
-        parameterType:
-          type: string
-    AssetQuestionDataType:
-      type: object
-      properties:
-        ID:
-          type: string
-        macro:
-          type: string
-        description:
-          type: string
-        importDataType:
-          type: string
-        optional:
-          type: boolean
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/QuestionDataTypeField'
     QuestionMetadata:
       type: object
       properties:
@@ -525,25 +368,39 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/QuestionUserListOutput'
-    AssetDatasetField:
+    FieldTypeEnum:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+    TimeAudit:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
+    QuestionUserListOutput:
       type: object
       properties:
         ID:
           type: string
-        fieldName:
+        name:
           type: string
-        dataType:
+        type:
           type: string
-        isFilterable:
+        isEncrypt:
           type: boolean
-        isUserIDField:
-          type: boolean
-        isPii:
-          type: boolean
-        isExcluded:
-          type: boolean
-        fieldLabel:
-          type: string
     CleanRoomType:
       description: Model containing Cleanroom Type
       properties:
@@ -559,7 +416,77 @@ components:
           type: boolean
         wallGarden:
           type: boolean
-    QuestionUserListOutput:
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    CleanRoom:
+      description: Model containing the Cleanroom details
+      properties:
+        id:
+          type: string
+        displayId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        ownerOrganization:
+          type: string
+        partners:
+          type: array
+          items:
+            type: string
+        startAt:
+          type: string
+        endAt:
+          type: string
+        questionsCount:
+          type: integer
+        status:
+          type: string
+        cleanRoomParameters:
+          type: object
+          additionalProperties:
+            type: string
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        cleanRoomTypeId:
+          type: string
+    QuestionParameter:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        type:
+          type: string
+        index:
+          type: integer
+        parameterType:
+          type: string
+    AssetQuestionDataType:
+      type: object
+      properties:
+        ID:
+          type: string
+        macro:
+          type: string
+        description:
+          type: string
+        importDataType:
+          type: string
+        optional:
+          type: boolean
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuestionDataTypeField'
+    QuestionDataTypeField:
       type: object
       properties:
         ID:
@@ -568,19 +495,23 @@ components:
           type: string
         type:
           type: string
-        isEncrypt:
-          type: boolean
-    CleanRoomTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomType'
-    FieldTypeEnum:
-      type: object
-      properties:
-        name:
+        format:
           type: string
         description:
           type: string
+    QuestionMetric:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        type:
+          type: string
+        computed:
+          type: boolean
     CleanRoomTypeRequest:
       type: string
       enum:
@@ -594,6 +525,58 @@ components:
       - ADH
       - LinkedIn
       - HabuConfidentialComputing
+    DatasetMetadata:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        organizationID:
+          type: string
+        organizationName:
+          type: string
+        dataImportType:
+          type: string
+        macro:
+          type: string
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/AssetDatasetField'
+    CleanRoomRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the Cleanroom
+        description:
+          type: string
+          description: Description of the Cleanroom
+        startAt:
+          type: string
+          description: Start Date for the cleanroom, use format yyyy-mm-dd
+        endAt:
+          type: string
+          description: End Date for the cleanroom, use format yyyy-mm-dd
+        type:
+          $ref: '#/components/schemas/CleanRoomTypeRequest'
+        parameters:
+          $ref: '#/components/schemas/CleanRoomParameterRequest'
+      required:
+      - organizationId
+      - name
+      - startAt
+      - type
+    CleanRoomTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomType'
+    CleanRooms:
+      description: A list of Cleanrooms and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoom'
     CleanroomAssetDetails:
       type: object
       properties:
@@ -632,61 +615,78 @@ components:
       required:
       - code
       - message
-  responses:
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    ResourceConflict:
-      description: Conflict with the current state of the resource
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
+    CleanRoomStakeholder:
+      type: object
+      properties:
+        organizationId:
+          type: string
+        organizationName:
+          type: string
+        ownership:
+          type: string
+    CleanRoomParameterRequest:
+      type: object
+      required:
+      - CLOUD
+      - REGION
+      properties:
+        REGION:
+          type: string
+          enum:
+          - REGION_EU
+          - REGION_US
+          - REGION_APAC
+          - REGION_AFRICA
+          - REGION_UAE
+        SUB_REGION:
+          type: string
+          enum:
+          - SUB_REGION_EAST1
+          - SUB_REGION_WEST1
+          - SUB_REGION_NORTH1
+          - SUB_REGION_SOUTH1
+          - SUB_REGION_CENTRAL1
+          - SUB_REGION_NORTHEAST1
+          - SUB_REGION_SOUTHEAST1
+          - SUB_REGION_ME_CENTRAL1
+          - SUB_REGION_EU_WEST4
+          - SUB_REGION_EAST2
+        CLOUD:
+          type: string
+          enum:
+          - CLOUD_AWS
+          - CLOUD_GCP
+          - CLOUD_AZURE
+        ENABLE_EXPORT, ENABLE_VIEW_QUERY, ENABLE_HABU_INTELLIGENCE, ENABLE_PAIR, ENABLE_OPJA:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+          description: Each of these values take a true or false, please separate them for example ENABLE_EXPORT = true, ENABLE_VIEW_QUERY = true
+      additionalProperties:
+        type: string
+        enum:
+        - DATA_DECIBEL
+        - CROWD_SIZE
+    AssetDatasetField:
+      type: object
+      properties:
+        ID:
+          type: string
+        fieldName:
+          type: string
+        dataType:
+          type: string
+        isFilterable:
+          type: boolean
+        isUserIDField:
+          type: boolean
+        isPii:
+          type: boolean
+        isExcluded:
+          type: boolean
+        fieldLabel:
+          type: string
   securitySchemes:
     application:
       type: oauth2

@@ -129,6 +129,15 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
       content:
@@ -156,33 +165,7 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
-    UpsertBillableConfigRequest:
-      type: object
-      required:
-      - config
-      properties:
-        config:
-          $ref: '#/components/schemas/BillableConfig'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
     BillableSourceType:
       type: string
       description: Type of entity a billable config applies to
@@ -196,6 +179,40 @@ components:
       - BILLABLE_OWNER
       - BILLABLE_PARTNER
       - BILLABLE_CRQ
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    DeleteBillableConfigResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    GetBillableConfigResponse:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/BillableConfig'
+    UpsertBillableConfigResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        billableConfigId:
+          type: string
+    UpsertBillableConfigRequest:
+      type: object
+      required:
+      - config
+      properties:
+        config:
+          $ref: '#/components/schemas/BillableConfig'
     BillableConfig:
       type: object
       description: Billable configuration for a source entity
@@ -214,23 +231,6 @@ components:
           description: Billable flag as string ("true" or "false")
         compositeSourceId:
           type: string
-    UpsertBillableConfigResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        billableConfigId:
-          type: string
-    GetBillableConfigResponse:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/BillableConfig'
-    DeleteBillableConfigResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
   securitySchemes:
     application:
       type: oauth2

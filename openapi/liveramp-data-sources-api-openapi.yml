@@ -81,6 +81,15 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
       content:
@@ -108,20 +117,7 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
-    DataSources:
-      type: array
-      items:
-        $ref: '#/components/schemas/DataSource'
     ReturnObject:
       type: object
       properties:
@@ -132,6 +128,10 @@ components:
       required:
       - code
       - message
+    DataSources:
+      type: array
+      items:
+        $ref: '#/components/schemas/DataSource'
     DataSource:
       type: object
       properties:

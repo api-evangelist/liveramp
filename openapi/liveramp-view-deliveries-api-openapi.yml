@@ -75,6 +75,32 @@ paths:
       x-operation-id-original: Get v2/Deliveries
 components:
   schemas:
+    v2DeliveryMultiResponse:
+      type: object
+      properties:
+        v2/Deliveries:
+          description: Array of retrieved v2/Deliveries
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DeliveryOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DeliveryMultiResponsePagination'
+    OperationType:
+      type: string
+      enum:
+      - ADD
+      - DELETE
+    DeviceType:
+      type: string
+      enum:
+      - PII
+      - WEB
+      - IOS
+      - ANDROID
+      - CUSTOM_ID
+      - MIXED
+      - OTHER
+      - RAMP_ID
     v2DeliveryOutput:
       type: object
       properties:
@@ -112,11 +138,6 @@ components:
       - integrationConnectionID
       - operationType
       description: Delivery information about a Segment to a IntegrationConnection
-    OperationType:
-      type: string
-      enum:
-      - ADD
-      - DELETE
     StandardError:
       type: object
       properties:
@@ -134,35 +155,6 @@ components:
       - httpStatus
       - errorCode
       - message
-    DeliveryStatus:
-      type: string
-      enum:
-      - FAILED
-      - CANCELLED
-      - PENDING
-      - IN_PROGRESS
-      - DELIVERED
-    v2DeliveryMultiResponse:
-      type: object
-      properties:
-        v2/Deliveries:
-          description: Array of retrieved v2/Deliveries
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DeliveryOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DeliveryMultiResponsePagination'
-    DeviceType:
-      type: string
-      enum:
-      - PII
-      - WEB
-      - IOS
-      - ANDROID
-      - CUSTOM_ID
-      - MIXED
-      - OTHER
-      - RAMP_ID
     v2DeliveryMultiResponsePagination:
       type: object
       properties:
@@ -178,3 +170,11 @@ components:
         total:
           type: integer
           description: The total number of results.
+    DeliveryStatus:
+      type: string
+      enum:
+      - FAILED
+      - CANCELLED
+      - PENDING
+      - IN_PROGRESS
+      - DELIVERED

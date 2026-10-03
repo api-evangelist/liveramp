@@ -114,19 +114,6 @@ paths:
       x-operation-id-original: Get v2/Segment
 components:
   schemas:
-    Field:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        audienceId:
-          type: string
-      required:
-      - id
-      - name
-      - audienceId
     v2SegmentMultiResponsePagination:
       type: object
       properties:
@@ -142,6 +129,41 @@ components:
         total:
           type: integer
           description: The total number of results.
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
+    Field:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        audienceId:
+          type: string
+      required:
+      - id
+      - name
+      - audienceId
     v2SegmentOutput:
       type: object
       properties:
@@ -163,11 +185,6 @@ components:
       - value
       - type
       description: Represents a field-value pair that can be added to a Distribution Manager
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE
     v2SegmentMultiResponse:
       type: object
       properties:
@@ -178,20 +195,3 @@ components:
             $ref: '#/components/schemas/v2SegmentOutput'
         _pagination:
           $ref: '#/components/schemas/v2SegmentMultiResponsePagination'
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
