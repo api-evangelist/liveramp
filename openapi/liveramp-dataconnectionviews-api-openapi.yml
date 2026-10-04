@@ -197,36 +197,6 @@ paths:
       - DataConnectionViews
 components:
   schemas:
-    UserAudit:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: Identifier of the user who created the object
-        updatedBy:
-          type: string
-          description: Identifier of the user who last updated the object
-    DataConnectionViewField:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the output field
-        type:
-          type: string
-          description: Data type of the output field
-    DataConnectionViewSourceInput:
-      type: object
-      properties:
-        dataConnectionId:
-          type: string
-          description: ID of the source data connection
-        macro:
-          type: string
-          description: Macro alias for the source data connection in the view query
-      required:
-      - dataConnectionId
-      - macro
     DataConnectionViews:
       description: Paginated list of Data Connection Views
       type: object
@@ -245,6 +215,26 @@ components:
         hasMore:
           type: boolean
           description: Whether there are more data connection views beyond this page
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    DataConnectionViewUpdateDetails:
+      type: object
+      description: Fields to update on a data connection view. Omitted fields retain their existing values.
+      properties:
+        name:
+          type: string
+          description: Name of the data connection view
+        query:
+          type: string
+          description: SQL query for the data connection view
+        dataConnections:
+          type: array
+          description: Source data connections referenced by the view query
+          items:
+            $ref: '#/components/schemas/DataConnectionViewSourceInput'
     DataConnectionViewSource:
       type: object
       properties:
@@ -361,83 +351,6 @@ components:
       required:
       - code
       - message
-    DataConnectionViewUpdateDetails:
-      type: object
-      description: Fields to update on a data connection view. Omitted fields retain their existing values.
-      properties:
-        name:
-          type: string
-          description: Name of the data connection view
-        query:
-          type: string
-          description: SQL query for the data connection view
-        dataConnections:
-          type: array
-          description: Source data connections referenced by the view query
-          items:
-            $ref: '#/components/schemas/DataConnectionViewSourceInput'
-    DataConnectionViewDetails:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the data connection view
-        query:
-          type: string
-          description: SQL query for the data connection view
-        dataConnections:
-          type: array
-          description: Source data connections referenced by the view query
-          items:
-            $ref: '#/components/schemas/DataConnectionViewSourceInput'
-      required:
-      - name
-      - query
-      - dataConnections
-    TimeAudit:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    PartitionFieldConfig:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Fixed
-          - Range
-          - Rolling
-          description: Fixed is used for String and Integer type fields, Range and Rolling is for Date and Timestamp
-        values:
-          type: array
-          items:
-            type: string
-        rollingUnit:
-          type: string
-          enum:
-          - Days
-          - Months
-          description: Applicable only in case of Rolling Date and Timestamp fields
-        isEnforced:
-          type: boolean
-          default: false
-          description: Indicates whether the partition field values are enforced for the CRQ run
     DataConnectionViewResponse:
       type: object
       properties:
@@ -479,27 +392,105 @@ components:
           $ref: '#/components/schemas/TimeAudit'
         userAudit:
           $ref: '#/components/schemas/UserAudit'
+    DataConnectionViewField:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the output field
+        type:
+          type: string
+          description: Data type of the output field
+    DataConnectionViewSourceInput:
+      type: object
+      properties:
+        dataConnectionId:
+          type: string
+          description: ID of the source data connection
+        macro:
+          type: string
+          description: Macro alias for the source data connection in the view query
+      required:
+      - dataConnectionId
+      - macro
+    PartitionFieldConfig:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - Fixed
+          - Range
+          - Rolling
+          description: Fixed is used for String and Integer type fields, Range and Rolling is for Date and Timestamp
+        values:
+          type: array
+          items:
+            type: string
+        rollingUnit:
+          type: string
+          enum:
+          - Days
+          - Months
+          description: Applicable only in case of Rolling Date and Timestamp fields
+        isEnforced:
+          type: boolean
+          default: false
+          description: Indicates whether the partition field values are enforced for the CRQ run
+    UserAudit:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: Identifier of the user who created the object
+        updatedBy:
+          type: string
+          description: Identifier of the user who last updated the object
+    TimeAudit:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
+    DataConnectionViewDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the data connection view
+        query:
+          type: string
+          description: SQL query for the data connection view
+        dataConnections:
+          type: array
+          description: Source data connections referenced by the view query
+          items:
+            $ref: '#/components/schemas/DataConnectionViewSourceInput'
+      required:
+      - name
+      - query
+      - dataConnections
   responses:
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -518,6 +509,15 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:

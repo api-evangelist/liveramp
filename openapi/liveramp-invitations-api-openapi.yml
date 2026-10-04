@@ -160,62 +160,7 @@ paths:
       tags:
       - Invitations
 components:
-  responses:
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
-    AddCleanRoomPartnerRequest:
-      type: object
-      properties:
-        partnerAdminEmail:
-          type: string
-          description: Cleanroom Partner Admin's Email
-        invitationNote:
-          type: string
-          default: We are making some insights based on our data available to you in a Clean Room and would like to invite you to take a look. Getting started is super easy.
     ReturnObject:
       type: object
       properties:
@@ -236,6 +181,15 @@ components:
       - REQUEST_SENT_ADMIN
       - IN_PROGRESS
       - DECLINED_BY_ADMIN
+    AddCleanRoomPartnerRequest:
+      type: object
+      properties:
+        partnerAdminEmail:
+          type: string
+          description: Cleanroom Partner Admin's Email
+        invitationNote:
+          type: string
+          default: We are making some insights based on our data available to you in a Clean Room and would like to invite you to take a look. Getting started is super easy.
     TimeAudit:
       type: object
       properties:
@@ -279,6 +233,52 @@ components:
           $ref: '#/components/schemas/InviteStatus'
         timeAudit:
           $ref: '#/components/schemas/TimeAudit'
+  responses:
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

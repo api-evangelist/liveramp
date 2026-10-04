@@ -87,39 +87,12 @@ paths:
       - Cleanroom Question Permissions
 components:
   schemas:
-    UpdateCleanRoomQuestionPermissionsRequest:
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomQuestionPermissionsUpdateInput'
-      description: Array of Cleanroom Question Permission Updates
-    CleanRoomQuestionPermissionsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomQuestionPermissions'
-      description: Array of Cleanroom Question Permissions
     QuestionAccess:
       type: string
       enum:
       - UNKNOWN_ACCESS
       - QUESTION_OWNER_ONLY
       - ALL_CLEAN_ROOM_PARTNERS
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    CleanRoomQuestionPermissionsUpdateInput:
-      type: object
-      properties:
-        permission:
-          $ref: '#/components/schemas/QuestionPermission'
-        access:
-          $ref: '#/components/schemas/QuestionAccess'
     QuestionPermission:
       type: string
       enum:
@@ -131,6 +104,21 @@ components:
       - IN_PROGRESS
       - VIEW_RESULTS
       - DELETE
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    CleanRoomQuestionPermissionsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomQuestionPermissions'
+      description: Array of Cleanroom Question Permissions
     CleanRoomQuestionPermissions:
       type: object
       properties:
@@ -140,27 +128,21 @@ components:
           $ref: '#/components/schemas/QuestionPermission'
         access:
           $ref: '#/components/schemas/QuestionAccess'
+    UpdateCleanRoomQuestionPermissionsRequest:
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomQuestionPermissionsUpdateInput'
+      description: Array of Cleanroom Question Permission Updates
+    CleanRoomQuestionPermissionsUpdateInput:
+      type: object
+      properties:
+        permission:
+          $ref: '#/components/schemas/QuestionPermission'
+        access:
+          $ref: '#/components/schemas/QuestionAccess'
   responses:
     InternalServerError:
       description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -179,6 +161,24 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:

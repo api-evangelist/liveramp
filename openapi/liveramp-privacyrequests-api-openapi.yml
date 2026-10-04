@@ -294,6 +294,20 @@ components:
           type: integer
           format: int32
           example: 10
+    StandardError:
+      type: object
+      properties:
+        message:
+          description: The error message/description of the error.
+          type: string
+        time:
+          description: The time the error occurred.
+          type: string
+          format: ISO8601 UTC date-time
+          example: '2019-04-13T03:35:34Z'
+      required:
+      - message
+      - time
     PrivacyRequestDetails:
       type: object
       properties:
@@ -346,20 +360,6 @@ components:
       - request_type
       - status
       - date_received
-    StandardError:
-      type: object
-      properties:
-        message:
-          description: The error message/description of the error.
-          type: string
-        time:
-          description: The time the error occurred.
-          type: string
-          format: ISO8601 UTC date-time
-          example: '2019-04-13T03:35:34Z'
-      required:
-      - message
-      - time
     CreatePrivacyRequestInput:
       type: object
       properties:

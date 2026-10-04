@@ -194,6 +194,64 @@ paths:
       x-operation-id-original: Get v2/OauthConnectionAttempt
 components:
   schemas:
+    v2OauthConnectionAttemptInput:
+      type: object
+      properties:
+        redirectUrl:
+          description: URL that the user will be taken to after completing the OAuth flow
+          type: string
+          format: url
+          example: https://www.domain.com (url)
+        state:
+          type: string
+        oAuthEndpointID:
+          description: oAuthEndpointID of the Integration you wish to authorize
+          type: string
+        oAuthConnectionID:
+          description: When status is AUTHORIZED, this references the OAuth Connection that was created. Pass this ID during create if you wish to reauthorize an existing OAuth Connection
+          type: string
+      required:
+      - oAuthEndpointID
+      description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    OAuthConnectionAttemptStatus:
+      type: string
+      enum:
+      - AUTHORIZED
+      - FAILED
+      - PENDING
+      - PROCESSING
+    v2OauthConnectionMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
     v2OauthConnectionMultiResponse:
       type: object
       properties:
@@ -204,13 +262,6 @@ components:
             $ref: '#/components/schemas/v2OauthConnectionOutput'
         _pagination:
           $ref: '#/components/schemas/v2OauthConnectionMultiResponsePagination'
-    OAuthConnectionAttemptStatus:
-      type: string
-      enum:
-      - AUTHORIZED
-      - FAILED
-      - PENDING
-      - PROCESSING
     v2OauthConnectionAttemptOutput:
       type: object
       properties:
@@ -273,54 +324,3 @@ components:
       - createdAt
       - updatedAt
       description: Represents an OAuth credential for a given OAuth Endpoint that the user has permission to use
-    v2OauthConnectionAttemptInput:
-      type: object
-      properties:
-        redirectUrl:
-          description: URL that the user will be taken to after completing the OAuth flow
-          type: string
-          format: url
-          example: https://www.domain.com (url)
-        state:
-          type: string
-        oAuthEndpointID:
-          description: oAuthEndpointID of the Integration you wish to authorize
-          type: string
-        oAuthConnectionID:
-          description: When status is AUTHORIZED, this references the OAuth Connection that was created. Pass this ID during create if you wish to reauthorize an existing OAuth Connection
-          type: string
-      required:
-      - oAuthEndpointID
-      description: Stores information about the current OAuth flow, creates an OAuthConnection on successful flow completion
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
-    v2OauthConnectionMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.

@@ -291,215 +291,7 @@ paths:
       tags:
       - Data Connections
 components:
-  responses:
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
-    IdentifierTypes:
-      description: A list of Identifier Types
-      type: array
-      items:
-        $ref: '#/components/schemas/IdentifierType'
-    FieldConfigurations:
-      description: A list of Field Configurations
-      type: array
-      items:
-        $ref: '#/components/schemas/FieldConfiguration'
-    DataSource:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          description: name of the data connection's data source
-        displayName:
-          type: string
-          description: display name of the data connection's data source
-          enum:
-          - AWS ECR Container
-          - AWS Glue Data Catalog
-          - Amazon Marketing Cloud
-          - Amazon Marketing Cloud (Ads API)
-          - Artifact Store
-          - Azure Storage
-          - CSV Catalog
-          - Client AWS S3
-          - Databricks Data Connection
-          - Databricks Delta Table Connection
-          - Docker Container
-          - Facebook Advanced Analytics
-          - Google Ad Manager Logs
-          - Google Ads Data Hub
-          - Google Cloud Authorized View
-          - Google Cloud Big Query
-          - Google Cloud Storage
-          - Google Cloud Storage(with SA)
-          - LiveRamp-Hosted AWS S3
-          - LiveRamp-Hosted Amazon Marketing Cloud
-          - LiveRamp-Hosted Google Cloud Storage
-          - LiveRamp-Hosted Snowflake
-          - LiveRamp-Hosted Javascript Tag
-          - HubSpot
-          - Iceberg Catalog
-          - LinkedIn Marketing Solution
-          - Notebooks
-          - Salesforce
-          - Snowflake
-          - Snowflake Azure Data Connection
-          - Snowflake Data Connection
-          - Snowflake GCS Data Connection
-          - Snowflake S3 Data Connection
-          - Snowflake Table
-          - 'The Trade Desk: Raw Event Data Stream (REDS)'
-          - Local Upload
-          - Publisher Synthetic Dataset Library
-        credentialSource:
-          type: string
-    IdentifierType:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-    DataConnectionRetryResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    DataType:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-          enum:
-          - Ad Engagement
-          - Ad Exposure
-          - Ad Logs
-          - 'Amazon Marketing Cloud: Event-Level Ad Campaign Data'
-          - Binary Data
-          - CRM Data
-          - Campaign Data
-          - Campaign Mapping Data
-          - Code Container
-          - Conversion Events
-          - Databricks Container
-          - Databricks Notebook
-          - 'Facebook: Advanced Analytics Data'
-          - Generic
-          - 'Google Ads Data Hub: Event-Level Ad Campaign Data'
-          - Google Cloud Big Query
-          - Identity Graph
-          - JAR
-          - LinkedIn Marketing Solutions Config Data
-          - Machine Learning Model
-          - Member Profile
-          - Metadata
-          - Model Training
-          - Offline Conversions
-          - Page Data
-          - Service Container
-          - 'The Trade Desk: Raw Event Data Stream (REDS) Feed'
-          - 'The Trade Desk: Raw Event Data Stream (REDS) Metadata'
-          - Transaction Data
-          - User Data
-          - User-Segment Map
-          - WHEEL
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    PartitionFieldConfig:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - Fixed
-          - Range
-          - Rolling
-          description: Fixed is used for String and Integer type fields, Range and Rolling is for Date and Timestamp
-        values:
-          type: array
-          items:
-            type: string
-        rollingUnit:
-          type: string
-          enum:
-          - Days
-          - Months
-          description: Applicable only in case of Rolling Date and Timestamp fields
-        isEnforced:
-          type: boolean
-          default: false
-          description: Indicates whether the partition field values are enforced for the CRQ run
-    DataConnections:
-      description: A list of Data Connections
-      type: array
-      items:
-        $ref: '#/components/schemas/DataConnectionResponse'
-    JobParameters:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-        value:
-          type: string
     FieldConfiguration:
       type: object
       properties:
@@ -587,6 +379,149 @@ components:
           description: Indicates whether this field is a partition column
         partitionFieldConfig:
           $ref: '#/components/schemas/PartitionFieldConfig'
+    DataType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+          enum:
+          - Ad Engagement
+          - Ad Exposure
+          - Ad Logs
+          - 'Amazon Marketing Cloud: Event-Level Ad Campaign Data'
+          - Binary Data
+          - CRM Data
+          - Campaign Data
+          - Campaign Mapping Data
+          - Code Container
+          - Conversion Events
+          - Databricks Container
+          - Databricks Notebook
+          - 'Facebook: Advanced Analytics Data'
+          - Generic
+          - 'Google Ads Data Hub: Event-Level Ad Campaign Data'
+          - Google Cloud Big Query
+          - Identity Graph
+          - JAR
+          - LinkedIn Marketing Solutions Config Data
+          - Machine Learning Model
+          - Member Profile
+          - Metadata
+          - Model Training
+          - Offline Conversions
+          - Page Data
+          - Service Container
+          - 'The Trade Desk: Raw Event Data Stream (REDS) Feed'
+          - 'The Trade Desk: Raw Event Data Stream (REDS) Metadata'
+          - Transaction Data
+          - User Data
+          - User-Segment Map
+          - WHEEL
+    DataConnectionDetails:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the data connection
+        category:
+          type: string
+          description: Category of the data connection
+        credentialId:
+          type: string
+          description: Credential ID for the data connection
+        dataType:
+          $ref: '#/components/schemas/DataType'
+        dataSource:
+          $ref: '#/components/schemas/DataSource'
+        dataSourceConfiguration:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobParameters'
+    IdentifierType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+    FieldConfigurations:
+      description: A list of Field Configurations
+      type: array
+      items:
+        $ref: '#/components/schemas/FieldConfiguration'
+    JobParameters:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        value:
+          type: string
+    DataSource:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: name of the data connection's data source
+        displayName:
+          type: string
+          description: display name of the data connection's data source
+          enum:
+          - AWS ECR Container
+          - AWS Glue Data Catalog
+          - Amazon Marketing Cloud
+          - Amazon Marketing Cloud (Ads API)
+          - Artifact Store
+          - Azure Storage
+          - CSV Catalog
+          - Client AWS S3
+          - Databricks Data Connection
+          - Databricks Delta Table Connection
+          - Docker Container
+          - Facebook Advanced Analytics
+          - Google Ad Manager Logs
+          - Google Ads Data Hub
+          - Google Cloud Authorized View
+          - Google Cloud Big Query
+          - Google Cloud Storage
+          - Google Cloud Storage(with SA)
+          - LiveRamp-Hosted AWS S3
+          - LiveRamp-Hosted Amazon Marketing Cloud
+          - LiveRamp-Hosted Google Cloud Storage
+          - LiveRamp-Hosted Snowflake
+          - LiveRamp-Hosted Javascript Tag
+          - HubSpot
+          - Iceberg Catalog
+          - LinkedIn Marketing Solution
+          - Notebooks
+          - Salesforce
+          - Snowflake
+          - Snowflake Azure Data Connection
+          - Snowflake Data Connection
+          - Snowflake GCS Data Connection
+          - Snowflake S3 Data Connection
+          - Snowflake Table
+          - 'The Trade Desk: Raw Event Data Stream (REDS)'
+          - Local Upload
+          - Publisher Synthetic Dataset Library
+        credentialSource:
+          type: string
+    IdentifierTypes:
+      description: A list of Identifier Types
+      type: array
+      items:
+        $ref: '#/components/schemas/IdentifierType'
     ReturnObject:
       type: object
       properties:
@@ -597,6 +532,16 @@ components:
       required:
       - code
       - message
+    DataConnectionRetryResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
     DataConnectionResponse:
       type: object
       properties:
@@ -626,26 +571,81 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/JobParameters'
-    DataConnectionDetails:
+    DataConnections:
+      description: A list of Data Connections
+      type: array
+      items:
+        $ref: '#/components/schemas/DataConnectionResponse'
+    PartitionFieldConfig:
       type: object
       properties:
-        name:
+        type:
           type: string
-          description: Name of the data connection
-        category:
-          type: string
-          description: Category of the data connection
-        credentialId:
-          type: string
-          description: Credential ID for the data connection
-        dataType:
-          $ref: '#/components/schemas/DataType'
-        dataSource:
-          $ref: '#/components/schemas/DataSource'
-        dataSourceConfiguration:
+          enum:
+          - Fixed
+          - Range
+          - Rolling
+          description: Fixed is used for String and Integer type fields, Range and Rolling is for Date and Timestamp
+        values:
           type: array
           items:
-            $ref: '#/components/schemas/JobParameters'
+            type: string
+        rollingUnit:
+          type: string
+          enum:
+          - Days
+          - Months
+          description: Applicable only in case of Rolling Date and Timestamp fields
+        isEnforced:
+          type: boolean
+          default: false
+          description: Indicates whether the partition field values are enforced for the CRQ run
+  responses:
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

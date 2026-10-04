@@ -119,52 +119,6 @@ paths:
       tags:
       - Billable Configs
 components:
-  responses:
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
     BillableSourceType:
       type: string
@@ -189,23 +143,6 @@ components:
       required:
       - code
       - message
-    DeleteBillableConfigResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    GetBillableConfigResponse:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/BillableConfig'
-    UpsertBillableConfigResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-        billableConfigId:
-          type: string
     UpsertBillableConfigRequest:
       type: object
       required:
@@ -231,6 +168,69 @@ components:
           description: Billable flag as string ("true" or "false")
         compositeSourceId:
           type: string
+    UpsertBillableConfigResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        billableConfigId:
+          type: string
+    DeleteBillableConfigResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    GetBillableConfigResponse:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/BillableConfig'
+  responses:
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

@@ -231,57 +231,6 @@ paths:
       x-operation-id-original: Get v2/DistributionManager::SegmentConfig
 components:
   schemas:
-    v2DistributionManagerSegmentConfigMultiResponse:
-      type: object
-      properties:
-        segmentConfigs:
-          description: Array of retrieved v2/DistributionManager::SegmentConfigs
-          type: array
-          items:
-            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
-        _pagination:
-          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
-    v2DistributionManagerSegmentConfigInput:
-      type: object
-      properties:
-        segmentID:
-          type: string
-        segmentType:
-          allOf:
-          - $ref: '#/components/schemas/SegmentType'
-          type: string
-        destinationSegmentID:
-          type: string
-        distributionManagerID:
-          type: string
-          description: Link to v2/DistributionManager resource via its id
-      required:
-      - segmentID
-      - segmentType
-      - distributionManagerID
-      description: A list of segment IDs to distribute
-    StandardError:
-      type: object
-      properties:
-        httpStatus:
-          description: HTTP error status code for this problem
-          type: integer
-          format: int32
-        errorCode:
-          description: Service specific error code, more granular
-          type: string
-        message:
-          description: General, human readable error message
-          type: string
-      required:
-      - httpStatus
-      - errorCode
-      - message
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE
     v2DistributionManagerSegmentConfigOutput:
       type: object
       properties:
@@ -304,6 +253,57 @@ components:
       - segmentType
       - distributionManagerID
       description: A list of segment IDs to distribute
+    StandardError:
+      type: object
+      properties:
+        httpStatus:
+          description: HTTP error status code for this problem
+          type: integer
+          format: int32
+        errorCode:
+          description: Service specific error code, more granular
+          type: string
+        message:
+          description: General, human readable error message
+          type: string
+      required:
+      - httpStatus
+      - errorCode
+      - message
+    v2DistributionManagerSegmentConfigInput:
+      type: object
+      properties:
+        segmentID:
+          type: string
+        segmentType:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+        destinationSegmentID:
+          type: string
+        distributionManagerID:
+          type: string
+          description: Link to v2/DistributionManager resource via its id
+      required:
+      - segmentID
+      - segmentType
+      - distributionManagerID
+      description: A list of segment IDs to distribute
+    v2DistributionManagerSegmentConfigMultiResponse:
+      type: object
+      properties:
+        segmentConfigs:
+          description: Array of retrieved v2/DistributionManager::SegmentConfigs
+          type: array
+          items:
+            $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
+        _pagination:
+          $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
     v2DistributionManagerSegmentConfigMultiResponsePagination:
       type: object
       properties:

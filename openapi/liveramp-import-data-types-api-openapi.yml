@@ -38,9 +38,42 @@ paths:
       tags:
       - Import Data Types
 components:
+  schemas:
+    ImportDataType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    ImportDataTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/ImportDataType'
   responses:
     InternalServerError:
       description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:
@@ -66,39 +99,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-  schemas:
-    ImportDataTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/ImportDataType'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    ImportDataType:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
   securitySchemes:
     application:
       type: oauth2

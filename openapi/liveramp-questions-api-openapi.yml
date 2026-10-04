@@ -206,44 +206,53 @@ paths:
       tags:
       - Questions
 components:
-  responses:
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
+    QuestionUpdateResponse:
+      description: Model containing the response for a question update request
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the question was created updated
+        message:
+          type: string
+          description: Message indicating what went wrong if the question was not created successfully
+        question:
+          $ref: '#/components/schemas/QuestionDetails'
+    Parameter:
+      description: A parameter used within the question
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        displayName:
+          type: string
+          description: Parameter Display Name
+        description:
+          type: string
+          description: Parameter Description
+        exampleValue:
+          type: string
+          description: Parameter Example Value
+        format:
+          type: string
+          description: Parameter Format
+        isSynced:
+          type: boolean
+          description: Parameter Sync Status
+    Measure:
+      description: Metrics associated with the question
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        isIdentity:
+          type: boolean
+        noise:
+          type: boolean
     QuestionDataType:
       description: Details about the data types used in the question
       type: object
@@ -268,57 +277,42 @@ components:
           type: string
         type:
           type: string
-    QuestionCreationResponse:
-      description: Model containing the response for a question creation request
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the question was created successfully
-        message:
-          type: string
-          description: Message indicating what went wrong if the question was not created successfully
-        questionID:
-          type: string
-          description: The ID of the created question
-    QuestionUpdateResponse:
-      description: Model containing the response for a question update request
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the question was created updated
-        message:
-          type: string
-          description: Message indicating what went wrong if the question was not created successfully
-        question:
-          $ref: '#/components/schemas/QuestionDetails'
-    DeleteQuestionResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the question was deleted successfully
-    Measure:
-      description: Metrics associated with the question
-      type: object
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        isIdentity:
-          type: boolean
-        noise:
-          type: boolean
-    QueryDetail:
-      description: A single query detail within the question
-      type: object
-      properties:
-        query:
-          type: string
-        cleanRoomType:
-          $ref: '#/components/schemas/CleanRoomTypeRequest'
-        queryLanguage:
-          type: string
+    QuestionImportDataType:
+      type: string
+      enum:
+      - CodeContainer
+      - Transaction
+      - Metadata
+      - PageData
+      - AdExposure
+      - ServiceContainer
+      - DatabricksNotebook
+      - TTDREDSFeed
+      - UserData
+      - MLModel
+      - ConversionEvents
+      - TrainModel
+      - AdLogs
+      - MemberProfile
+      - AADataFeed
+      - TTDREDSMetadata
+      - Conversion
+      - BinaryData
+      - SparkCodeContainer
+      - DatabricksContainer
+      - AdEngagement
+      - OfflineConversions
+      - UserSegmentMap
+      - LinkedInMarketingSolutionsConfigData
+      - GoogleCloudBigQuery
+      - IDENTITY_GRAPH
+      - AdsDataFeed
+      - CRM
+      - Generic
+      - AMCAdsDataFeed
+      - Campaign
+      - CampaignMapping
+      - WHEEL
     CleanRoomTypeRequest:
       type: string
       enum:
@@ -332,13 +326,24 @@ components:
       - ADH
       - LinkedIn
       - HabuConfidentialComputing
-    CreateQuestionSettings:
-      description: Settings for how the create question api will behave
+    Dimension:
+      description: Dimensions used within the question
       type: object
       properties:
-        queryValidation:
-          type: boolean
-          description: If true, the query will be validated before being saved
+        name:
+          type: string
+        type:
+          type: string
+    QueryDetail:
+      description: A single query detail within the question
+      type: object
+      properties:
+        query:
+          type: string
+        cleanRoomType:
+          $ref: '#/components/schemas/CleanRoomTypeRequest'
+        queryLanguage:
+          type: string
     DataSetTypeField:
       description: Fields associated with a specific data type
       type: object
@@ -347,6 +352,23 @@ components:
           type: string
         type:
           type: string
+    CreateQuestionSettings:
+      description: Settings for how the create question api will behave
+      type: object
+      properties:
+        queryValidation:
+          type: boolean
+          description: If true, the query will be validated before being saved
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     Question:
       description: Model containing the Question details
       type: object
@@ -361,16 +383,6 @@ components:
           type: string
         settings:
           $ref: '#/components/schemas/CreateQuestionSettings'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
     QuestionDetails:
       description: Detailed information about the question
       type: object
@@ -429,73 +441,61 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/UserListOutput'
-    QuestionImportDataType:
-      type: string
-      enum:
-      - CodeContainer
-      - Transaction
-      - Metadata
-      - PageData
-      - AdExposure
-      - ServiceContainer
-      - DatabricksNotebook
-      - TTDREDSFeed
-      - UserData
-      - MLModel
-      - ConversionEvents
-      - TrainModel
-      - AdLogs
-      - MemberProfile
-      - AADataFeed
-      - TTDREDSMetadata
-      - Conversion
-      - BinaryData
-      - SparkCodeContainer
-      - DatabricksContainer
-      - AdEngagement
-      - OfflineConversions
-      - UserSegmentMap
-      - LinkedInMarketingSolutionsConfigData
-      - GoogleCloudBigQuery
-      - IDENTITY_GRAPH
-      - AdsDataFeed
-      - CRM
-      - Generic
-      - AMCAdsDataFeed
-      - Campaign
-      - CampaignMapping
-      - WHEEL
-    Dimension:
-      description: Dimensions used within the question
-      type: object
+    QuestionCreationResponse:
+      description: Model containing the response for a question creation request
       properties:
-        name:
-          type: string
-        type:
-          type: string
-    Parameter:
-      description: A parameter used within the question
-      type: object
-      properties:
-        name:
-          type: string
-        type:
-          type: string
-        displayName:
-          type: string
-          description: Parameter Display Name
-        description:
-          type: string
-          description: Parameter Description
-        exampleValue:
-          type: string
-          description: Parameter Example Value
-        format:
-          type: string
-          description: Parameter Format
-        isSynced:
+        success:
           type: boolean
-          description: Parameter Sync Status
+          description: Indicates if the question was created successfully
+        message:
+          type: string
+          description: Message indicating what went wrong if the question was not created successfully
+        questionID:
+          type: string
+          description: The ID of the created question
+    DeleteQuestionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the question was deleted successfully
+  responses:
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

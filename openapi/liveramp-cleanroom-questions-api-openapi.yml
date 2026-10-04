@@ -338,53 +338,32 @@ paths:
       tags:
       - Cleanroom Questions
 components:
-  responses:
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
   schemas:
+    UpdateCleanroomQuestionComputeCapacityRequest:
+      type: object
+      properties:
+        computeCapacity:
+          $ref: '#/components/schemas/CleanroomQuestionComputeCapacity'
+          description: The new warehouse size for the cleanroom question
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    SegmentationRequest:
+      description: Request body for enabling or updating segmentation for a Cleanroom Question
+      required:
+      - assetDisplayName
+      - rampID
+      properties:
+        assetDisplayName:
+          type: string
+          description: Display name for the asset
+          example: CRQ-065269-Feb2
+        rampID:
+          type: string
+          description: Ramp ID type
+          example: NAME
     CleanRoomQuestionResponse:
       type: object
       properties:
@@ -433,20 +412,49 @@ components:
         description:
           type: string
           description: Description of the Question
-    SegmentationRequest:
-      description: Request body for enabling or updating segmentation for a Cleanroom Question
-      required:
-      - assetDisplayName
-      - rampID
+    SegmentationResponse:
+      description: Response when segmentation is enabled or updated successfully
+      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
       properties:
-        assetDisplayName:
+        assetId:
           type: string
-          description: Display name for the asset
-          example: CRQ-065269-Feb2
-        rampID:
+          description: The created or updated asset ID
+          example: 5f3e2b1a-90ab-4cde-8fgh-1234567890ab
+        success:
+          type: boolean
+          description: Indicates whether the operation succeeded
+          example: true
+    ReturnObject:
+      type: object
+      properties:
+        code:
           type: string
-          description: Ramp ID type
-          example: NAME
+        message:
+          type: string
+      required:
+      - code
+      - message
+    CleanRoomQuestionRun:
+      type: object
+      properties:
+        runId:
+          type: string
+          description: Run ID
+        status:
+          type: string
+        startTimestamp:
+          type: string
+          format: date-time
+          description: Start Timestamp of the Run
+        endTimestamp:
+          type: string
+          format: date-time
+          description: End Timestamp of the Run
+    CleanRoomQuestions:
+      description: A list of Cleanroom Questions and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomQuestion'
     CleanRoomQuestion:
       description: Model containing the Cleanroom Question details
       properties:
@@ -489,27 +497,6 @@ components:
           type: string
         questionId:
           type: string
-    CleanRoomQuestions:
-      description: A list of Cleanroom Questions and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomQuestion'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    UpdateCleanroomQuestionComputeCapacityRequest:
-      type: object
-      properties:
-        computeCapacity:
-          $ref: '#/components/schemas/CleanroomQuestionComputeCapacity'
-          description: The new warehouse size for the cleanroom question
     CleanroomQuestionComputeCapacity:
       type: string
       description: possible compute capacities for cleanroom questions. This can be set for Hybrid, LinkedIn, Snowflake and Habu Confidential Compute. Snowflake cleanroom questions can only be DEFAULT or LARGE.
@@ -518,45 +505,58 @@ components:
       - MEDIUM
       - LARGE
       - XLARGE
-    SegmentationResponse:
-      description: Response when segmentation is enabled or updated successfully
-      x-class-extra-annotation: '@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)'
-      properties:
-        assetId:
-          type: string
-          description: The created or updated asset ID
-          example: 5f3e2b1a-90ab-4cde-8fgh-1234567890ab
-        success:
-          type: boolean
-          description: Indicates whether the operation succeeded
-          example: true
-    CleanRoomQuestionRun:
-      type: object
-      properties:
-        runId:
-          type: string
-          description: Run ID
-        status:
-          type: string
-        startTimestamp:
-          type: string
-          format: date-time
-          description: Start Timestamp of the Run
-        endTimestamp:
-          type: string
-          format: date-time
-          description: End Timestamp of the Run
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
     UpdateCleanroomQuestionComputeCapacityResponse:
       type: object
       properties:
         success:
           type: boolean
           description: Indicates if the warehouse size was updated successfully
+  responses:
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

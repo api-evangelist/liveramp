@@ -209,15 +209,6 @@ paths:
       - Cleanroom Users
 components:
   schemas:
-    UserAudit:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: Identifier of the user who created the object
-        updatedBy:
-          type: string
-          description: Identifier of the user who last updated the object
     User:
       type: object
       properties:
@@ -229,26 +220,11 @@ components:
           description: Name of the user
         email:
           type: string
-    CleanRoomUsers:
-      description: A list of Cleanroom Users and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomUser'
-    AddCleanRoomUserRequest:
+    DeleteResponse:
       type: object
       properties:
-        userId:
-          type: string
-          description: (deprecated) id of the user in the organization
-        roleId:
-          type: string
-          description: (deprecated) id of Role that you want to assign the user
-        email:
-          type: string
-          description: email of the user in the organization
-        role:
-          type: string
-          description: Role that you want to assign the user
+        success:
+          type: boolean
     ReturnObject:
       type: object
       properties:
@@ -259,21 +235,11 @@ components:
       required:
       - code
       - message
-    TimeAudit:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
+    CleanRoomUsers:
+      description: A list of Cleanroom Users and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomUser'
     CleanRoomUser:
       type: object
       properties:
@@ -291,11 +257,15 @@ components:
           $ref: '#/components/schemas/UserAudit'
         role:
           $ref: '#/components/schemas/CleanRoomRole'
-    DeleteResponse:
+    UserAudit:
       type: object
       properties:
-        success:
-          type: boolean
+        createdBy:
+          type: string
+          description: Identifier of the user who created the object
+        updatedBy:
+          type: string
+          description: Identifier of the user who last updated the object
     CleanRoomRole:
       properties:
         id:
@@ -306,9 +276,66 @@ components:
           type: string
         organizationId:
           type: string
+    AddCleanRoomUserRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: (deprecated) id of the user in the organization
+        roleId:
+          type: string
+          description: (deprecated) id of Role that you want to assign the user
+        email:
+          type: string
+          description: email of the user in the organization
+        role:
+          type: string
+          description: Role that you want to assign the user
+    TimeAudit:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
   responses:
+    ResourceConflict:
+      description: Conflict with the current state of the resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     InternalServerError:
       description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:
@@ -327,33 +354,6 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    ResourceConflict:
-      description: Conflict with the current state of the resource
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
       content:
         application/json:
           schema:

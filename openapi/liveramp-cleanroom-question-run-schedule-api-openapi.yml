@@ -210,60 +210,21 @@ paths:
       - Cleanroom Question Run Schedule
 components:
   schemas:
-    DeleteCleanroomQuestionRunScheduleResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    CleanroomQuestionRunScheduleParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of Cleanroom Question Run Schedule Parameter
-        value:
-          type: string
-          description: Value of Cleanroom Question Run Schedule Parameter
-        dataType:
-          type: string
-          description: Data Type of Cleanroom Question Run Schedule Parameter.
-        parameterType:
-          $ref: '#/components/schemas/CleanroomQuestionRunParameterType'
-        dateQualifier:
-          $ref: '#/components/schemas/DateQualifier'
-        dateType:
-          $ref: '#/components/schemas/CleanroomQuestionRunScheduleDateParameterType'
-    CleanroomQuestionRunParameterType:
+    DateQualifier:
       type: string
       enum:
-      - PARTITION_PARAMETER
-      - RUN_PARAMETER
-    CreateCleanroomQuestionRunScheduleResponse:
-      type: object
-      properties:
-        id:
-          type: string
-    DaysOfWeek:
+      - DAYS
+      - MONTHS
+    CleanroomQuestionRunScheduleDateParameterType:
       type: string
       enum:
-      - DAY_OF_WEEK_UNKNOWN
-      - SUN
-      - MON
-      - TUE
-      - WED
-      - THU
-      - FRI
-      - SAT
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
+      - RELATIVE
+      - ABSOLUTE
+    CleanroomQuestionRunScheduleParameters:
+      description: A list of Cleanroom Question Run Schedule Parameters
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanroomQuestionRunScheduleParameter'
     ScheduleQuestionParameters:
       type: object
       properties:
@@ -279,6 +240,17 @@ components:
           type: boolean
         parameterType:
           type: string
+    DaysOfWeek:
+      type: string
+      enum:
+      - DAY_OF_WEEK_UNKNOWN
+      - SUN
+      - MON
+      - TUE
+      - WED
+      - THU
+      - FRI
+      - SAT
     RepeatFrequency:
       type: string
       enum:
@@ -286,10 +258,6 @@ components:
       - DAILY
       - WEEKLY
       - MONTHLY
-    GetAllRunSchedulesForCleanroomQuestionResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/GetCleanroomQuestionRunScheduleResponse'
     GetCleanroomQuestionRunScheduleResponse:
       type: object
       properties:
@@ -336,21 +304,53 @@ components:
             format: int64
         displayId:
           type: string
-    DateQualifier:
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    CleanroomQuestionRunScheduleParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of Cleanroom Question Run Schedule Parameter
+        value:
+          type: string
+          description: Value of Cleanroom Question Run Schedule Parameter
+        dataType:
+          type: string
+          description: Data Type of Cleanroom Question Run Schedule Parameter.
+        parameterType:
+          $ref: '#/components/schemas/CleanroomQuestionRunParameterType'
+        dateQualifier:
+          $ref: '#/components/schemas/DateQualifier'
+        dateType:
+          $ref: '#/components/schemas/CleanroomQuestionRunScheduleDateParameterType'
+    CleanroomQuestionRunParameterType:
       type: string
       enum:
-      - DAYS
-      - MONTHS
-    CleanroomQuestionRunScheduleParameters:
-      description: A list of Cleanroom Question Run Schedule Parameters
+      - PARTITION_PARAMETER
+      - RUN_PARAMETER
+    DeleteCleanroomQuestionRunScheduleResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    CreateCleanroomQuestionRunScheduleResponse:
+      type: object
+      properties:
+        id:
+          type: string
+    GetAllRunSchedulesForCleanroomQuestionResponse:
       type: array
       items:
-        $ref: '#/components/schemas/CleanroomQuestionRunScheduleParameter'
-    CleanroomQuestionRunScheduleDateParameterType:
-      type: string
-      enum:
-      - RELATIVE
-      - ABSOLUTE
+        $ref: '#/components/schemas/GetCleanroomQuestionRunScheduleResponse'
     CreateCleanroomQuestionRunScheduleInput:
       type: object
       properties:
@@ -382,6 +382,15 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     BadRequest:
       description: Bad Request - Incorrect syntax or request
       content:
@@ -393,15 +402,6 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
       content:
         application/json:
           schema:

@@ -114,21 +114,6 @@ paths:
       x-operation-id-original: Get v2/Segment
 components:
   schemas:
-    v2SegmentMultiResponsePagination:
-      type: object
-      properties:
-        after:
-          type:
-          - string
-          - 'null'
-          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
-
-            It allows the next request to begin from where the current request left off.
-
-            When "after" is  null, there are no more records to fetch.'
-        total:
-          type: integer
-          description: The total number of results.
     StandardError:
       type: object
       properties:
@@ -146,11 +131,6 @@ components:
       - httpStatus
       - errorCode
       - message
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE
     Field:
       type: object
       properties:
@@ -164,6 +144,26 @@ components:
       - id
       - name
       - audienceId
+    v2SegmentMultiResponsePagination:
+      type: object
+      properties:
+        after:
+          type:
+          - string
+          - 'null'
+          description: 'This field is a cursor to be passed as a query parameter in subsequent, paginated queries.
+
+            It allows the next request to begin from where the current request left off.
+
+            When "after" is  null, there are no more records to fetch.'
+        total:
+          type: integer
+          description: The total number of results.
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
     v2SegmentOutput:
       type: object
       properties:
