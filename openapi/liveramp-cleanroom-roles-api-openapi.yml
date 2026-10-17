@@ -84,9 +84,35 @@ paths:
       tags:
       - Cleanroom Roles
 components:
+  schemas:
+    CleanRoomRole:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        cleanRoomId:
+          type: string
+        organizationId:
+          type: string
+    CleanRoomRoles:
+      description: A list of Cleanroom Roles
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomRole'
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
   responses:
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -103,15 +129,6 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
       content:
@@ -121,8 +138,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:
@@ -130,32 +147,15 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-  schemas:
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    CleanRoomRoles:
-      description: A list of Cleanroom Roles
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomRole'
-    CleanRoomRole:
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        cleanRoomId:
-          type: string
-        organizationId:
-          type: string
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
   securitySchemes:
     application:
       type: oauth2

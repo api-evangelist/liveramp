@@ -87,12 +87,13 @@ paths:
       - Cleanroom Question Permissions
 components:
   schemas:
-    QuestionAccess:
-      type: string
-      enum:
-      - UNKNOWN_ACCESS
-      - QUESTION_OWNER_ONLY
-      - ALL_CLEAN_ROOM_PARTNERS
+    CleanRoomQuestionPermissionsUpdateInput:
+      type: object
+      properties:
+        permission:
+          $ref: '#/components/schemas/QuestionPermission'
+        access:
+          $ref: '#/components/schemas/QuestionAccess'
     QuestionPermission:
       type: string
       enum:
@@ -104,6 +105,12 @@ components:
       - IN_PROGRESS
       - VIEW_RESULTS
       - DELETE
+    QuestionAccess:
+      type: string
+      enum:
+      - UNKNOWN_ACCESS
+      - QUESTION_OWNER_ONLY
+      - ALL_CLEAN_ROOM_PARTNERS
     ReturnObject:
       type: object
       properties:
@@ -114,11 +121,6 @@ components:
       required:
       - code
       - message
-    CleanRoomQuestionPermissionsResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomQuestionPermissions'
-      description: Array of Cleanroom Question Permissions
     CleanRoomQuestionPermissions:
       type: object
       properties:
@@ -133,16 +135,32 @@ components:
       items:
         $ref: '#/components/schemas/CleanRoomQuestionPermissionsUpdateInput'
       description: Array of Cleanroom Question Permission Updates
-    CleanRoomQuestionPermissionsUpdateInput:
-      type: object
-      properties:
-        permission:
-          $ref: '#/components/schemas/QuestionPermission'
-        access:
-          $ref: '#/components/schemas/QuestionAccess'
+    CleanRoomQuestionPermissionsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomQuestionPermissions'
+      description: Array of Cleanroom Question Permissions
   responses:
+    Unauthorized:
+      description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     InternalServerError:
       description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:
@@ -161,24 +179,6 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Forbidden:
       description: This action is not allowed
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:

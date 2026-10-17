@@ -208,104 +208,6 @@ paths:
       tags:
       - Cleanroom Users
 components:
-  schemas:
-    User:
-      type: object
-      properties:
-        id:
-          type: string
-          description: User ID
-        name:
-          type: string
-          description: Name of the user
-        email:
-          type: string
-    DeleteResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    CleanRoomUsers:
-      description: A list of Cleanroom Users and their details
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomUser'
-    CleanRoomUser:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Cleanroom User ID
-        cleanRoomId:
-          type: string
-          description: Cleanroom ID
-        user:
-          $ref: '#/components/schemas/User'
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
-        role:
-          $ref: '#/components/schemas/CleanRoomRole'
-    UserAudit:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: Identifier of the user who created the object
-        updatedBy:
-          type: string
-          description: Identifier of the user who last updated the object
-    CleanRoomRole:
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        cleanRoomId:
-          type: string
-        organizationId:
-          type: string
-    AddCleanRoomUserRequest:
-      type: object
-      properties:
-        userId:
-          type: string
-          description: (deprecated) id of the user in the organization
-        roleId:
-          type: string
-          description: (deprecated) id of Role that you want to assign the user
-        email:
-          type: string
-          description: email of the user in the organization
-        role:
-          type: string
-          description: Role that you want to assign the user
-    TimeAudit:
-      type: object
-      properties:
-        createdAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
   responses:
     ResourceConflict:
       description: Conflict with the current state of the resource
@@ -316,8 +218,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -325,8 +227,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -352,8 +254,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:
@@ -361,6 +263,104 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: User ID
+        name:
+          type: string
+          description: Name of the user
+        email:
+          type: string
+    TimeAudit:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
+    CleanRoomRole:
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        cleanRoomId:
+          type: string
+        organizationId:
+          type: string
+    CleanRoomUsers:
+      description: A list of Cleanroom Users and their details
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomUser'
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    DeleteResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    UserAudit:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: Identifier of the user who created the object
+        updatedBy:
+          type: string
+          description: Identifier of the user who last updated the object
+    CleanRoomUser:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Cleanroom User ID
+        cleanRoomId:
+          type: string
+          description: Cleanroom ID
+        user:
+          $ref: '#/components/schemas/User'
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+        role:
+          $ref: '#/components/schemas/CleanRoomRole'
+    AddCleanRoomUserRequest:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: (deprecated) id of the user in the organization
+        roleId:
+          type: string
+          description: (deprecated) id of Role that you want to assign the user
+        email:
+          type: string
+          description: email of the user in the organization
+        role:
+          type: string
+          description: Role that you want to assign the user
   securitySchemes:
     application:
       type: oauth2

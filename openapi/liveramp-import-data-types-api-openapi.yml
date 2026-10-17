@@ -39,15 +39,6 @@ paths:
       - Import Data Types
 components:
   schemas:
-    ImportDataType:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
     ReturnObject:
       type: object
       properties:
@@ -62,9 +53,18 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/ImportDataType'
+    ImportDataType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
   responses:
-    InternalServerError:
-      description: Internal Server Error
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -72,8 +72,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -90,8 +90,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:

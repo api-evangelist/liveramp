@@ -54,6 +54,20 @@ paths:
       - Data Source Parameters
 components:
   schemas:
+    DataSourceParameters:
+      type: array
+      items:
+        $ref: '#/components/schemas/DataSourceParameter'
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
     DataSourceParameter:
       type: object
       properties:
@@ -69,23 +83,9 @@ components:
           type: integer
         dataSourceId:
           type: string
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    DataSourceParameters:
-      type: array
-      items:
-        $ref: '#/components/schemas/DataSourceParameter'
   responses:
-    InternalServerError:
-      description: Internal Server Error
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -93,8 +93,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -120,8 +120,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:

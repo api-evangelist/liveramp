@@ -79,10 +79,6 @@ paths:
       - Data Types
 components:
   schemas:
-    DataTypes:
-      type: array
-      items:
-        $ref: '#/components/schemas/DataType'
     ReturnObject:
       type: object
       properties:
@@ -135,9 +131,13 @@ components:
           - User Data
           - User-Segment Map
           - WHEEL
+    DataTypes:
+      type: array
+      items:
+        $ref: '#/components/schemas/DataType'
   responses:
-    InternalServerError:
-      description: Internal Server Error
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -145,8 +145,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -172,8 +172,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:

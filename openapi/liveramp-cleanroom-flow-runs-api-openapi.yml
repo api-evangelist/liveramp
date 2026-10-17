@@ -503,69 +503,6 @@ paths:
       - Cleanroom Flow Runs
 components:
   schemas:
-    CreateCleanroomFlowRunInput:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the flow run
-        pauseLevelID:
-          type: string
-          description: Optional pause level ID at which to pause execution
-        nodes:
-          type: array
-          description: Nodes with parameters
-          items:
-            $ref: '#/components/schemas/NodeParametersEntry'
-        branches:
-          type: string
-          description: Branch names to filter flow execution (comma-separated)
-        excludeNodesWithoutTags:
-          type: boolean
-          description: Exclude nodes without tags when branch filtering is enabled
-        ignoreParentChildRule:
-          type: boolean
-          description: Ignore parent-child dependency rules for normal flow runs
-        includeMismatchingTaggedNodes:
-          type: boolean
-          description: Include unmatched nodes when branch filtering is enabled
-        datasetAssignments:
-          type: array
-          description: Dataset assignments for each node
-          items:
-            $ref: '#/components/schemas/NodeDatasetAssignment'
-    UnhygienixFieldType:
-      type: string
-      enum:
-      - FIELD_TYPE_UNKNOWN
-      - INTEGER
-      - STRING
-      - DATE
-      - TIMESTAMP
-      - DOUBLE
-      - BIGINT
-      - BOOLEAN
-      - DECIMAL
-      - LONG
-    ListCleanroomFlowRunsResponse:
-      type: object
-      properties:
-        cleanRoomFlowRuns:
-          type: array
-          items:
-            $ref: '#/components/schemas/FlowRunMetadata'
-        count:
-          type: integer
-          format: int32
-    FieldMapping:
-      type: object
-      properties:
-        questionFieldName:
-          type: string
-          description: Question field name in the node
-        datasetFieldName:
-          type: string
-          description: Dataset field name to map to
     NodeDatasetAssignment:
       type: object
       properties:
@@ -577,137 +514,6 @@ components:
           description: Dataset assignments for this node
           items:
             $ref: '#/components/schemas/DatasetAssignment'
-    PreviewFlowRunParametersInput:
-      type: object
-      description: Input for previewing flow run parameters
-      properties:
-        branches:
-          type: string
-          description: Branch names to filter flow execution (comma-separated)
-        excludeNodesWithoutTags:
-          type: boolean
-          description: Exclude nodes without tags when branch filtering is enabled
-        ignoreParentChildRule:
-          type: boolean
-          description: Ignore parent-child dependency rules
-        includeMismatchingTaggedNodes:
-          type: boolean
-          description: Include unmatched nodes when branch filtering is enabled
-        datasetAssignments:
-          type: array
-          description: Dataset assignments for each node (used to derive partition parameters)
-          items:
-            $ref: '#/components/schemas/NodeDatasetAssignment'
-        parentFlowRunId:
-          type: string
-          description: When set, preview is treated as a replay of this parent flow run
-    ParameterType:
-      type: string
-      enum:
-      - RUN_TIME_PARAMETER
-      - PARTITION_PARAMETER
-      - ARTIFACT_FILE_METADATA
-      - PARAMETER_UNKNOWN
-    GetCleanroomFlowRunOutputNodeResponseObject:
-      type: object
-      properties:
-        node:
-          $ref: '#/components/schemas/CleanroomFlowRunOutputNode'
-        runStatus:
-          type: string
-        runID:
-          type: string
-    NodeParametersEntry:
-      type: object
-      properties:
-        nodeIdentifier:
-          type: string
-          description: Node identifier
-        parameters:
-          type: object
-          description: Parameters for this node
-          additionalProperties:
-            type: string
-    DatasetAssignment:
-      type: object
-      properties:
-        datasetName:
-          type: string
-          description: Dataset name (will be resolved to ID)
-        datasetMacro:
-          type: string
-          description: Dataset macro/type
-        organizationName:
-          type: string
-          description: Organization name from stakeholders list (will be resolved to ownership)
-        fieldMappings:
-          type: array
-          description: Field mappings using field names
-          items:
-            $ref: '#/components/schemas/FieldMapping'
-    GetCleanroomFlowRunStatusResponse:
-      type: object
-      properties:
-        status:
-          type: string
-    CleanroomFlowRunOutputNodes:
-      type: array
-      items:
-        $ref: '#/components/schemas/GetCleanroomFlowRunOutputNodeResponseObject'
-    ReplayCleanroomFlowRunApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          description: Success indicator
-        cleanRoomFlowRunID:
-          type: string
-          description: The new flow run ID created for the replay
-    UserAudit:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: Identifier of the user who created the object
-        updatedBy:
-          type: string
-          description: Identifier of the user who last updated the object
-    RunTableMetadata:
-      type: object
-      properties:
-        fieldName:
-          type: string
-        dataType:
-          type: string
-        columnName:
-          type: string
-    CleanroomFlowRunOutputNode:
-      type: object
-      properties:
-        id:
-          type: string
-        flowId:
-          type: string
-        label:
-          type: string
-        nodeType:
-          type: string
-        referenceId:
-          type: string
-        positionX:
-          type: integer
-        positionY:
-          type: integer
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
-        level:
-          type: integer
-        title:
-          type: string
-        cleanroomQuestionId:
-          type: string
     FlowNodeParameterPreview:
       type: object
       description: Per-node parameter preview containing question metadata and expected parameters
@@ -732,73 +538,6 @@ components:
           description: Combined list of runtime and partition parameters
           items:
             $ref: '#/components/schemas/ParameterInfo'
-    FlowRunMetadata:
-      description: Model containing the Cleanroom Flow Run Metadata
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        status:
-          type: string
-        submittedAt:
-          type: string
-          format: date-time
-        executedAt:
-          type: string
-          format: date-time
-        completedAt:
-          type: string
-          format: date-time
-        flowRunParameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/FlowRunParameter'
-        runMessage:
-          type: string
-    FlowRunMetadataParameter:
-      type: object
-      properties:
-        nodeId:
-          type: string
-        nodeQuestionName:
-          type: string
-        parameterMetadataList:
-          type: array
-          items:
-            $ref: '#/components/schemas/ParameterInfo'
-    QuestionRunResultData:
-      description: Model containing the Cleanroom Question Run Result Data
-      properties:
-        metadata:
-          type: array
-          items:
-            $ref: '#/components/schemas/RunTableMetadata'
-        stats:
-          type: array
-          items:
-            $ref: '#/components/schemas/RunTableStats'
-        count:
-          type: integer
-        multipleOutputs:
-          type: array
-          items:
-            type: string
-    ParameterInfo:
-      type: object
-      properties:
-        Id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-        index:
-          type: integer
-        fieldType:
-          $ref: '#/components/schemas/UnhygienixFieldType'
-        parameterType:
-          $ref: '#/components/schemas/ParameterType'
     ReturnObject:
       type: object
       properties:
@@ -809,66 +548,17 @@ components:
       required:
       - code
       - message
-    TimeAudit:
+    NodeParametersEntry:
       type: object
       properties:
-        createdAt:
+        nodeIdentifier:
           type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
-    GetCleanroomFlowRunParametersResponse:
-      type: object
-      properties:
-        flowRunParameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/FlowRunMetadataParameter'
-    ResumeCleanroomFlowRunInput:
-      type: object
-      properties:
-        pauseLevelID:
-          type: string
-          description: Optional pause level ID at which to pause execution
-    FlowRunParameterValue:
-      type: object
-      properties:
-        value:
-          type: string
-        parameterType:
-          $ref: '#/components/schemas/ParameterType'
-    PreviewFlowRunParametersResponse:
-      type: object
-      properties:
-        nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/FlowNodeParameterPreview'
-    FlowRunParameter:
-      type: object
-      properties:
-        nodeId:
-          type: string
+          description: Node identifier
         parameters:
           type: object
+          description: Parameters for this node
           additionalProperties:
-            $ref: '#/components/schemas/FlowRunParameterValue'
-    RunTableStats:
-      type: object
-      additionalProperties:
-        type: string
-    ResumeCleanroomFlowRunApiResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
+            type: string
     ReplayCleanroomFlowRunInput:
       type: object
       properties:
@@ -900,25 +590,317 @@ components:
         name:
           type: string
           description: Optional name for the replay
+    FlowRunParameterValue:
+      type: object
+      properties:
+        value:
+          type: string
+        parameterType:
+          $ref: '#/components/schemas/ParameterType'
+    DatasetAssignment:
+      type: object
+      properties:
+        datasetName:
+          type: string
+          description: Dataset name (will be resolved to ID)
+        datasetMacro:
+          type: string
+          description: Dataset macro/type
+        organizationName:
+          type: string
+          description: Organization name from stakeholders list (will be resolved to ownership)
+        fieldMappings:
+          type: array
+          description: Field mappings using field names
+          items:
+            $ref: '#/components/schemas/FieldMapping'
+    ResumeCleanroomFlowRunInput:
+      type: object
+      properties:
+        pauseLevelID:
+          type: string
+          description: Optional pause level ID at which to pause execution
+    ResumeCleanroomFlowRunApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    GetCleanroomFlowRunOutputNodeResponseObject:
+      type: object
+      properties:
+        node:
+          $ref: '#/components/schemas/CleanroomFlowRunOutputNode'
+        runStatus:
+          type: string
+        runID:
+          type: string
+    ReplayCleanroomFlowRunApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Success indicator
+        cleanRoomFlowRunID:
+          type: string
+          description: The new flow run ID created for the replay
+    RunTableMetadata:
+      type: object
+      properties:
+        fieldName:
+          type: string
+        dataType:
+          type: string
+        columnName:
+          type: string
+    ParameterInfo:
+      type: object
+      properties:
+        Id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        index:
+          type: integer
+        fieldType:
+          $ref: '#/components/schemas/UnhygienixFieldType'
+        parameterType:
+          $ref: '#/components/schemas/ParameterType'
+    FlowRunMetadata:
+      description: Model containing the Cleanroom Flow Run Metadata
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+        submittedAt:
+          type: string
+          format: date-time
+        executedAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+        flowRunParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowRunParameter'
+        runMessage:
+          type: string
+    CleanroomFlowRunOutputNodes:
+      type: array
+      items:
+        $ref: '#/components/schemas/GetCleanroomFlowRunOutputNodeResponseObject'
+    ListCleanroomFlowRunsResponse:
+      type: object
+      properties:
+        cleanRoomFlowRuns:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowRunMetadata'
+        count:
+          type: integer
+          format: int32
+    FieldMapping:
+      type: object
+      properties:
+        questionFieldName:
+          type: string
+          description: Question field name in the node
+        datasetFieldName:
+          type: string
+          description: Dataset field name to map to
+    RunTableStats:
+      type: object
+      additionalProperties:
+        type: string
+    FlowRunMetadataParameter:
+      type: object
+      properties:
+        nodeId:
+          type: string
+        nodeQuestionName:
+          type: string
+        parameterMetadataList:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParameterInfo'
+    GetCleanroomFlowRunStatusResponse:
+      type: object
+      properties:
+        status:
+          type: string
+    QuestionRunResultData:
+      description: Model containing the Cleanroom Question Run Result Data
+      properties:
+        metadata:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunTableMetadata'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/RunTableStats'
+        count:
+          type: integer
+        multipleOutputs:
+          type: array
+          items:
+            type: string
+    TimeAudit:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
+    PreviewFlowRunParametersResponse:
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowNodeParameterPreview'
+    GetCleanroomFlowRunParametersResponse:
+      type: object
+      properties:
+        flowRunParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowRunMetadataParameter'
+    ParameterType:
+      type: string
+      enum:
+      - RUN_TIME_PARAMETER
+      - PARTITION_PARAMETER
+      - ARTIFACT_FILE_METADATA
+      - PARAMETER_UNKNOWN
+    CreateCleanroomFlowRunInput:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the flow run
+        pauseLevelID:
+          type: string
+          description: Optional pause level ID at which to pause execution
+        nodes:
+          type: array
+          description: Nodes with parameters
+          items:
+            $ref: '#/components/schemas/NodeParametersEntry'
+        branches:
+          type: string
+          description: Branch names to filter flow execution (comma-separated)
+        excludeNodesWithoutTags:
+          type: boolean
+          description: Exclude nodes without tags when branch filtering is enabled
+        ignoreParentChildRule:
+          type: boolean
+          description: Ignore parent-child dependency rules for normal flow runs
+        includeMismatchingTaggedNodes:
+          type: boolean
+          description: Include unmatched nodes when branch filtering is enabled
+        datasetAssignments:
+          type: array
+          description: Dataset assignments for each node
+          items:
+            $ref: '#/components/schemas/NodeDatasetAssignment'
+    UserAudit:
+      type: object
+      properties:
+        createdBy:
+          type: string
+          description: Identifier of the user who created the object
+        updatedBy:
+          type: string
+          description: Identifier of the user who last updated the object
+    UnhygienixFieldType:
+      type: string
+      enum:
+      - FIELD_TYPE_UNKNOWN
+      - INTEGER
+      - STRING
+      - DATE
+      - TIMESTAMP
+      - DOUBLE
+      - BIGINT
+      - BOOLEAN
+      - DECIMAL
+      - LONG
+    FlowRunParameter:
+      type: object
+      properties:
+        nodeId:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FlowRunParameterValue'
+    PreviewFlowRunParametersInput:
+      type: object
+      description: Input for previewing flow run parameters
+      properties:
+        branches:
+          type: string
+          description: Branch names to filter flow execution (comma-separated)
+        excludeNodesWithoutTags:
+          type: boolean
+          description: Exclude nodes without tags when branch filtering is enabled
+        ignoreParentChildRule:
+          type: boolean
+          description: Ignore parent-child dependency rules
+        includeMismatchingTaggedNodes:
+          type: boolean
+          description: Include unmatched nodes when branch filtering is enabled
+        datasetAssignments:
+          type: array
+          description: Dataset assignments for each node (used to derive partition parameters)
+          items:
+            $ref: '#/components/schemas/NodeDatasetAssignment'
+        parentFlowRunId:
+          type: string
+          description: When set, preview is treated as a replay of this parent flow run
+    CleanroomFlowRunOutputNode:
+      type: object
+      properties:
+        id:
+          type: string
+        flowId:
+          type: string
+        label:
+          type: string
+        nodeType:
+          type: string
+        referenceId:
+          type: string
+        positionX:
+          type: integer
+        positionY:
+          type: integer
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+        level:
+          type: integer
+        title:
+          type: string
+        cleanroomQuestionId:
+          type: string
   responses:
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
     NotFound:
       description: The specified resource was not found
       content:
@@ -928,8 +910,26 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:

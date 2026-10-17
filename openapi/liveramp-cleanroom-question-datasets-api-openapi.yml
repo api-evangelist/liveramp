@@ -192,20 +192,6 @@ paths:
       - Cleanroom Question Datasets
 components:
   schemas:
-    CleanRoomStakeholder:
-      type: object
-      properties:
-        organizationId:
-          type: string
-        organizationName:
-          type: string
-        ownership:
-          type: string
-    CleanRoomStakeholders:
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomStakeholder'
-      description: List of Cleanroom Stakeholders
     QuestionDataTypeOptions:
       type: array
       items:
@@ -220,47 +206,6 @@ components:
         macro:
           type: string
           description: name of Question Data Type
-    QuestionDataTypeOption:
-      type: object
-      properties:
-        dataTypeName:
-          type: string
-        datasetOptions:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              name:
-                type: string
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    CleanRoomQuestionDatasets:
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomQuestionDataset'
-      description: List of Cleanroom Question Datasets
-    DatasetParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Dataset Parameter Name
-        value:
-          type: string
-          description: Dataset Parameter Value
-        type:
-          type: string
-          description: Dataset Parameter Type
     CleanRoomQuestionDataset:
       type: object
       properties:
@@ -313,6 +258,61 @@ components:
           items:
             $ref: '#/components/schemas/DatasetField'
           description: Dataset Fields
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    CleanRoomQuestionDatasets:
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomQuestionDataset'
+      description: List of Cleanroom Question Datasets
+    QuestionDataTypeOption:
+      type: object
+      properties:
+        dataTypeName:
+          type: string
+        datasetOptions:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+    CleanRoomStakeholders:
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanRoomStakeholder'
+      description: List of Cleanroom Stakeholders
+    CleanRoomStakeholder:
+      type: object
+      properties:
+        organizationId:
+          type: string
+        organizationName:
+          type: string
+        ownership:
+          type: string
+    DatasetParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset Parameter Name
+        value:
+          type: string
+          description: Dataset Parameter Value
+        type:
+          type: string
+          description: Dataset Parameter Type
     DatasetField:
       type: object
       properties:
@@ -332,8 +332,8 @@ components:
           type: string
           description: Dataset Field Type
   responses:
-    InternalServerError:
-      description: Internal Server Error
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -341,8 +341,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -368,8 +368,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:

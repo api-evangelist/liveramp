@@ -239,171 +239,6 @@ components:
           type: boolean
           default: false
           description: Consent to the use of RampID as a join key in questions (https://storage.googleapis.com/lr-tech-docs-resources/Files/LiveRamp%20RampID%20Data%20Protection%20Attestation.pdf)
-    DatasetParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Dataset Parameter Name
-        value:
-          type: string
-          description: Dataset Parameter Value
-        type:
-          type: string
-          description: Dataset Parameter Type
-    DatasetFieldMapping:
-      type: object
-      properties:
-        dataConnectionId:
-          type: string
-          description: The Data Connection ID associated with this Field Configuration
-        id:
-          type: string
-          description: Unique ID for the Field
-        fieldIndex:
-          type: integer
-        fieldName:
-          type: string
-          description: Name of the Field
-        fieldLabel:
-          type: string
-          description: Display Name of the Field
-        dataType:
-          type: string
-        delimiter:
-          type: string
-        isPii:
-          type: boolean
-          default: false
-        isUserIdField:
-          type: boolean
-          default: false
-        isExcluded:
-          type: boolean
-          default: false
-        rename:
-          type: string
-        transformation:
-          type: string
-          description: Transformation formula for calculated fields
-        isPartitionColumn:
-          type: boolean
-          default: false
-          readOnly: true
-          description: Indicates whether this field is a partition column
-        partitionFieldConfig:
-          $ref: '#/components/schemas/PartitionFieldConfig'
-    CleanRoomDatasets:
-      description: A list of Cleanroom Datasets
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanRoomDataset'
-    IdentifierType:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-    CleanRoomDatasetUpdateRequest:
-      type: object
-      description: 'The following fields are required: datasetFieldMapping.[fieldName, isExcluded, rename], datasetFilter.[datasetFieldName , operator, values]; all others are optional'
-      properties:
-        datasetFieldMappings:
-          $ref: '#/components/schemas/DatasetFieldMappings'
-        datasetFilters:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasetFilter'
-    DatasetPartitionParameters:
-      type: object
-      description: Partition parameters discoverable when this dataset is assigned to a question
-      properties:
-        isView:
-          type: boolean
-          description: Whether this dataset is a view
-        partitionGroups:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasetPartitionParameterGroup'
-    DatasetPartitionParameterGroup:
-      type: object
-      properties:
-        dataConnectionId:
-          type: string
-          description: Data connection (import job) ID
-        dataConnectionName:
-          type: string
-          description: Data connection name
-        dataConnectionMacro:
-          type: string
-          description: Macro of the underlying data connection (set for view datasets)
-        partitionFields:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasetPartitionField'
-    DatasetPartitionParameter:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Full parameter name including view macro prefix and date expansion suffixes
-        dataType:
-          type: string
-          description: Parameter data type
-        partitionFieldConfig:
-          $ref: '#/components/schemas/PartitionFieldConfig'
-    IdentifierTypes:
-      description: A list of Identifier Types
-      type: array
-      items:
-        $ref: '#/components/schemas/IdentifierType'
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    DatasetFilter:
-      type: object
-      properties:
-        datasetId:
-          type: string
-          description: Dataset ID
-        id:
-          type: string
-          description: Dataset Filter ID
-        datasetFieldName:
-          type: string
-          description: Dataset Field Name
-        datasetFieldType:
-          type: string
-          description: Dataset Field Type
-        operator:
-          type: string
-          description: Operator to be applied on the Dataset Field
-          enum:
-          - ''
-          - EQUALS
-          - NOT_EQUALS
-          - IN
-          - NOT_IN
-        values:
-          type: array
-          items:
-            type: string
-          description: Values to filter the Dataset Field on
-    DatasetFieldMappings:
-      description: A list of Dataset Field Mappings
-      type: array
-      items:
-        $ref: '#/components/schemas/DatasetFieldMapping'
     CleanRoomDataset:
       type: object
       properties:
@@ -446,13 +281,72 @@ components:
           description: Whether this dataset is a view
         partnerCanAssign:
           type: boolean
-    UpdateCleanroomDatasetPartnerAssignmentParameters:
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    IdentifierTypes:
+      description: A list of Identifier Types
+      type: array
+      items:
+        $ref: '#/components/schemas/IdentifierType'
+    DatasetFilter:
       type: object
       properties:
         datasetId:
           type: string
-        partnerCanAssign:
-          type: boolean
+          description: Dataset ID
+        id:
+          type: string
+          description: Dataset Filter ID
+        datasetFieldName:
+          type: string
+          description: Dataset Field Name
+        datasetFieldType:
+          type: string
+          description: Dataset Field Type
+        operator:
+          type: string
+          description: Operator to be applied on the Dataset Field
+          enum:
+          - ''
+          - EQUALS
+          - NOT_EQUALS
+          - IN
+          - NOT_IN
+        values:
+          type: array
+          items:
+            type: string
+          description: Values to filter the Dataset Field on
+    CleanRoomDatasetUpdateRequest:
+      type: object
+      description: 'The following fields are required: datasetFieldMapping.[fieldName, isExcluded, rename], datasetFilter.[datasetFieldName , operator, values]; all others are optional'
+      properties:
+        datasetFieldMappings:
+          $ref: '#/components/schemas/DatasetFieldMappings'
+        datasetFilters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetFilter'
+    DatasetParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset Parameter Name
+        value:
+          type: string
+          description: Dataset Parameter Value
+        type:
+          type: string
+          description: Dataset Parameter Type
     PartitionFieldConfig:
       type: object
       properties:
@@ -477,10 +371,16 @@ components:
           type: boolean
           default: false
           description: Indicates whether the partition field values are enforced for the CRQ run
-    UpdateCleanroomDatasetPartnerAssignmentRequest:
+    CleanRoomDatasets:
+      description: A list of Cleanroom Datasets
       type: array
       items:
-        $ref: '#/components/schemas/UpdateCleanroomDatasetPartnerAssignmentParameters'
+        $ref: '#/components/schemas/CleanRoomDataset'
+    DatasetFieldMappings:
+      description: A list of Dataset Field Mappings
+      type: array
+      items:
+        $ref: '#/components/schemas/DatasetFieldMapping'
     DatasetPartitionField:
       type: object
       properties:
@@ -494,6 +394,111 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DatasetPartitionParameter'
+    DatasetFieldMapping:
+      type: object
+      properties:
+        dataConnectionId:
+          type: string
+          description: The Data Connection ID associated with this Field Configuration
+        id:
+          type: string
+          description: Unique ID for the Field
+        fieldIndex:
+          type: integer
+        fieldName:
+          type: string
+          description: Name of the Field
+        fieldLabel:
+          type: string
+          description: Display Name of the Field
+        dataType:
+          type: string
+        delimiter:
+          type: string
+        isPii:
+          type: boolean
+          default: false
+        isUserIdField:
+          type: boolean
+          default: false
+        isExcluded:
+          type: boolean
+          default: false
+        rename:
+          type: string
+        transformation:
+          type: string
+          description: Transformation formula for calculated fields
+        isPartitionColumn:
+          type: boolean
+          default: false
+          readOnly: true
+          description: Indicates whether this field is a partition column
+        partitionFieldConfig:
+          $ref: '#/components/schemas/PartitionFieldConfig'
+    DatasetPartitionParameterGroup:
+      type: object
+      properties:
+        dataConnectionId:
+          type: string
+          description: Data connection (import job) ID
+        dataConnectionName:
+          type: string
+          description: Data connection name
+        dataConnectionMacro:
+          type: string
+          description: Macro of the underlying data connection (set for view datasets)
+        partitionFields:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetPartitionField'
+    DatasetPartitionParameter:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Full parameter name including view macro prefix and date expansion suffixes
+        dataType:
+          type: string
+          description: Parameter data type
+        partitionFieldConfig:
+          $ref: '#/components/schemas/PartitionFieldConfig'
+    UpdateCleanroomDatasetPartnerAssignmentResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+    DatasetPartitionParameters:
+      type: object
+      description: Partition parameters discoverable when this dataset is assigned to a question
+      properties:
+        isView:
+          type: boolean
+          description: Whether this dataset is a view
+        partitionGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetPartitionParameterGroup'
+    UpdateCleanroomDatasetPartnerAssignmentRequest:
+      type: array
+      items:
+        $ref: '#/components/schemas/UpdateCleanroomDatasetPartnerAssignmentParameters'
+    UpdateCleanroomDatasetPartnerAssignmentParameters:
+      type: object
+      properties:
+        datasetId:
+          type: string
+        partnerCanAssign:
+          type: boolean
+    IdentifierType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
     DatasetField:
       type: object
       properties:
@@ -512,23 +517,9 @@ components:
         type:
           type: string
           description: Dataset Field Type
-    UpdateCleanroomDatasetPartnerAssignmentResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
   responses:
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:
@@ -545,8 +536,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:
@@ -556,6 +547,15 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:

@@ -81,6 +81,20 @@ paths:
       - Cleanroom Question Tags
 components:
   schemas:
+    GetCleanRoomQuestionParametersResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        displayId:
+          type: string
+        parameters:
+          $ref: '#/components/schemas/CleanroomQuestionParameters'
+    CleanroomQuestionParameters:
+      description: A list of Cleanroom Question Parameters
+      type: array
+      items:
+        $ref: '#/components/schemas/CleanroomQuestionParameter'
     ReturnObject:
       type: object
       properties:
@@ -91,6 +105,11 @@ components:
       required:
       - code
       - message
+    CleanRoomQuestionTags:
+      description: A list of Cleanroom Question Tags
+      type: array
+      items:
+        type: string
     CleanroomQuestionParameter:
       type: object
       properties:
@@ -136,6 +155,12 @@ components:
           description: Cleanroom Question Parameter Default Value
         partitionFieldConfig:
           $ref: '#/components/schemas/PartitionFieldConfig'
+    ValueConstraintType:
+      type: string
+      description: Type of value constraint applied to a parameter
+      enum:
+      - ENFORCED_LIST
+      - DEFAULT_VALUE
     PartitionFieldConfig:
       type: object
       properties:
@@ -160,34 +185,9 @@ components:
           type: boolean
           default: false
           description: Indicates whether the partition field values are enforced for the CRQ run
-    ValueConstraintType:
-      type: string
-      description: Type of value constraint applied to a parameter
-      enum:
-      - ENFORCED_LIST
-      - DEFAULT_VALUE
-    CleanroomQuestionParameters:
-      description: A list of Cleanroom Question Parameters
-      type: array
-      items:
-        $ref: '#/components/schemas/CleanroomQuestionParameter'
-    GetCleanRoomQuestionParametersResponse:
-      type: object
-      properties:
-        name:
-          type: string
-        displayId:
-          type: string
-        parameters:
-          $ref: '#/components/schemas/CleanroomQuestionParameters'
-    CleanRoomQuestionTags:
-      description: A list of Cleanroom Question Tags
-      type: array
-      items:
-        type: string
   responses:
-    InternalServerError:
-      description: Internal Server Error
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -195,8 +195,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -213,8 +213,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:

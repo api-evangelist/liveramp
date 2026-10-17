@@ -197,75 +197,6 @@ paths:
       - Intelligence
 components:
   schemas:
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    CRQLoadStatus:
-      type: string
-      description: Per-CRQ load state for HI Snowflake report tables
-      enum:
-      - UNSPECIFIED
-      - NOT_LOADED
-      - LOADED
-      - STALE
-      - FAILED
-    FlowIntelligence:
-      type: object
-      description: HI bindings for a Cleanroom Flow's question outputs
-      properties:
-        flowId:
-          type: string
-        flowName:
-          type: string
-        outputs:
-          type: array
-          items:
-            $ref: '#/components/schemas/FlowIntelligenceOutput'
-    FlowIntelligenceOutput:
-      type: object
-      description: One question output of a flow with its HI report-table referent
-      properties:
-        cleanRoomQuestionId:
-          type: string
-        displayId:
-          type: string
-        title:
-          type: string
-        snowflakeReportTable:
-          type: string
-        metabaseTableId:
-          type: integer
-          format: int64
-        runStatus:
-          type: string
-          description: Run status (only populated when flowRunId is provided)
-    HIProvisionStatus:
-      type: string
-      description: Habu Intelligence provisioning lifecycle state for a Cleanroom
-      enum:
-      - UNSPECIFIED
-      - NOT_ENABLED
-      - PROVISIONING
-      - ENABLED
-      - FAILED
-    LoadedIntelligenceQuestions:
-      type: object
-      description: Page of CRQs with HI data loaded
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CleanRoomQuestionIntelligence'
-        nextPageToken:
-          type: string
-          description: Opaque next-page token; empty when no further pages
     CleanRoomIntelligence:
       type: object
       description: HI bindings for a Cleanroom
@@ -291,6 +222,48 @@ components:
           description: Metabase collection id (stored as string upstream)
         metabaseUrl:
           type: string
+    HIProvisionStatus:
+      type: string
+      description: Habu Intelligence provisioning lifecycle state for a Cleanroom
+      enum:
+      - UNSPECIFIED
+      - NOT_ENABLED
+      - PROVISIONING
+      - ENABLED
+      - FAILED
+    LoadedIntelligenceQuestions:
+      type: object
+      description: Page of CRQs with HI data loaded
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CleanRoomQuestionIntelligence'
+        nextPageToken:
+          type: string
+          description: Opaque next-page token; empty when no further pages
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    FlowIntelligence:
+      type: object
+      description: HI bindings for a Cleanroom Flow's question outputs
+      properties:
+        flowId:
+          type: string
+        flowName:
+          type: string
+        outputs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowIntelligenceOutput'
     CleanRoomQuestionIntelligence:
       type: object
       description: HI bindings for a Cleanroom Question
@@ -320,9 +293,36 @@ components:
           format: int64
         loadStatus:
           $ref: '#/components/schemas/CRQLoadStatus'
+    FlowIntelligenceOutput:
+      type: object
+      description: One question output of a flow with its HI report-table referent
+      properties:
+        cleanRoomQuestionId:
+          type: string
+        displayId:
+          type: string
+        title:
+          type: string
+        snowflakeReportTable:
+          type: string
+        metabaseTableId:
+          type: integer
+          format: int64
+        runStatus:
+          type: string
+          description: Run status (only populated when flowRunId is provided)
+    CRQLoadStatus:
+      type: string
+      description: Per-CRQ load state for HI Snowflake report tables
+      enum:
+      - UNSPECIFIED
+      - NOT_LOADED
+      - LOADED
+      - STALE
+      - FAILED
   responses:
-    InternalServerError:
-      description: Internal Server Error
+    Unauthorized:
+      description: Authorization information was missing or invalid
       content:
         application/json:
           schema:
@@ -330,8 +330,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    NotFound:
-      description: The specified resource was not found
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:
@@ -357,8 +357,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Unauthorized:
-      description: Authorization information was missing or invalid
+    NotFound:
+      description: The specified resource was not found
       content:
         application/json:
           schema:

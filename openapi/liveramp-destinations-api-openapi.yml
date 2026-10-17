@@ -177,22 +177,139 @@ paths:
       - Destinations
 components:
   schemas:
-    ListDestinationsResponse:
+    PartnerAccount:
       type: object
       properties:
-        partnerAccounts:
+        ID:
+          type: string
+        name:
+          type: string
+        organizationID:
+          type: string
+        partner:
+          $ref: '#/components/schemas/Partner'
+        credential:
+          $ref: '#/components/schemas/PrimageOrganizationCredential'
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+        jobCount:
           type: array
           items:
-            $ref: '#/components/schemas/PartnerAccount'
-        total:
+            $ref: '#/components/schemas/JobCount'
+        latestJobRunStatusCount:
+          $ref: '#/components/schemas/LatestJobRunStatusCount'
+        configStatus:
+          $ref: '#/components/schemas/ConfigStatus'
+        errorMessage:
+          type: string
+        publicKey:
+          type: string
+    ReturnObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - message
+    PrimageCredential:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        value:
+          type: string
+    JobCount:
+      type: object
+      properties:
+        jobType:
+          type: string
+        count:
           type: integer
-          description: Total count of destination connections
-        limit:
+          format: int32
+          minimum: 0
+    UpdateDestinationResponse:
+      type: object
+      description: Response after updating a destination connection (partner account).
+      properties:
+        partnerAccount:
+          $ref: '#/components/schemas/PartnerAccount'
+    Partner:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        logoUrl:
+          type: string
+        credentialSourceName:
+          type: string
+        partnerConfigArray:
+          $ref: '#/components/schemas/PartnerConfigs'
+        timeAudit:
+          $ref: '#/components/schemas/TimeAudit'
+        userAudit:
+          $ref: '#/components/schemas/UserAudit'
+        type:
+          $ref: '#/components/schemas/PicanmixType'
+        credentialSources:
+          type: array
+          items:
+            type: string
+        partnerConfigMap:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/PartnerConfigs'
+    ConfigStatus:
+      type: string
+      enum:
+      - UNKNOWN_CONFIG_STATUS
+      - CONFIG_PENDING
+      - CONFIG_CONFIGURED
+      - CONFIG_FAILED
+      - CONFIG_AVAILABLE
+    PartnerConfig:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        index:
           type: integer
-          description: The number of destination connections returned per page
-        offset:
-          type: integer
-          description: The offset used for pagination
+          format: int32
+        type:
+          type: string
+        encrypted:
+          type: boolean
+    PartnerConfigs:
+      type: array
+      items:
+        $ref: '#/components/schemas/PartnerConfig'
+    TimeAudit:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was last updated
+        deletedAt:
+          type: string
+          format: date-time
+          description: Timestamp for when the object was deleted (if applicable)
     CreateDestinationRequest:
       type: object
       required:
@@ -218,43 +335,6 @@ components:
         publicKey:
           type: string
           description: Optional; only allowed for certain partners (e.g. S3 IAM Role Export, GCS Export)
-    PicanmixType:
-      type: string
-      enum:
-      - UNKNOWN_PICANMIX_TYPE
-      - USER_LIST
-      - OFFLINE_CONVERSIONS
-      - EXPORTS
-      - QUESTION_USER_LIST
-    UserAudit:
-      type: object
-      properties:
-        createdBy:
-          type: string
-          description: Identifier of the user who created the object
-        updatedBy:
-          type: string
-          description: Identifier of the user who last updated the object
-    ListDestinationPartnersResponse:
-      type: object
-      properties:
-        partners:
-          type: array
-          items:
-            $ref: '#/components/schemas/Partner'
-    JobCount:
-      type: object
-      properties:
-        jobType:
-          type: string
-        count:
-          type: integer
-          format: int32
-          minimum: 0
-    PartnerConfigs:
-      type: array
-      items:
-        $ref: '#/components/schemas/PartnerConfig'
     PrimageOrganizationCredential:
       type: object
       properties:
@@ -293,108 +373,36 @@ components:
           type: integer
           format: int32
           minimum: 0
-    ReturnObject:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - message
-    Partner:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-        logoUrl:
-          type: string
-        credentialSourceName:
-          type: string
-        partnerConfigArray:
-          $ref: '#/components/schemas/PartnerConfigs'
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
-        type:
-          $ref: '#/components/schemas/PicanmixType'
-        credentialSources:
-          type: array
-          items:
-            type: string
-        partnerConfigMap:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/PartnerConfigs'
-    PartnerConfig:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        index:
-          type: integer
-          format: int32
-        type:
-          type: string
-        encrypted:
-          type: boolean
-    PartnerAccount:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        organizationID:
-          type: string
-        partner:
-          $ref: '#/components/schemas/Partner'
-        credential:
-          $ref: '#/components/schemas/PrimageOrganizationCredential'
-        timeAudit:
-          $ref: '#/components/schemas/TimeAudit'
-        userAudit:
-          $ref: '#/components/schemas/UserAudit'
-        jobCount:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobCount'
-        latestJobRunStatusCount:
-          $ref: '#/components/schemas/LatestJobRunStatusCount'
-        configStatus:
-          $ref: '#/components/schemas/ConfigStatus'
-        errorMessage:
-          type: string
-        publicKey:
-          type: string
     DeleteResponse:
       type: object
       properties:
         success:
           type: boolean
-    TimeAudit:
+    UserAudit:
       type: object
       properties:
-        createdAt:
+        createdBy:
           type: string
-          format: date-time
-          description: Timestamp for when the object was created
-        updatedAt:
+          description: Identifier of the user who created the object
+        updatedBy:
           type: string
-          format: date-time
-          description: Timestamp for when the object was last updated
-        deletedAt:
-          type: string
-          format: date-time
-          description: Timestamp for when the object was deleted (if applicable)
+          description: Identifier of the user who last updated the object
+    ListDestinationsResponse:
+      type: object
+      properties:
+        partnerAccounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartnerAccount'
+        total:
+          type: integer
+          description: Total count of destination connections
+        limit:
+          type: integer
+          description: The number of destination connections returned per page
+        offset:
+          type: integer
+          description: The offset used for pagination
     UpdateDestinationRequest:
       type: object
       description: Request to update a destination connection (partner account).
@@ -408,41 +416,24 @@ components:
         publicKey:
           type: string
           description: Optional; if provided, updates public key associated with this destination connection.
-    ConfigStatus:
+    ListDestinationPartnersResponse:
+      type: object
+      properties:
+        partners:
+          type: array
+          items:
+            $ref: '#/components/schemas/Partner'
+    PicanmixType:
       type: string
       enum:
-      - UNKNOWN_CONFIG_STATUS
-      - CONFIG_PENDING
-      - CONFIG_CONFIGURED
-      - CONFIG_FAILED
-      - CONFIG_AVAILABLE
-    UpdateDestinationResponse:
-      type: object
-      description: Response after updating a destination connection (partner account).
-      properties:
-        partnerAccount:
-          $ref: '#/components/schemas/PartnerAccount'
-    PrimageCredential:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        value:
-          type: string
+      - UNKNOWN_PICANMIX_TYPE
+      - USER_LIST
+      - OFFLINE_CONVERSIONS
+      - EXPORTS
+      - QUESTION_USER_LIST
   responses:
-    BadRequest:
-      description: Bad Request - Incorrect syntax or request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/ReturnObject'
-    InternalServerError:
-      description: Internal Server Error
+    Forbidden:
+      description: This action is not allowed
       content:
         application/json:
           schema:
@@ -459,8 +450,8 @@ components:
         application/xml:
           schema:
             $ref: '#/components/schemas/ReturnObject'
-    Forbidden:
-      description: This action is not allowed
+    BadRequest:
+      description: Bad Request - Incorrect syntax or request
       content:
         application/json:
           schema:
@@ -470,6 +461,15 @@ components:
             $ref: '#/components/schemas/ReturnObject'
     Unauthorized:
       description: Authorization information was missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/ReturnObject'
+    InternalServerError:
+      description: Internal Server Error
       content:
         application/json:
           schema:

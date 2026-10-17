@@ -231,28 +231,6 @@ paths:
       x-operation-id-original: Get v2/DistributionManager::SegmentConfig
 components:
   schemas:
-    v2DistributionManagerSegmentConfigOutput:
-      type: object
-      properties:
-        id:
-          type: string
-        segmentID:
-          type: string
-        segmentType:
-          allOf:
-          - $ref: '#/components/schemas/SegmentType'
-          type: string
-        destinationSegmentID:
-          type: string
-        distributionManagerID:
-          type: string
-          description: Link to v2/DistributionManager resource via its id
-      required:
-      - id
-      - segmentID
-      - segmentType
-      - distributionManagerID
-      description: A list of segment IDs to distribute
     StandardError:
       type: object
       properties:
@@ -289,6 +267,11 @@ components:
       - segmentType
       - distributionManagerID
       description: A list of segment IDs to distribute
+    SegmentType:
+      type: string
+      enum:
+      - ONBOARDING
+      - DATA_MARKETPLACE
     v2DistributionManagerSegmentConfigMultiResponse:
       type: object
       properties:
@@ -299,11 +282,6 @@ components:
             $ref: '#/components/schemas/v2DistributionManagerSegmentConfigOutput'
         _pagination:
           $ref: '#/components/schemas/v2DistributionManagerSegmentConfigMultiResponsePagination'
-    SegmentType:
-      type: string
-      enum:
-      - ONBOARDING
-      - DATA_MARKETPLACE
     v2DistributionManagerSegmentConfigMultiResponsePagination:
       type: object
       properties:
@@ -319,3 +297,25 @@ components:
         total:
           type: integer
           description: The total number of results.
+    v2DistributionManagerSegmentConfigOutput:
+      type: object
+      properties:
+        id:
+          type: string
+        segmentID:
+          type: string
+        segmentType:
+          allOf:
+          - $ref: '#/components/schemas/SegmentType'
+          type: string
+        destinationSegmentID:
+          type: string
+        distributionManagerID:
+          type: string
+          description: Link to v2/DistributionManager resource via its id
+      required:
+      - id
+      - segmentID
+      - segmentType
+      - distributionManagerID
+      description: A list of segment IDs to distribute

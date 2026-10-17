@@ -263,37 +263,6 @@ paths:
       x-operation-id-original: Get PrivacyRequests
 components:
   schemas:
-    PrivacyRequestListResponse:
-      type: object
-      properties:
-        privacy_requests:
-          description: Array of privacy requests or single request if UUID specified.
-          items:
-            $ref: '#/components/schemas/PrivacyRequestDetails'
-          type: array
-          example:
-          - request_uuid: 123e4567-e89b-12d3-a456-426655440000
-            request_type: DELETION
-            status: ACCEPTED
-            date_received: '2023-10-07T10:30:00Z'
-        privacy_request:
-          description: Single privacy request when retrieved by UUID.
-          $ref: '#/components/schemas/PrivacyRequestDetails'
-        total:
-          description: Total number of requests (only present for list operations).
-          type: integer
-          format: int32
-          example: 25
-        page:
-          description: Current page number (only present for list operations).
-          type: integer
-          format: int32
-          example: 1
-        page_size:
-          description: Number of items per page (only present for list operations).
-          type: integer
-          format: int32
-          example: 10
     StandardError:
       type: object
       properties:
@@ -308,6 +277,34 @@ components:
       required:
       - message
       - time
+    PrivacyRequestResponse:
+      type: object
+      properties:
+        request_uuid:
+          description: The UUID of the privacy request.
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426655440000
+        status:
+          description: The status of the privacy request.
+          type: string
+          enum:
+          - ACCEPTED
+          - PROCESSING
+          - COMPLETED
+          - FAILED
+          example: ACCEPTED
+        message:
+          description: Additional message about the request.
+          type: string
+          example: Request created successfully
+        is_duplicate:
+          description: Whether this is a duplicate request.
+          type: boolean
+          example: false
+      required:
+      - request_uuid
+      - status
     PrivacyRequestDetails:
       type: object
       properties:
@@ -415,34 +412,37 @@ components:
         - email
       - required:
         - maid
-    PrivacyRequestResponse:
+    PrivacyRequestListResponse:
       type: object
       properties:
-        request_uuid:
-          description: The UUID of the privacy request.
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426655440000
-        status:
-          description: The status of the privacy request.
-          type: string
-          enum:
-          - ACCEPTED
-          - PROCESSING
-          - COMPLETED
-          - FAILED
-          example: ACCEPTED
-        message:
-          description: Additional message about the request.
-          type: string
-          example: Request created successfully
-        is_duplicate:
-          description: Whether this is a duplicate request.
-          type: boolean
-          example: false
-      required:
-      - request_uuid
-      - status
+        privacy_requests:
+          description: Array of privacy requests or single request if UUID specified.
+          items:
+            $ref: '#/components/schemas/PrivacyRequestDetails'
+          type: array
+          example:
+          - request_uuid: 123e4567-e89b-12d3-a456-426655440000
+            request_type: DELETION
+            status: ACCEPTED
+            date_received: '2023-10-07T10:30:00Z'
+        privacy_request:
+          description: Single privacy request when retrieved by UUID.
+          $ref: '#/components/schemas/PrivacyRequestDetails'
+        total:
+          description: Total number of requests (only present for list operations).
+          type: integer
+          format: int32
+          example: 25
+        page:
+          description: Current page number (only present for list operations).
+          type: integer
+          format: int32
+          example: 1
+        page_size:
+          description: Number of items per page (only present for list operations).
+          type: integer
+          format: int32
+          example: 10
   securitySchemes:
     BearerAuth:
       type: http
