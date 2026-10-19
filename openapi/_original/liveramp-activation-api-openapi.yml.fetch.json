@@ -1,0 +1,12 @@
+{
+ "url": "https://storage.googleapis.com/lr-tech-docs-resources/Files/connect/activation/api/activation-api-v2.openapi.yaml",
+ "requested_url": "https://storage.googleapis.com/lr-tech-docs-resources/Files/connect/activation/api/activation-api-v2.openapi.yaml",
+ "status": 200,
+ "content_type": "application/octet-stream",
+ "bytes": 69178,
+ "sha256": "c4ef204b9eba4afef6cc7d5848341a340be976785ebc1e5cf95e084e3171a238",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
