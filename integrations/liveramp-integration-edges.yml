@@ -1,5 +1,35 @@
 generated: '2026-10-14'
 edges:
+- partner_name: Maven Central
+  partner: maven-central
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Java/JVM)
+  evidence: https://central.sonatype.com/artifact/com.liveramp/cascading_ext
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.liveramp:cascading_ext
+      version: '1.7'
+      released: '2019-06-16'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/com.liveramp/cascading_ext
+      repo_leg: domain:liveramp.com
+      publisher_leg: groupId:liveramp.com
+      matched_by: domain
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 - partner_name: Twilio Segment
   partner: segment
   partner_match: aggregator
@@ -66,36 +96,64 @@ edges:
       - insert
   detected_by: sweep-cdp.py
   first_seen: '2026-10-14'
-- partner_name: Maven Central
-  partner: maven-central
-  partner_match: register
-  type: register
-  direction: provider-built
-  category: official SDK (Java/JVM)
-  evidence: https://central.sonatype.com/artifact/com.liveramp/cascading_ext
-  channel: package-registry
+- partner_name: AWS Data Exchange
+  partner: amazon-data-exchange
+  partner_match: aggregator
+  type: marketplace
+  marketplace: amazon-data-exchange-marketplace
+  channel: distribution
   relationship: distribution-channel
+  direction: third-party
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=3204d632-3f67-4e90-87af-03f6913eaced
+  category: data product listing
   contract_reference:
-    register: Maven Central (public registry JSON)
+    register: AWS Data Exchange (AWS Marketplace discovery search, FULFILLMENT_OPTION_TYPE=DATA_EXCHANGE + seller-profile
+      sellerWebsiteUrl)
     spec_file: null
-    language: Java/JVM
-    packages:
-    - name: com.liveramp:cascading_ext
-      version: '1.7'
-      released: '2019-06-16'
-      released_field: lastUpdated
-      lapsed: true
-      page: https://central.sonatype.com/artifact/com.liveramp/cascading_ext
-      repo_leg: domain:liveramp.com
-      publisher_leg: groupId:liveramp.com
-      matched_by: domain
-    current: false
-    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
-      24 months'
-    detected_by: sweep-official-sdks.py
-    detected: '2026-10-18'
-  detected_by: sweep-official-sdks.py
-  first_seen: '2026-10-18'
+    role: data-marketplace-seller
+    registered_name: LiveRamp
+    matched_domain: liveramp.com
+    matched_by: domain
+    listings: 3
+    sample_listings:
+    - LiveRamp Identity Resolution
+    - LiveRamp Identity Translation
+    - LiveRamp for AWS Entity Resolution
+    signal_note: 'participation: the provider lists data products on this marketplace; counts are context'
+    detected_by: sweep-data-marketplaces.py
+    detected: '2026-10-20'
+  detected_by: sweep-data-marketplaces.py
+  detected: '2026-10-20'
+  publisher_verified:
+  - AWS Specializations
+  - Deployed on AWS
+- partner_name: Snowflake Marketplace
+  partner: snowflake
+  partner_match: aggregator
+  type: marketplace
+  marketplace: snowflake-marketplace
+  channel: distribution
+  relationship: distribution-channel
+  direction: third-party
+  evidence: https://app.snowflake.com/marketplace/providers/GZT0Z11US76L
+  category: data product listing
+  contract_reference:
+    register: Snowflake Marketplace providers (app.snowflake.com/marketplace/providers, rendered; names only, Wikidata
+      P856 identity step)
+    spec_file: null
+    role: data-marketplace-seller
+    registered_name: LiveRamp
+    matched_domain: liveramp.com
+    matched_by: domain
+    listings: 7
+    sample_listings: []
+    signal_note: 'participation: the provider lists data products on this marketplace; counts are context'
+    detected_by: sweep-data-marketplaces.py
+    detected: '2026-10-20'
+    identity_source: wikidata
+    identity_note: wikidata P856 liveramp.com for 'LiveRamp' (labelled identity step)
+  detected_by: sweep-data-marketplaces.py
+  detected: '2026-10-20'
 method: searched
 checked:
 - https://api.nuget.org/v3
@@ -108,6 +166,8 @@ checked:
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
 - https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-liveramp-audiences
+- https://app.snowflake.com/marketplace/providers
+- https://aws.amazon.com/marketplace/search/results?FULFILLMENT_OPTION_TYPE=DATA_EXCHANGE
 source:
 - https://docs.mparticle.com/integrations/liveramp/audience/
 - https://hightouch.com/docs/destinations/liveramp
