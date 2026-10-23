@@ -195,3 +195,9 @@ components:
             $ref: '#/components/schemas/v2SegmentOutput'
         _pagination:
           $ref: '#/components/schemas/v2SegmentMultiResponsePagination'
+x-provenance:
+  method: harvested
+  publisher: LiveRamp
+  source: https://storage.googleapis.com/lr-tech-docs-resources/Files/connect/activation/api/activation-api-v2.openapi.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
