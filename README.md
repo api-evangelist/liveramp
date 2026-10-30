@@ -1,4 +1,4 @@
-# LiveRamp (liveramp)
+# LiveRamp
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,207 +64,217 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-LiveRamp is a data connectivity platform that enables enterprises to safely connect, control, and activate first-party customer data across the digital ecosystem. Their developer platform exposes a suite of REST APIs for identity resolution, data activation, clean-room collaboration, marketplace data access, and privacy-first authenticated traffic.
+LiveRamp is a data collaboration platform that lets enterprises connect, control, and activate first-party customer data across the digital ecosystem without moving raw PII between parties. Its developer surface spans identity resolution (AbiliTec links and RampID), programmatic activation to more than 500 destination platforms, privacy-safe clean-room collaboration on the former Habu platform, data marketplace buying and selling, Safe Haven analytics job automation, cookieless authenticated addressability through ATS, and a Privacy API for data-subject requests. LiveRamp publishes downloadable OpenAPI specifications for the Activation, Clean Room and Privacy APIs, an RFC 9727 API catalog, and an llms.txt index across ten developer sub-sites; API credentials are issued as Service Accounts by a LiveRamp representative rather than through self-serve signup.
+
+**Areas:** Data Connectivity · Data Collaboration · Identity Resolution · Activation · Cleanroom · Privacy · AdTech · Marketing · Consent · Audience Segments
+
+## LiveRamp on APIs.io
+
+Everything profiled for LiveRamp is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/liveramp/](https://apis.io/providers/liveramp/)** — or go straight to one of the APIs or properties below.
+
+### APIs (50)
+
+- [LiveRamp Authenticated Traffic Solution (ATS) API](https://apis.io/apis/liveramp/ats-api/) — Privacy-first, PII-based authentication API enabling programmatic addressability without third-party cookies via RampID envelopes. Publishes no OpenAPI.…
+- [LiveRamp AbiliTec API](https://apis.io/apis/liveramp/abilitec-api/) — Identity resolution API that resolves offline PII data into stable AbiliTec links for enterprise customer-database unification, via a Match endpoint…
+- [LiveRamp RampID API](https://apis.io/apis/liveramp/rampid-api/) — API for matching data to the LiveRamp Identity Graph, including identity envelope creation and decryption, RampID transcoding between pseudonymous…
+- [LiveRamp Data Marketplace Buyer API](https://apis.io/apis/liveramp/datamarketplace-buyer-api/) — API enabling platforms to host third-party segments from the LiveRamp Data Marketplace and access detailed segment metadata. Currently on v3, from which a…
+- [LiveRamp Data Seller API](https://apis.io/apis/liveramp/data-seller-api/) — General-availability API for data sellers in the LiveRamp Data Marketplace — create and search segments using an Activation API first-party segmentID,…
+- [LiveRamp Safe Haven Job Management API](https://apis.io/apis/liveramp/job-management-api/) — Automates Python, PySpark and BigQuery jobs running in LiveRamp's Safe Haven Analytics Environment, so analytics workloads can be scheduled and monitored…
+- [LiveRamp Data Pipeline Visibility API (Beta)](https://apis.io/apis/liveramp/data-pipeline-visibility-api/) — Beta API giving customers visibility into the state of their LiveRamp data pipelines. In beta as of this profile; publishes no OpenAPI.
+- [LiveRamp Sidecar](https://apis.io/apis/liveramp/sidecar/) — Service enabling SSPs to decrypt RampID identity envelopes into DSP-specific identifiers for programmatic activation. Documented on its own ReadMe site…
+- [LiveRamp Billable Configs API](https://apis.io/apis/liveramp/liveramp-billable-configs-api/) — The Billable Configs API from LiveRamp — 2 operation(s) for billable configs.
+- [LiveRamp Cleanroom API](https://apis.io/apis/liveramp/liveramp-cleanroom-api/) — The Cleanroom API from LiveRamp — 2 operation(s) for cleanroom.
+- [LiveRamp Cleanroom Datasets API](https://apis.io/apis/liveramp/liveramp-cleanroom-datasets-api/) — The Cleanroom Datasets API from LiveRamp — 5 operation(s) for cleanroom datasets.
+- [LiveRamp Cleanroom Destinations API](https://apis.io/apis/liveramp/liveramp-cleanroom-destinations-api/) — The Cleanroom Destinations API from LiveRamp — 3 operation(s) for cleanroom destinations.
+- [LiveRamp Cleanroom Exports API](https://apis.io/apis/liveramp/liveramp-cleanroom-exports-api/) — The Cleanroom Exports API from LiveRamp — 4 operation(s) for cleanroom exports.
+- [LiveRamp Cleanroom Flow Runs API](https://apis.io/apis/liveramp/liveramp-cleanroom-flow-runs-api/) — The Cleanroom Flow Runs API from LiveRamp — 10 operation(s) for cleanroom flow runs.
+- [LiveRamp Cleanroom Flows API](https://apis.io/apis/liveramp/liveramp-cleanroom-flows-api/) — The Cleanroom Flows API from LiveRamp — 10 operation(s) for cleanroom flows.
+- [LiveRamp Cleanroom Partners API](https://apis.io/apis/liveramp/liveramp-cleanroom-partners-api/) — The Cleanroom Partners API from LiveRamp — 8 operation(s) for cleanroom partners.
+- [LiveRamp Cleanroom Question Datasets API](https://apis.io/apis/liveramp/liveramp-cleanroom-question-datasets-api/) — The Cleanroom Question Datasets API from LiveRamp — 4 operation(s) for cleanroom question datasets.
+- [LiveRamp Cleanroom Question Permissions API](https://apis.io/apis/liveramp/liveramp-cleanroom-question-permissions-api/) — The Cleanroom Question Permissions API from LiveRamp — 1 operation(s) for cleanroom question permissions.
+- [LiveRamp Cleanroom Question Result Shares API](https://apis.io/apis/liveramp/liveramp-cleanroom-question-result-shares-api/) — The Cleanroom Question Result Shares API from LiveRamp — 1 operation(s) for cleanroom question result shares.
+- [LiveRamp Cleanroom Question Run Schedule API](https://apis.io/apis/liveramp/liveramp-cleanroom-question-run-schedule-api/) — The Cleanroom Question Run Schedule API from LiveRamp — 2 operation(s) for cleanroom question run schedule.
+- [LiveRamp Cleanroom Question Runs API](https://apis.io/apis/liveramp/liveramp-cleanroom-question-runs-api/) — The Cleanroom Question Runs API from LiveRamp — 10 operation(s) for cleanroom question runs.
+- [LiveRamp Cleanroom Question Tags API](https://apis.io/apis/liveramp/liveramp-cleanroom-question-tags-api/) — The Cleanroom Question Tags API from LiveRamp — 2 operation(s) for cleanroom question tags.
+- [LiveRamp Cleanroom Questions API](https://apis.io/apis/liveramp/liveramp-cleanroom-questions-api/) — The Cleanroom Questions API from LiveRamp — 5 operation(s) for cleanroom questions.
+- [LiveRamp Cleanroom Roles API](https://apis.io/apis/liveramp/liveramp-cleanroom-roles-api/) — The Cleanroom Roles API from LiveRamp — 2 operation(s) for cleanroom roles.
+- [LiveRamp Cleanroom Users API](https://apis.io/apis/liveramp/liveramp-cleanroom-users-api/) — The Cleanroom Users API from LiveRamp — 3 operation(s) for cleanroom users.
+- [LiveRamp Cleanrooms API](https://apis.io/apis/liveramp/liveramp-cleanrooms-api/) — The Cleanrooms API from LiveRamp — 4 operation(s) for cleanrooms.
+- [LiveRamp Configure Distributions API](https://apis.io/apis/liveramp/liveramp-configure-distributions-api/) — The Configure Distributions API from LiveRamp — 4 operation(s) for configure distributions.
+- [LiveRamp Credential Sources API](https://apis.io/apis/liveramp/liveramp-credential-sources-api/) — The Credential Sources API from LiveRamp — 3 operation(s) for credential sources.
+- [LiveRamp Data Connections API](https://apis.io/apis/liveramp/liveramp-data-connections-api/) — The Data Connections API from LiveRamp — 5 operation(s) for data connections.
+- [LiveRamp Data Source Parameters API](https://apis.io/apis/liveramp/liveramp-data-source-parameters-api/) — The Data Source Parameters API from LiveRamp — 1 operation(s) for data source parameters.
+- [LiveRamp Data Sources API](https://apis.io/apis/liveramp/liveramp-data-sources-api/) — The Data Sources API from LiveRamp — 2 operation(s) for data sources.
+- [LiveRamp Data Types API](https://apis.io/apis/liveramp/liveramp-data-types-api/) — The Data Types API from LiveRamp — 2 operation(s) for data types.
+- [LiveRamp Data Connection Views API](https://apis.io/apis/liveramp/liveramp-dataconnectionviews-api/) — The DataConnectionViews API from LiveRamp — 2 operation(s) for dataconnectionviews.
+- [LiveRamp Destinations API](https://apis.io/apis/liveramp/liveramp-destinations-api/) — The Destinations API from LiveRamp — 3 operation(s) for destinations.
+- [LiveRamp Distribute Data API](https://apis.io/apis/liveramp/liveramp-distribute-data-api/) — The Distribute Data API from LiveRamp — 2 operation(s) for distribute data.
+- [LiveRamp Explore Destinations API](https://apis.io/apis/liveramp/liveramp-explore-destinations-api/) — View Destinations and Integrations where you can distribute data
+- [LiveRamp Flow Decision Configurations API](https://apis.io/apis/liveramp/liveramp-flow-decision-configurations-api/) — The Flow Decision Configurations API from LiveRamp — 1 operation(s) for flow decision configurations.
+- [LiveRamp Health API](https://apis.io/apis/liveramp/liveramp-health-api/) — The Health API from LiveRamp — 1 operation(s) for health.
+- [LiveRamp Import Data Types API](https://apis.io/apis/liveramp/liveramp-import-data-types-api/) — The Import Data Types API from LiveRamp — 1 operation(s) for import data types.
+- [LiveRamp Intelligence API](https://apis.io/apis/liveramp/liveramp-intelligence-api/) — The Intelligence API from LiveRamp — 4 operation(s) for intelligence.
+- [LiveRamp Internal API](https://apis.io/apis/liveramp/liveramp-internal-api/) — For internal LiveRamp consumption. These operations are not part of the supported external customer contract and may change without notice.
+- [LiveRamp Invitations API](https://apis.io/apis/liveramp/liveramp-invitations-api/) — The Invitations API from LiveRamp — 3 operation(s) for invitations.
+- [LiveRamp OAuth Configuration API](https://apis.io/apis/liveramp/liveramp-oauth-configuration-api/) — The OAuth Configuration API from LiveRamp — 4 operation(s) for oauth configuration.
+- [LiveRamp Organization Credentials API](https://apis.io/apis/liveramp/liveramp-organization-credentials-api/) — The Organization Credentials API from LiveRamp — 2 operation(s) for organization credentials.
+- [LiveRamp Organization Users API](https://apis.io/apis/liveramp/liveramp-organization-users-api/) — The Organization Users API from LiveRamp — 1 operation(s) for organization users.
+- [LiveRamp Privacy Requests API](https://apis.io/apis/liveramp/liveramp-privacyrequests-api/) — (resource) Manage privacy requests.
+- [LiveRamp Questions API](https://apis.io/apis/liveramp/liveramp-questions-api/) — The Questions API from LiveRamp — 3 operation(s) for questions.
+- [LiveRamp V2/Segment Status API](https://apis.io/apis/liveramp/liveramp-v2-segmentstatus-api/) — (resource) Represents a segment's status
+- [LiveRamp View Deliveries API](https://apis.io/apis/liveramp/liveramp-view-deliveries-api/) — The View Deliveries API from LiveRamp — 1 operation(s) for view deliveries.
+- [LiveRamp View Segments API](https://apis.io/apis/liveramp/liveramp-view-segments-api/) — The View Segments API from LiveRamp — 2 operation(s) for view segments.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/liveramp/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/liveramp/refs/heads/main/apis.yml)
+### Published properties
 
-## Scope
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Type:** Index
-- **Position:** Consuming
-- **Access:** 3rd-Party
+#### GraphQL (1)
 
-## Tags
+GraphQL schemas.
 
-- Data Connectivity
-- Identity Resolution
-- Activation
-- Clean Room
-- Privacy
-- AdTech
+- [Moved to /providers/liveramp/](https://apis.io/graphqls/liveramp/liveramp-graphql/)
 
-## Timestamps
+#### MCP servers (1)
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Model Context Protocol servers that expose the API to agents.
 
-## APIs
+- [logscale](https://apis.io/servers/liveramp/logscale/)
 
-### LiveRamp Activation API
+#### Agentic access (1)
 
-Programmatic activation of first-party and marketplace data across destination partners and connected platforms in the LiveRamp network.
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- **Human URL:** [https://developers.liveramp.com/activation-api](https://developers.liveramp.com/activation-api)
+- [Liveramp Agentic Access](https://apis.io/agentic-access/liveramp/liveramp-agentic-access/)
 
-#### Tags
+#### Collections (12)
 
-- Activation
-- AdTech
-- Marketing
+Postman and Open Collection request collections.
 
-#### Properties
+- [LiveRamp Activation API](https://apis.io/collections/liveramp/open-liveramp/)
+- [Activation API](https://apis.io/collections/liveramp/open-liveramp-activation-api/)
+- [External APIs for Customer Integration](https://apis.io/collections/liveramp/open-liveramp-clean-room-api/)
+- [LiveRamp Activation Deliveries API](https://apis.io/collections/liveramp/open-liveramp-deliveries-api/)
+- [LiveRamp Activation Deliveries Destination Integrations API](https://apis.io/collections/liveramp/open-liveramp-destination-integrations-api/)
+- [LiveRamp Activation Deliveries Destinations API](https://apis.io/collections/liveramp/open-liveramp-destinations-api/)
+- [LiveRamp Activation Deliveries Distribution Managers API](https://apis.io/collections/liveramp/open-liveramp-distribution-managers-api/)
+- [LiveRamp Activation Deliveries Integration Connections API](https://apis.io/collections/liveramp/open-liveramp-integration-connections-api/)
+- [LiveRamp Activation Deliveries OAuth Connections API](https://apis.io/collections/liveramp/open-liveramp-oauth-connections-api/)
+- [Privacy API](https://apis.io/collections/liveramp/open-liveramp-privacy-api/)
+- [LiveRamp Activation Deliveries Segment Configurations API](https://apis.io/collections/liveramp/open-liveramp-segment-configurations-api/)
+- [LiveRamp Activation Deliveries Segments API](https://apis.io/collections/liveramp/open-liveramp-segments-api/)
 
-- [Documentation](https://developers.liveramp.com/activation-api)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Overlays (3)
 
-### LiveRamp Authenticated Traffic Solution (ATS) API
+OpenAPI overlays, including conversational phrasing for each operation.
 
-Privacy-first, PII-based authentication API enabling programmatic addressability without third-party cookies via RampID envelopes.
+- [Liveramp Activation Api Overlay](https://apis.io/overlays/liveramp/liveramp-activation-api-overlay/)
+- [Liveramp Clean Room Api Overlay](https://apis.io/overlays/liveramp/liveramp-clean-room-api-overlay/)
+- [Liveramp Privacy Api Overlay](https://apis.io/overlays/liveramp/liveramp-privacy-api-overlay/)
 
-- **Human URL:** [https://developers.liveramp.com/authenticatedtraffic-api](https://developers.liveramp.com/authenticatedtraffic-api)
+#### Security (4)
 
-#### Tags
+Authentication, trust centre, and vulnerability disclosure.
 
-- Identity
-- Privacy
-- Authentication
+- [Liveramp Authentication](https://apis.io/security/liveramp/liveramp-authentication/)
+- [Liveramp Domain Security](https://apis.io/security/liveramp/liveramp-domain-security/)
+- [Liveramp Trust Center](https://apis.io/security/liveramp/liveramp-trust-center/)
+- [Liveramp Vulnerability Disclosure](https://apis.io/security/liveramp/liveramp-vulnerability-disclosure/)
 
-#### Properties
+#### OAuth scopes (1)
 
-- [Documentation](https://developers.liveramp.com/authenticatedtraffic-api)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+The permissions the API asks for.
 
-### LiveRamp Clean Room API
+- [Liveramp Scopes](https://apis.io/scopes/liveramp/liveramp-scopes/)
 
-API for setting up and managing clean rooms, data sources, and collaborative analytics queries between data partners.
+#### Plans and pricing (1)
 
-- **Human URL:** [https://developers.liveramp.com/clean-room-api](https://developers.liveramp.com/clean-room-api)
+Published plans, tiers and prices.
 
-#### Tags
+- [Liveramp Plans Pricing](https://apis.io/plans/liveramp/liveramp-plans-pricing/)
 
-- Clean Room
-- Data Collaboration
-- Privacy
+#### Rate limits (1)
 
-#### Properties
+Published request limits.
 
-- [Documentation](https://developers.liveramp.com/clean-room-api)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Liveramp Rate Limits](https://apis.io/rate-limits/liveramp/liveramp-rate-limits/)
 
-### LiveRamp Data Marketplace Buyer API
+#### FinOps (1)
 
-API enabling platforms to host third-party segments from the LiveRamp Data Marketplace and access detailed segment metadata.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://developers.liveramp.com/datamarketplace-buyer-api](https://developers.liveramp.com/datamarketplace-buyer-api)
+- [Liveramp Finops](https://apis.io/finops/liveramp/liveramp-finops/)
 
-#### Tags
+## Where to find this API
 
-- Data Marketplace
-- Segments
-- AdTech
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Properties
-
-- [Documentation](https://developers.liveramp.com/datamarketplace-buyer-api)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### LiveRamp AbiliTec API
-
-Identity resolution API that resolves offline PII data into stable AbiliTec links for enterprise customer-database unification.
-
-- **Human URL:** [https://developers.liveramp.com/abilitec-api](https://developers.liveramp.com/abilitec-api)
-
-#### Tags
-
-- Identity
-- Resolution
-- PII
-
-#### Properties
-
-- [Documentation](https://developers.liveramp.com/abilitec-api)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### LiveRamp RampID API
-
-API for matching data to the LiveRamp Identity Graph, including envelope decryption and translation between pseudonymous identifiers.
-
-- **Human URL:** [https://developers.liveramp.com/rampid-api](https://developers.liveramp.com/rampid-api)
-
-#### Tags
-
-- Identity
-- RampID
-- Pseudonymous
-
-#### Properties
-
-- [Documentation](https://developers.liveramp.com/rampid-api)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### LiveRamp Safe Haven Job Management API
-
-Automates Python, PySpark, and BigQuery jobs running in LiveRamp's Safe Haven Analytics Environment.
-
-- **Human URL:** [https://developers.liveramp.com/ae-job-management-api](https://developers.liveramp.com/ae-job-management-api)
-
-#### Tags
-
-- Analytics
-- Automation
-- Jobs
-
-#### Properties
-
-- [Documentation](https://developers.liveramp.com/ae-job-management-api)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### LiveRamp Privacy API
-
-Automates data subject requests including opt-outs, deletions, and consent updates across the LiveRamp ecosystem.
-
-- **Human URL:** [https://developers.liveramp.com/privacy-api](https://developers.liveramp.com/privacy-api)
-
-#### Tags
-
-- Privacy
-- Consent
-- Compliance
-
-#### Properties
-
-- [Documentation](https://developers.liveramp.com/privacy-api)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### LiveRamp Sidecar
-
-Service enabling SSPs to decrypt RampID identity envelopes into DSP-specific identifiers for programmatic activation.
-
-- **Human URL:** [https://sidecar.readme.io/](https://sidecar.readme.io/)
-
-#### Tags
-
-- SSP
-- Programmatic
-- Identity
-
-#### Properties
-
-- [Documentation](https://sidecar.readme.io/)
-- [Postman Collection](collections/liveramp.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/liveramp.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/liveramp)
 - [Website](https://liveramp.com)
-- [Portal](https://developers.liveramp.com/)
 - [Documentation](https://docs.liveramp.com/)
-- [Support Portal](https://support.liveramp.com/)
+- [Getting started](https://developers.liveramp.com/activation-api/reference/getting-started-1)
+- [API reference](https://developers.liveramp.com/activation-api/reference/distribution-api-overview)
+- [Pricing](https://liveramp.com/pricing/)
+- [Sign up](https://liveramp.com/contact/)
+- [Support](https://support.liveramp.com/)
 - [Blog](https://liveramp.com/blog/)
-- [GitHub Organization](https://github.com/LiveRamp)
-- [M C P Server](https://github.com/LiveRamp/logscale-mcp)
-- [L L Ms Txt](https://developers.liveramp.com/llms.txt)
+- [Security](https://liveramp.com/security/bug-bounty)
+- [Compliance](https://trust.liveramp.com/)
+- [Terms of service](https://liveramp.com/liveramp-terms-of-service/)
+- [Privacy policy](https://liveramp.com/privacy/service-privacy-policy/)
+- [GitHub](https://github.com/LiveRamp)
+- [Status](https://status.liveramp.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** API Evangelist
-**Email:** info@apievangelist.com
+**Kin Score 59.1** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.3 |
+| Contract quality | 51.5 |
+| Contract governance | 18.2 |
+| Operational transparency | 68.4 |
+| Developer ergonomics | 45.8 |
+| Access clarity | 60.5 |
+
+**Agent readiness 41.8** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | mostly |
+
+**Regulatory alignment 45.1** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/liveramp/](https://apis.io/providers/liveramp/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for LiveRamp: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/liveramp/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
