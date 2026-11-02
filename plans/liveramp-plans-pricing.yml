@@ -1,0 +1,83 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://liveramp.com/pricing
+sources:
+- https://liveramp.com/pricing
+- https://liveramp.com/pricing/
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T141238
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+  managed_tier: Standard
+published: true
+note: Tiered annual token commitments with consumption drawdown; FAQ states Standard starts at $20,000
+  per year. Exact rates require custom quote.
+plan_count: 3
+currency: USD
+plans:
+- name: Standard
+  price_text: Starting at $20,000
+  price: 20000
+  currency: USD
+  period: year
+  unit: annual token commitment
+  included_quota: Essential consumption-based products to maximize media impact and performance; Flexible
+    entry-level rates; Ticketed support included
+  overage: you can purchase overage tokens or increase your commitment under the terms of your agreement
+- name: Premier
+  price_text: Starting at $150,000
+  price: 150000
+  currency: USD
+  period: year
+  unit: annual token commitment
+  included_quota: All consumption products included; Volume-discounted consumption rates; Dedicated account
+    support resource
+  overage: you can purchase overage tokens or increase your commitment under the terms of your agreement
+- name: Enterprise
+  price_text: Starting at $360,000
+  price: 360000
+  currency: USD
+  period: year
+  unit: annual token commitment
+  included_quota: All consumption products included; Best consumption rates; Dedicated account resources;
+    Consultative support
+  overage: you can purchase overage tokens or increase your commitment under the terms of your agreement
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  units:
+  - token
+  plans:
+  - name: Standard
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - year
+  - name: Premier
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - year
+  - name: Enterprise
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - token
+    periods:
+    - year
