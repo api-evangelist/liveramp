@@ -50,7 +50,7 @@ plans:
     Consultative support
   overage: you can purchase overage tokens or increase your commitment under the terms of your agreement
 x-canonical:
-  generated: '2026-11-02'
+  generated: '2026-11-06'
   vocabulary: engine/economics/plans-canonical.yml
   models:
   - hybrid
